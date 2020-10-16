@@ -4,6 +4,18 @@ const mongoose = require('mongoose')
 const requireLogin = require('../middleware/requireLogin')
 const Post = mongoose.model('Post')
 
+//acces à tous les posts requiert d'etre login
+router.get('/allpost', requireLogin, (req, res)=>{
+    Post.find()
+    .populate("postedBy", "_id name")
+    .then(posts=>{
+        res.json({posts})
+        res.send(posts)
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
 
 router.post('/createpost', requireLogin ,(req, res)=>{
     const {title, body} = req.body
@@ -18,6 +30,18 @@ router.post('/createpost', requireLogin ,(req, res)=>{
     })
     post.save().then(result=>{
         res.json({post:result})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get lessons i've posted
+router.get('/mypost',requireLogin, (req, res)=>{
+    Post.find({postedBy:req.user._id})
+    .populate("potedBy", "_id name")
+    .then(mypost =>{
+        res.json({mypost})
     })
     .catch(err=>{
         console.log(err)
