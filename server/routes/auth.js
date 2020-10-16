@@ -7,10 +7,6 @@ const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../keys')
 const requireLogin = require('../middleware/requireLogin')
 
-router.get('/protected',requireLogin, (req, res)=>{
-    res.send("Hello user")
-})
-
 router.post('/signup', (req,res)=>{
     const {name, email, password}= req.body
     if(!name || !email || !password){
@@ -72,6 +68,9 @@ router.post('/signin', (req, res)=>{
     })
 })
 
-
-
 module.exports = router
+
+//Token Utilisation
+// router.get('/protected',requireLogin, (req, res)=>{
+//     res.send("Hello user")
+// })
