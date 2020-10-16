@@ -1,10 +1,10 @@
 import React from 'react'
 import './Pages.css'
 
-const Home = ()=>{
+const Admin = ()=>{
     return(
-        <h1>Home</h1>
+        <h1>Admin Page</h1>
     )
 }
 
-export default Home
+export default Admin

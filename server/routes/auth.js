@@ -8,8 +8,8 @@ const {JWT_SECRET} = require('../keys')
 const requireLogin = require('../middleware/requireLogin')
 
 router.post('/signup', (req,res)=>{
-    const {name, email, password}= req.body
-    if(!name || !email || !password){
+    const {name, isenId ,email, password}= req.body
+    if(!name || !isenId || !email || !password){
         return res.status(422).json({error:"Complete all the fields"})
     }
     User.findOne({email:email})
@@ -21,6 +21,7 @@ router.post('/signup', (req,res)=>{
         .then(hashedpassword=>{
             const user = new User({
                 name,
+                isenId,
                 email,
                 password:hashedpassword
             })
@@ -69,8 +70,3 @@ router.post('/signin', (req, res)=>{
 })
 
 module.exports = router
-
-//Token Utilisation
-// router.get('/protected',requireLogin, (req, res)=>{
-//     res.send("Hello user")
-// })
