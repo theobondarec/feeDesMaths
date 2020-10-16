@@ -17,6 +17,7 @@ router.get('/allpost', requireLogin, (req, res)=>{
     })
 })
 
+//creation post schema
 router.post('/createpost', requireLogin ,(req, res)=>{
     const {title, body} = req.body
     if(!title || !body){
