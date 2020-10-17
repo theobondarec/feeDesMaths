@@ -3,9 +3,9 @@ import './Pages.css'
 
 const Admin = ()=>{
     return(
-        <div className="">
-            <h1>Admin Page</h1>
+        <div className="adminClass">
             <div>
+                <h1>Utilisateurs</h1>
                 <table className="table">
                     <thead>
                         <tr>
