@@ -8,12 +8,14 @@ import Profile from './components/screens/Profile'
 import Signup from './components/screens/Signup'
 import Admin from './components/screens/Admin'
 import Settings from './components/screens/Settings'
+import Cours from './components/screens/Cours'
+import Addlesson from './components/screens/Addlesson'
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter>         {/*visible que si login*/}
       {/* HEADER */}
-      <NavBar />
+      <NavBar />                {/* */}
       <Route exact path="/">
         <Home />
       </Route>
@@ -26,11 +28,17 @@ function App() {
       <Route path="/profile">
         <Profile />
       </Route>
-      <Route path="/admin">
+      <Route path="/admin">       {/*only if you're admin*/}
         <Admin />
       </Route>
       <Route path="/settings">
         <Settings />
+      </Route>
+      <Route path="/cours">
+        <Cours />
+      </Route>
+      <Route path="/createpost">  {/*visible seulement pour rank professor*/}
+        <Addlesson />
       </Route>
       
       {/* FOOTER 

@@ -16,7 +16,7 @@ const NavBar = () =>{
                         <Link class="nav-link" to="/">Home <span class="sr-only">(current)</span></Link>
                     </li>
                     <li class="nav-item">
-                        <Link class="nav-link" to="/cours">lessons</Link>
+                        <Link class="nav-link" to="/cours">Cours</Link>
                     </li>
                     <li class="nav-item">
                         <Link class="nav-link" to="/login">Login</Link>
@@ -30,6 +30,7 @@ const NavBar = () =>{
                         </Link>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <Link class="dropdown-item" to="/profile">My profile</Link> {/*Avancement des cours*/}
+                            <Link class="dropdown-item" to="/createpost">Ajouter un cours</Link> {/*only if you're professor*/}
                             <Link class="dropdown-item" to="/admin">Admin page</Link> {/*only if you're admin*/}
                             <Link class="dropdown-item" to="/settings">Settings</Link> {/*modification mot de passe*/}
                             <div class="dropdown-divider"></div>
