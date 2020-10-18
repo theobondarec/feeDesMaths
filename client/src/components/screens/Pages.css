@@ -39,3 +39,17 @@ body{
     display: flex;
     justify-content: space-around;
 }
+.lessonSelection{
+    display: flex;
+    justify-content: space-around;
+}
+.lessonCard{
+    display: flex;
+    flex-direction: row;
+}
+.card-title{
+    display: flex;
+}
+.imgTest{
+    max-width: 30%;
+}
