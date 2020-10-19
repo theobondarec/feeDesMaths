@@ -11,7 +11,7 @@ const Signup = ()=>{
 
     const postData = ()=>{
         if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){
-            window.alert('Invalid Email !')
+            window.alert('Invalid Email !')          //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
             return
         }
         fetch("/register",{
