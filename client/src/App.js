@@ -11,6 +11,9 @@ import Settings from './components/screens/Settings'
 import Cours from './components/screens/Cours'
 import Addlesson from './components/screens/Addlesson'
 
+// {/*Pagination cours precis  ->  a suppr*/}
+import CoursPrecis from './components/screens/CourPrecis'
+
 function App() {
   return (
     <BrowserRouter>         {/*visible que si login*/}
@@ -34,12 +37,20 @@ function App() {
       <Route path="/settings">
         <Settings />
       </Route>
-      <Route path="/cours">
+      <Route exact path="/cours">
         <Cours />
       </Route>
       <Route path="/createpost">  {/*visible seulement pour rank professor*/}
         <Addlesson />
       </Route>
+
+
+      {/*pour bosser la pagination d'un cours  ->  a suppr*/}
+      <Route path="/cours/precis">
+        <CoursPrecis />
+      </Route>
+
+      
       
       {/* FOOTER 
         Ajouter Information en footer et non en navbar

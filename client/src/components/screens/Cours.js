@@ -1,5 +1,6 @@
 import React from 'react'
 import './Pages.css'
+import {Link} from 'react-router-dom'
 
 const Cours = ()=>{
     return(
@@ -34,7 +35,7 @@ const Cours = ()=>{
                     <div className="f">
                         <div className="card-title">
                             <h1>Cours x</h1>
-                            <a href="/" class="btn btn-primary">Modifier</a>        {/*MODIFIER/SUPPR juste pour rank=prof */}
+                            <Link to="/modifLesson" class="btn btn-primary">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
                             <a href="/" class="btn btn-primary">Supprimer</a>       {/*
                                                                                         Page speciale modif pour les prof ?
                                                                                         un formulaire pré remplis avec info bdd
@@ -44,7 +45,7 @@ const Cours = ()=>{
                         <div class="card-body">
                             This is some text within a card body.
                         </div>
-                        <a href="/" class="btn btn-primary">Voir le cours</a>
+                        <Link to="/cours/precis" class="btn btn-primary">Voir le cours</Link>
                     </div>
                 </div>
                 <div class="card lessonCard">
@@ -52,13 +53,13 @@ const Cours = ()=>{
                     <div className="f">
                         <div className="card-title">
                             <h1>Cours x2</h1>
-                            <a href="/" class="btn btn-primary">Modifier</a>        {/*MODIFIER/SUPPR juste pour rank=prof */}
+                            <Link to="/modifLesson" class="btn btn-primary">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
                             <a href="/" class="btn btn-primary">Supprimer</a>
                         </div>
                         <div class="card-body">
                             This is some text within a card body.
                         </div>
-                        <a href="/" class="btn btn-primary">Voir le cours</a>
+                        <Link to="/cours/precis" class="btn btn-primary">Voir le cours</Link>
                     </div>
                 </div>
 
