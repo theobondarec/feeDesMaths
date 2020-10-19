@@ -7,7 +7,7 @@ const Login = ()=>{
             <div className="card auth-card">
                 <h1>Login</h1>
                 <input 
-                type="text"
+                type="email"
                 placeholder="email"
                 />
                 <input 
@@ -17,7 +17,7 @@ const Login = ()=>{
                 <button type="button" className="btn btn-primary">Login</button>
                 <div className="dropdown-divider"></div>
                 <div className="loginFooter">
-                    <Link to="/signup">Don't have an account ? Sign up</Link>
+                    <Link to="/register">Don't have an account ? Sign up</Link>
                     <Link to="/restpassword">forgotten password ?</Link>
                 </div>
             </div>

@@ -13,19 +13,16 @@ const Addlesson = ()=>{
                     <label class="custom-file-label" for="inputGroupFile01">Add Illustration</label>
                 </div>
                 </div>
-                <div className="mcl">
-                    <input 
-                    type="text"
-                    placeholder="matière"
-                    />
-                    <input 
-                    type="text"
-                    placeholder="chapitre"
-                    />
-                    <input 
-                    type="text"
-                    placeholder="lecon"
-                    />
+                <div className="form-row mcl">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Matière"/>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Chapitre"/>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Leçon"/>
+                    </div>
                 </div>
                 <textarea 
                     type="text"

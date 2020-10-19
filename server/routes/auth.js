@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../keys')
 const requireLogin = require('../middleware/requireLogin')
 
-router.post('/signup', (req,res)=>{
+router.post('/register', (req,res)=>{
     const {name, isenId ,email, password}= req.body
     if(!name || !isenId || !email || !password){
         return res.status(422).json({error:"Complete all the fields"})
@@ -39,7 +39,7 @@ router.post('/signup', (req,res)=>{
     })
 })
 
-router.post('/signin', (req, res)=>{
+router.post('/login', (req, res)=>{
     const {email, password} = req.body
     if(!email || !password){
         res.status(422).json({error:"please fill in all fields"})
