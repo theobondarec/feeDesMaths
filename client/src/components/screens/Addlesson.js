@@ -1,45 +1,151 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './Pages.css'
 
-const Addlesson = ()=>{
+const Addlesson = ()=>{ 
+    const [matiere, setMatiere] = useState("")
+    const [chapitre, setChapitre] = useState("")
+    const [lecon, setLecon] = useState("")
+    const [description, setDescription] = useState("")
+    const [cours, setCours] = useState("")
+    const [illustration, setIllustration] = useState("")
+    const [url, setUrl] = useState("")
+    const [pdf, setPdf] = useState("")
+    const [url2, setUrl2] = useState("")
+
+    useEffect(()=>{
+        if(url2){
+            if(url){
+                fetch("/createpost",{
+                    method:"post",
+                    headers:{
+                        "Content-Type":"application/json",
+                        "Authorization":"Bearer "+localStorage.getItem("jwt")
+                    },
+                    body:JSON.stringify({
+                        matiere,
+                        chapitre,
+                        lecon,
+                        description,
+                        cours,
+                        photo:url,
+                        pdf:url2
+                    })
+                }).then(res=>res.json())
+                .then(data => {
+                    if(data.error){
+                        window.alert(data.error)            //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
+                    }
+                    else{
+                        window.alert("Lesson added")          //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
+                    }
+                }).catch(err=>{
+                    console.log(err)
+                })
+            }
+        }
+    },[matiere, chapitre, cours, description, lecon, url, url2])
+
+    const postLesson = ()=>{
+        //Upload Illustration
+        const data = new FormData()
+        data.append("file", illustration)
+        data.append("folder", "img")
+        data.append("upload_preset", "feedesmaths")
+        data.append("cloud_name", "feedesmaths")
+
+        fetch("https://api.cloudinary.com/v1_1/feedesmaths/image/upload/", {
+            method: "post",
+            body:data
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            setUrl(data.url)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+        //
+        
+        //Upload PDF
+        const dataPdf = new FormData()
+        dataPdf.append("file", pdf)
+        dataPdf.append("folder", "pdf")
+        dataPdf.append("upload_preset", "feedesmaths")
+        dataPdf.append("cloud_name", "feedesmaths")
+
+        fetch("https://api.cloudinary.com/v1_1/feedesmaths/image/upload/", {
+            method: "post",
+            body:dataPdf
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            setUrl2(data.url)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+        //
+    }
+
     return(
         <div className="myCard">
             <div className="card add-card">
                 <h1>Ajouter un cours</h1>
-                <div class="input-group">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01"
-                    aria-describedby="inputGroupFileAddon01"/>
-                    <label class="custom-file-label" for="inputGroupFile01">Add Illustration</label>
+                <div className="input-group">
+                <div className="custom-file">
+                    <input type="file" className="custom-file-input" id="inputGroupFile01"
+                    aria-describedby="inputGroupFileAddon01"
+                    onChange={(e)=>setIllustration(e.target.files[0])}
+                    />
+                    <label className="custom-file-label" htmlFor="inputGroupFile01">Add Illustration</label>
                 </div>
                 </div>
                 <div className="form-row mcl">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Matière"/>
+                    <div className="col">
+                        <input type="text" className="form-control" placeholder="Matière"
+                        value={matiere}
+                        onChange={(e)=>setMatiere(e.target.value)}
+                        />
                     </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Chapitre"/>
+                    <div className="col">
+                        <input type="text" className="form-control" placeholder="Chapitre"
+                        value={chapitre}
+                        onChange={(e)=>setChapitre(e.target.value)}
+                        />
                     </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Leçon"/>
+                    <div className="col">
+                        <input type="text" className="form-control" placeholder="Leçon"
+                        value={lecon}
+                        onChange={(e)=>setLecon(e.target.value)}
+                        />
                     </div>
                 </div>
                 <textarea 
                     type="text"
                     placeholder="Description"
+                    value={description}
+                    onChange={(e)=>setDescription(e.target.value)}
                 />
                 <textarea 
                     type="text"
                     placeholder="Cours"
+                    value={cours}
+                    onChange={(e)=>setCours(e.target.value)}
                 />
-                <div class="input-group">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01"
-                        aria-describedby="inputGroupFileAddon01"/>
-                        <label class="custom-file-label" for="inputGroupFile01">Add pdf</label>
+                <div className="input-group">
+                    <div className="custom-file">
+                        <input type="file" className="custom-file-input" id="inputGroupFile01"
+                        aria-describedby="inputGroupFileAddon01"
+                        onChange={(e)=>setPdf(e.target.files[0])}
+                        />
+                        <label className="custom-file-label" htmlFor="inputGroupFile01">Add pdf</label>
                     </div>
                 </div>
-                <button type="button" className="btn btn-primary">Upload</button>
+                <button type="button" className="btn btn-primary"
+                    onClick={()=>postLesson()}
+                >
+                    Upload
+                </button>
             </div>
         </div>
     )

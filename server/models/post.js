@@ -1,17 +1,33 @@
 const mongoose = require('mongoose')
 const {ObjectId} = mongoose.Schema.Types
 const postSchema = new mongoose.Schema({
-    title:{
+    matiere:{
         type:String,
         required:true
     },
-    body:{
+    chapitre:{
+        type:String,
+        required:true
+    },
+    lecon:{
+        type:String,
+        required:true
+    },
+    description:{
+        type:String,
+        required:true
+    },
+    cours:{
         type:String,
         required:true
     },
     photo:{
         type:String,
         default:"no photo"
+    },
+    pdf:{
+        type:String,
+        default:"no pdf"
     },
     postedBy:{
         type:ObjectId,

@@ -34,6 +34,8 @@ const Signup = ()=>{
                 window.alert(data.message)          //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
                 history.push('/login')
             }
+        }).catch(err=>{
+            console.log(err)
         })
     }
 

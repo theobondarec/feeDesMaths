@@ -19,14 +19,19 @@ router.get('/allpost', requireLogin, (req, res)=>{
 
 //creation post schema
 router.post('/createpost', requireLogin ,(req, res)=>{
-    const {title, body} = req.body
-    if(!title || !body){
+    const {matiere, chapitre, lecon, description, cours, photo, pdf} = req.body
+    if(!matiere || !chapitre || !lecon || !description || !cours){
         res.status(422).json({error:"please add all the fields"})
     }
     req.user.password = undefined
     const post = new Post({
-        title,
-        body,
+        matiere,
+        chapitre,
+        lecon,
+        description,
+        cours,
+        photo,
+        pdf,
         postedBy:req.user
     })
     post.save().then(result=>{
