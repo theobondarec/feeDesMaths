@@ -45,7 +45,7 @@ const Routing = ()=>{
       <Route path="/profile">
         <Profile />
       </Route>
-      <Route path="/admin">       {/*only if you're admin*/}
+      <Route path="/admin">
         <Admin />
       </Route>
       <Route path="/settings">
@@ -54,7 +54,7 @@ const Routing = ()=>{
       <Route exact path="/cours">
         <Cours />
       </Route>
-      <Route path="/createpost">  {/*visible seulement pour rank professor*/}
+      <Route path="/createpost">
         <Addlesson />
       </Route>
 

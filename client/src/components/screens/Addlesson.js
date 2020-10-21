@@ -51,7 +51,6 @@ const Addlesson = ()=>{
         //Upload Illustration
         const data = new FormData()
         data.append("file", illustration)
-        // console.log("illustration file: " + illustration)
         data.append("folder", "img")
         data.append("upload_preset", "feedesmaths")
         data.append("cloud_name", "feedesmaths")
@@ -66,7 +65,7 @@ const Addlesson = ()=>{
                 window.alert("illustration error : " + data.error.message)
                 return
             }
-            console.log(data)
+            // console.log(data)
             setUrl(data.url)
         })
         .catch(err=>{
@@ -92,7 +91,7 @@ const Addlesson = ()=>{
                 window.alert("pdf error : " + data.error.message)
                 return
             }
-            console.log(data)
+            // console.log(data)
             setUrl2(data.url)
         })
         .catch(err=>{

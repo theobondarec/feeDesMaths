@@ -12,9 +12,8 @@ const NavBar = () =>{
             rang = state.rank
             // console.log(rang)
         }
-
-        if(rang === "student"){                  /////A FAIRE EN FONCTION DU RANK => state.rank === "student" ????????
-            return [    //If login as STUDENT
+        if(rang === "student"){
+            return [
                 <li className="nav-item">
                     <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
                 </li>,
@@ -100,7 +99,7 @@ const NavBar = () =>{
 
             <div className="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
-                    {renderList()}
+                    {renderList()}                          {/*WARNING BECAUSE OF THIS LINE*/}
                 </ul>
             </div>
         </nav>
