@@ -23,11 +23,11 @@ const postSchema = new mongoose.Schema({
     },
     photo:{
         type:String,
-        default:"no photo"
+        required:true
     },
     pdf:{
         type:String,
-        default:"no pdf"
+        required:true
     },
     postedBy:{
         type:ObjectId,

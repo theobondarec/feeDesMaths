@@ -12,9 +12,9 @@ const Addlesson = ()=>{
     const [pdf, setPdf] = useState("")
     const [url2, setUrl2] = useState("")
 
+    //meilleure facon de async function ?
     useEffect(()=>{
-        if(url2){
-            if(url){
+        if(url2 && url){
                 fetch("/createpost",{
                     method:"post",
                     headers:{
@@ -34,21 +34,24 @@ const Addlesson = ()=>{
                 .then(data => {
                     if(data.error){
                         window.alert(data.error)            //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
+                        setUrl("")
+                        setUrl2("")
                     }
                     else{
-                        window.alert("Lesson added")          //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
+                        window.alert("Lesson added")        //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
                     }
                 }).catch(err=>{
                     console.log(err)
                 })
-            }
-        }
-    },[matiere, chapitre, cours, description, lecon, url, url2])
+         }
+         // eslint-disable-next-line
+    },[url, url2])
 
     const postLesson = ()=>{
         //Upload Illustration
         const data = new FormData()
         data.append("file", illustration)
+        // console.log("illustration file: " + illustration)
         data.append("folder", "img")
         data.append("upload_preset", "feedesmaths")
         data.append("cloud_name", "feedesmaths")
@@ -59,16 +62,22 @@ const Addlesson = ()=>{
         })
         .then(res=>res.json())
         .then(data=>{
+            if(data.error){
+                window.alert("illustration error : " + data.error.message)
+                return
+            }
+            console.log(data)
             setUrl(data.url)
         })
         .catch(err=>{
             console.log(err)
         })
         //
-        
+
         //Upload PDF
         const dataPdf = new FormData()
         dataPdf.append("file", pdf)
+        // console.log("pdf file: " + pdf)
         dataPdf.append("folder", "pdf")
         dataPdf.append("upload_preset", "feedesmaths")
         dataPdf.append("cloud_name", "feedesmaths")
@@ -79,12 +88,29 @@ const Addlesson = ()=>{
         })
         .then(res=>res.json())
         .then(data=>{
+            if(data.error){
+                window.alert("pdf error : " + data.error.message)
+                return
+            }
+            console.log(data)
             setUrl2(data.url)
         })
         .catch(err=>{
             console.log(err)
         })
         //
+
+        if(url === "" || url2 === ""){              //PAS OPTI JE PENSE
+            // window.alert("URL vide")
+            if(url =! ""){
+                //suprimer url2 de la bdd Cloudinary
+            }
+            if(url2 =! ""){
+                //suprimer url2 de la bdd Cloudinary
+            }
+            setUrl("")
+            setUrl2("")
+        }
     }
 
     return(
@@ -136,7 +162,10 @@ const Addlesson = ()=>{
                     <div className="custom-file">
                         <input type="file" className="custom-file-input" id="inputGroupFile01"
                         aria-describedby="inputGroupFileAddon01"
-                        onChange={(e)=>setPdf(e.target.files[0])}
+                        onChange={(e)=>{
+                            setPdf(e.target.files[0])
+                            }
+                        }
                         />
                         <label className="custom-file-label" htmlFor="inputGroupFile01">Add pdf</label>
                     </div>
