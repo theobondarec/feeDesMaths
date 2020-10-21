@@ -1,8 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState, useContext} from 'react'
 import './Pages.css'
 import {Link, useHistory} from 'react-router-dom'
-const Login = ()=>{
+import {UserContext} from '../../App'
 
+const Login = ()=>{
+    const {state, dispatch}= useContext(UserContext)
     const [email, setEmail]= useState("")
     const [password, setPassword]= useState("")
     const history = useHistory()
@@ -23,13 +25,14 @@ const Login = ()=>{
             })
         }).then(res=>res.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             if(data.error){
                 window.alert(data.error)            //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
             }
             else{
                 localStorage.setItem("jwt",data.token)
                 localStorage.setItem("user",JSON.stringify(data.user))
+                dispatch({type:"USER", payload:data.user})
                 window.alert("signed in")          //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
                 history.push('/')
             }

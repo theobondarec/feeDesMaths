@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect, createContext, useReducer, useContext} from 'react';
 import NavBar from './components/Navbar'
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route, Switch, useHistory} from 'react-router-dom'
 
 import Home from './components/screens/Home'
 import Login from './components/screens/Login'
@@ -10,15 +10,29 @@ import Admin from './components/screens/Admin'
 import Settings from './components/screens/Settings'
 import Cours from './components/screens/Cours'
 import Addlesson from './components/screens/Addlesson'
+import {reducer, initialState} from './reducer/userReducer'
 
 // {/*Pagination cours precis  ->  a suppr*/}
 import CoursPrecis from './components/screens/CourPrecis'
 
-function App() {
-  return (
-    <BrowserRouter>         {/*visible que si login*/}
-      {/* HEADER */}
-      <NavBar />                {/* */}
+
+export const UserContext = createContext()
+
+const Routing = ()=>{
+  const history = useHistory()
+  const {state, dispatch} = useContext(UserContext)
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("user"))
+    if(user){
+      dispatch({type:"USER", playload:user})
+      history.push('/')
+    }
+    else{
+      history.push('/login')          /////////////if user can access home without signin change path to '/'
+    }
+  },[])
+  return(
+    <Switch>
       <Route exact path="/">
         <Home />
       </Route>
@@ -45,17 +59,30 @@ function App() {
       </Route>
 
 
-      {/*pour bosser la pagination d'un cours  ->  a suppr*/}
+      // {/*pour bosser la pagination d'un cours  ->  a suppr*/}
       <Route path="/cours/precis">
         <CoursPrecis />
       </Route>
+    </Switch>
+  )
+}
 
-      
-      
-      {/* FOOTER 
-        Ajouter Information en footer et non en navbar
-      */}
-    </BrowserRouter>
+function App() {
+  const [state, dispatch]= useReducer(reducer, initialState)
+  return (
+    <UserContext.Provider value={{state, dispatch}}>
+      <BrowserRouter>
+        {/* HEADER */}
+        <NavBar />                {/* */}
+
+        {/*Body*/}                {/*visible que si login*/}
+        <Routing />
+        
+        {/* FOOTER 
+          Ajouter Information en footer et non en navbar
+        */}
+      </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 

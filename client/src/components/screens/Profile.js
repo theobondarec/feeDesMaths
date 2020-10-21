@@ -14,10 +14,10 @@ const Profile = ()=>{
                                 <th>Progression</th>
                             </tr>
                         </thead>
-                        <tbody>  {/*DYNAMIQUE AVEC BDD*/}
+                        <tbody>{/*DYNAMIQUE AVEC BDD*/}
                             <tr>
-                                <td>Nombre complexe</td>    {/*Titre qui correspond au chapitre de la bdd*/}
-                                <td>100%</td>                {/*correspond au chapitre actuel de l'utilisateur dans le chapitre*/}
+                                <td>Nombre complexe</td>{/*Titre qui correspond au chapitre de la bdd*/}
+                                <td>100%</td>{/*correspond au chapitre actuel de l'utilisateur dans le chapitre*/}
                             </tr>
                             <tr>
                                 <td>sommes</td>
@@ -37,10 +37,10 @@ const Profile = ()=>{
                                 <th>Notes</th>
                             </tr>
                         </thead>
-                        <tbody>  {/*DYNAMIQUE AVEC BDD*/}
+                        <tbody>{/*DYNAMIQUE AVEC BDD*/}
                             <tr>
-                                <td>nombre complexe</td>    {/*Titre qui correspond au chapitre de la bdd*/}
-                                <td>20/20</td>                {/*correspond au chapitre actuel de l'utilisateur dans le chapitre*/}
+                                <td>nombre complexe</td>{/*Titre qui correspond au chapitre de la bdd*/}
+                                <td>20/20</td>{/*correspond au chapitre actuel de l'utilisateur dans le chapitre*/}
                             </tr>
                             <tr>
                                 <td>sommes</td>

@@ -102,10 +102,10 @@ const Addlesson = ()=>{
 
         if(url === "" || url2 === ""){              //PAS OPTI JE PENSE
             // window.alert("URL vide")
-            if(url =! ""){
+            if(url !== ""){
                 //suprimer url2 de la bdd Cloudinary
             }
-            if(url2 =! ""){
+            if(url2 !== ""){
                 //suprimer url2 de la bdd Cloudinary
             }
             setUrl("")

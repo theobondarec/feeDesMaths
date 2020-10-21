@@ -14,7 +14,7 @@ const Admin = ()=>{
                             <th>rank</th>
                         </tr>
                     </thead>
-                    <tbody>                 {/*info de la BDD afficher 10personnes et pagesuivante en bas du tableau*/}
+                    <tbody>{/*info de la BDD afficher 10personnes et pagesuivante en bas du tableau*/}
                         <tr>
                             <td>Bondarec</td>
                             <td>theo.bondarec@isen.yncrea.fr</td>
@@ -35,8 +35,8 @@ const Admin = ()=>{
                     type="text"
                     placeholder="email"
                     />
-                    <select id="inputState" class="form-control">
-                        <option selected>Student</option>
+                    <select id="inputState" className="form-control">
+                        <option defaultValue>Student</option>
                         <option>Professor</option>
                         <option>Admin</option>
                     </select>
