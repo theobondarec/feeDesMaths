@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 const requireLogin = require('../middleware/requireLogin')
 const Post = mongoose.model('Post')
 
-//acces à tous les posts requiert d'etre login
-router.get('/allpost', requireLogin, (req, res)=>{
+//acces à tous les posts requiert d'etre login 
+router.get('/cours', requireLogin, (req, res)=>{
     Post.find()
     .populate("postedBy", "_id name")
     .then(posts=>{

@@ -1,11 +1,12 @@
 import React, {useContext} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {UserContext} from '../App'
 import '../App.css'
 
 const NavBar = () =>{
 
     const {state, dispatch} = useContext(UserContext)
+    const history = useHistory()
     const renderList=()=>{
         var rang = null
         if(state){
@@ -28,7 +29,13 @@ const NavBar = () =>{
                         <Link className="dropdown-item" to="/profile">My profile</Link> {/*Avancement des cours*/}
                         <Link className="dropdown-item" to="/settings">Settings</Link> {/*modification mot de passe*/}
                         <div className="dropdown-divider"></div>
-                        <Link className="dropdown-item" to="#">sign out</Link>
+                        <button className="dropdown-item" 
+                        onClick={()=>{
+                            localStorage.clear()
+                            dispatch({type:"CLEAR"})
+                            history.push('/login')
+                        }}
+                        >Logout</button>
                     </div>
                 </li>
             ]
@@ -50,7 +57,13 @@ const NavBar = () =>{
                         <Link className="dropdown-item" to="/createpost">Ajouter un cours</Link> {/*only if you're professor*/}
                         <Link className="dropdown-item" to="/settings">Settings</Link> {/*modification mot de passe*/}
                         <div className="dropdown-divider"></div>
-                        <Link className="dropdown-item" to="#">sign out</Link>
+                        <button className="dropdown-item" 
+                        onClick={()=>{
+                            localStorage.clear()
+                            dispatch({type:"CLEAR"})
+                            history.push('/login')
+                        }}
+                        >Logout</button>
                     </div>
                 </li>
             ]
@@ -69,7 +82,13 @@ const NavBar = () =>{
                         <Link className="dropdown-item" to="/admin">Admin page</Link> {/*only if you're admin*/}
                         <Link className="dropdown-item" to="/settings">Settings</Link> {/*modification mot de passe*/}
                         <div className="dropdown-divider"></div>
-                        <Link className="dropdown-item" to="#">sign out</Link>
+                        <button className="dropdown-item" 
+                        onClick={()=>{
+                            localStorage.clear()
+                            dispatch({type:"CLEAR"})
+                            history.push('/login')
+                        }}
+                        >Logout</button>
                     </div>
                 </li>
             ]

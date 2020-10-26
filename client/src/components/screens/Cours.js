@@ -1,8 +1,20 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './Pages.css'
 import {Link} from 'react-router-dom'
 
 const Cours = ()=>{
+    const [data, setData] = useState([])
+    useEffect(()=>{
+        fetch('/cours',{
+            headers:{
+                "Authorization":"Bearer "+localStorage.getItem("jwt")
+            }
+        }).then(res=>res.json())
+        .then(result=>{
+            // console.log(result)
+            setData(result.posts)
+        })
+    },[])
     return(
         <div>
             <h1>Cours</h1>
@@ -27,41 +39,35 @@ const Cours = ()=>{
                         <option>Chapitre 5</option>
                     </select>
                 </div>
+            
             </div>
             <div className="allCard">
-                <div className="card lessonCard">
-                    <img className="card-img imgTest" src="https://images.theconversation.com/files/245367/original/file-20181113-194488-cusrab.jpg?ixlib=rb-1.1.0&rect=0%2C935%2C4977%2C3158&q=45&auto=format&w=926&fit=clip" alt="Cardimagecap"></img>
-                    <div className="f">
-                        <div className="card-title">
-                            <h1>Cours x</h1>
-                            <Link to="/modifLesson" className="btn btn-primary">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
-                            <a href="/" className="btn btn-primary">Supprimer</a>       {/*
-                                                                                        Page speciale modif pour les prof ?
-                                                                                        un formulaire pré remplis avec info bdd
-                                                                                        et un bouton update qui change la bdd
-                                                                                    */}
-                        </div>
-                        <div className="card-body">
-                            This is some text within a card body.
-                        </div>
-                        <Link to="/cours/precis" className="btn btn-primary">Voir le cours</Link>
-                    </div>
-                </div>
-                <div className="card lessonCard">
-                    <img className="card-img imgTest" src="https://www.wedemain.fr/photo/art/grande/43834408-36051839.jpg?v=1584704323" alt="Cardimagecap"></img>
-                    <div className="f">
-                        <div className="card-title">
-                            <h1>Cours x2</h1>
-                            <Link to="/modifLesson" className="btn btn-primary">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
-                            <a href="/" className="btn btn-primary">Supprimer</a>
-                        </div>
-                        <div className="card-body">
-                            This is some text within a card body.
-                        </div>
-                        <Link to="/cours/precis" className="btn btn-primary">Voir le cours</Link>
-                    </div>
-                </div>
+                {
+                    data.map(item=>{
+                        return(
+                            <div className="card lessonCard" key={item._id}>
+                                <img className="card-img imgTest" src={item.photo} alt="Cardimagecap"></img>
+                                <div className="f">
+                                    <div className="card-title">
+                                        <h2>{item.matiere}</h2>
+                                        <h2>{item.chapitre}</h2>
 
+                                        <Link to="/modifLesson" className="btn btn-primary">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
+                                        <a href="/" className="btn btn-primary">Supprimer</a>       {/*
+                                                                                                    Page speciale modif pour les prof ?
+                                                                                                    un formulaire pré remplis avec info bdd
+                                                                                                    et un bouton update qui change la bdd
+                                                                                                */}
+                                    </div>
+                                    <div className="card-body">
+                                        {item.description}
+                                    </div>
+                                    <Link to="/cours/precis" className="btn btn-primary">Voir le cours</Link>
+                                </div>
+                            </div>
+                        )
+                    })
+                }
 
                 {/*10 par page, apres ajouter page navigation*/}
 
