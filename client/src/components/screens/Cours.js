@@ -41,7 +41,7 @@ const Cours = ()=>{
 
     useEffect(()=>{
         fetch('/cours',{
-            headers:{
+            headers:{                                                   //ERR_HTTP_HEADERS_SENT ??
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }
         }).then(res=>res.json())
