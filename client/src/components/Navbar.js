@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import {UserContext} from '../App'
 import '../App.css'
@@ -7,11 +7,16 @@ const NavBar = () =>{
 
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
+
     const renderList=()=>{
-        var rang = null
+        var rang
         if(state){
             rang = state.rank
             // console.log(rang)
+        }
+        if(localStorage.getItem("user")){
+            const user = JSON.parse(localStorage.getItem("user"))
+            rang = user.rank
         }
         if(rang === "student"){
             return [
@@ -94,10 +99,10 @@ const NavBar = () =>{
             ]
         }
         else{
-            return [
+            return [                //SI RELOAD la page on tombe comme si aucune info en localStorage
                 ////Uncom if CAN ACCESS TO HOME
                 // <li className="nav-item">
-                //     <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+                //     <Link className="nav-link" to="/cours">Home <span className="sr-only">(current)</span></Link>
                 // </li>,
                 <li className="nav-item">
                     <Link className="nav-link" to="/login">Login</Link>
@@ -111,7 +116,11 @@ const NavBar = () =>{
 
     return(
         <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-            <Link className="navbar-brand" to={state?"/":"/login"}>Fée des maths</Link>
+            <Link className="navbar-brand" 
+            to={
+                state?"/":"/login",
+                localStorage.getItem("user")?"/":"/"
+            }>Fée des maths</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>

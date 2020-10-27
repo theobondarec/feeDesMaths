@@ -3,7 +3,14 @@ import './Pages.css'
 
 const Home = ()=>{
     return(
-        <h1>Home</h1>
+        <div>
+            <h1>Home</h1>
+            <p>{
+            
+            localStorage.getItem("user")
+            
+            }</p>
+        </div>
     )
 }
 

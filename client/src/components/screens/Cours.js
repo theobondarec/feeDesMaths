@@ -4,6 +4,41 @@ import {Link} from 'react-router-dom'
 
 const Cours = ()=>{
     const [data, setData] = useState([])
+
+    function filterSelection() {
+        var inputState = document.getElementById("inputState");
+        var c = inputState.options[inputState.selectedIndex].value
+        var x, i;
+        x = document.getElementsByClassName("filterDiv");
+        if (c == "all") c = "";
+        for (i = 0; i < x.length; i++) {
+            w3RemoveClass(x[i], "show");
+            if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+        }
+    }
+
+    function w3AddClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+            if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+        }
+    }
+
+    function w3RemoveClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+            while (arr1.indexOf(arr2[i]) > -1) {
+            arr1.splice(arr1.indexOf(arr2[i]), 1);     
+            }
+        }
+        element.className = arr1.join(" ");
+    }
+
+
     useEffect(()=>{
         fetch('/cours',{
             headers:{
@@ -11,24 +46,32 @@ const Cours = ()=>{
             }
         }).then(res=>res.json())
         .then(result=>{
-            // console.log(result)
             setData(result.posts)
+            if(result.posts.length !== 0){
+                console.log(result.posts)
+                filterSelection("all")
+            }
         })
     },[])
+
+
+
     return(
         <div>
             <h1>Cours</h1>
             <div className="lessonSelection">               {/*Dynamique en fonction des cours de la bdd*/}
                 <div className="matiereSelection">
                 <h2>Matieres</h2>
-                    <select id="inputState" className="form-control">
-                        <option defaultValue>All</option>
-                        <option>Math</option>
-                        <option>Physique</option>
-                        <option>Anglais</option>
+                    <select id="inputState" className="form-control" onChange={()=>filterSelection()}>
+                        <option className="defaultValue" value="all">Show all</option>
+                        <option value="math">Math</option>
+                        <option value="physique">Physique</option>
+                        <option value="anglais">Anglais</option>
+                        <option value="test">Test</option>
                     </select>
                 </div>
-                <div className="chapitreSelection">
+
+                {/* <div className="chapitreSelection">                          PAS ENCORE FAIT A FAIRE ?
                 <h2>Chapitres</h2>
                     <select id="inputState" className="form-control">
                         <option defaultValue>All</option>
@@ -38,18 +81,17 @@ const Cours = ()=>{
                         <option>Chapitre 4</option>
                         <option>Chapitre 5</option>
                     </select>
-                </div>
-            
+                </div> */}
             </div>
             <div className="allCard">
                 {
                     data.map(item=>{
-                        return(
-                            <div className="card lessonCard" key={item._id}>
+                        return( 
+                            <div className={"card filterDiv " + item.matiere} key={item._id}>
                                 <img className="card-img imgTest" src={item.photo} alt="Cardimagecap"></img>
                                 <div className="f">
                                     <div className="card-title">
-                                        <h2>{item.matiere}</h2>
+                                        <div><h2>{item.matiere}</h2></div>
                                         <h2>{item.chapitre}</h2>
 
                                         <Link to="/modifLesson" className="btn btn-primary">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
@@ -73,6 +115,7 @@ const Cours = ()=>{
 
 
             </div>
+            
             <nav aria-label="Page navigation example">
                 <ul className="pagination justify-content-center">
                     <li className="page-item disabled">
@@ -91,3 +134,75 @@ const Cours = ()=>{
 }
 
 export default Cours
+
+
+
+/*
+
+<!DOCTYPE html>
+<html>
+    <body>
+        <select id="inputState" className="form-control" onChange="filterSelection()">
+            <option class="defaultValue" value="all">Show all</option>
+            <option value="cars">Cars</option>
+            <option value="animals">Animals</option>
+            <option value="fruits">Fruits</option>
+            <option value="colors">Colors</option>
+        </select>
+
+        <div class="filterDiv cars">BMW</div>
+        <div class="filterDiv colors fruits">Orange</div>
+        <div class="filterDiv cars">Volvo</div>
+        <div class="filterDiv colors">Red</div>
+        <div class="filterDiv cars animals">Mustang</div>
+        <div class="filterDiv colors">Blue</div>
+        <div class="filterDiv animals">Cat</div>
+        <div class="filterDiv animals">Dog</div>
+        <div class="filterDiv fruits">Melon</div>
+        <div class="filterDiv fruits animals">Kiwi</div>
+        <div class="filterDiv fruits">Banana</div>
+        <div class="filterDiv fruits">Lemon</div>
+        <div class="filterDiv animals">Cow</div>
+
+
+
+        <script>
+            filterSelection("all")
+            function filterSelection() {
+                var inputState = document.getElementById("inputState");
+                var c = inputState.options[inputState.selectedIndex].value
+                var x, i;
+                x = document.getElementsByClassName("filterDiv");
+                if (c == "all") c = "";
+                for (i = 0; i < x.length; i++) {
+                    w3RemoveClass(x[i], "show");
+                    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+                }
+            }
+
+            function w3AddClass(element, name) {
+                var i, arr1, arr2;
+                arr1 = element.className.split(" ");
+                arr2 = name.split(" ");
+                for (i = 0; i < arr2.length; i++) {
+                    if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+                }
+            }
+
+            function w3RemoveClass(element, name) {
+                var i, arr1, arr2;
+                arr1 = element.className.split(" ");
+                arr2 = name.split(" ");
+                for (i = 0; i < arr2.length; i++) {
+                    while (arr1.indexOf(arr2[i]) > -1) {
+                    arr1.splice(arr1.indexOf(arr2[i]), 1);     
+                    }
+                }
+                element.className = arr1.join(" ");
+            }
+        </script>
+    </body>
+</html>
+
+
+*/

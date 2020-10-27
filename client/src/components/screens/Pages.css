@@ -37,6 +37,17 @@ body{
     /* justify-content: space-between; */
     /* width: 100%; */
 }
+
+/*Filtre*/
+.filterDiv {
+    display: none;
+}
+
+.show {
+    display: flex;
+    flex-direction: row;
+}
+
 .formulaire{
     display: flex;
     justify-content: space-around;
@@ -44,10 +55,6 @@ body{
 .lessonSelection{
     display: flex;
     justify-content: space-around;
-}
-.lessonCard{
-    display: flex;
-    flex-direction: row;
 }
 .card-title{
     display: flex;
@@ -58,6 +65,7 @@ body{
 
 
 /* Page d'un cours */
+
 .fullLessonPage{
     display: flex;
     flex-direction: column;
@@ -100,3 +108,5 @@ body{
     justify-content: space-around;
     margin-bottom: 1%;
 }
+
+
