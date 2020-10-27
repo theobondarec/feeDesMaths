@@ -10,6 +10,7 @@ import Admin from './components/screens/Admin'
 import Settings from './components/screens/Settings'
 import Cours from './components/screens/Cours'
 import Addlesson from './components/screens/Addlesson'
+import Mescours from './components/screens/MesCours'
 import {reducer, initialState} from './reducer/userReducer'
 
 // {/*Pagination cours precis  ->  a suppr*/}
@@ -25,7 +26,7 @@ const Routing = ()=>{
     const user = JSON.parse(localStorage.getItem("user"))
     if(user){
       dispatch({type:"USER", playload:user})
-      history.push('/')
+      // history.push('/')            if user reload go to home page
     }
     else{
       history.push('/login')          /////////////if user can access home without signin change path to '/'
@@ -53,6 +54,9 @@ const Routing = ()=>{
       </Route>
       <Route exact path="/cours">
         <Cours />
+      </Route>
+      <Route path="/mypost">
+        <Mescours />
       </Route>
       <Route path="/createpost">
         <Addlesson />

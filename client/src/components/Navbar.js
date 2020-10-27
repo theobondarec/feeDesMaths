@@ -60,6 +60,7 @@ const NavBar = () =>{
                     </Link>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                         <Link className="dropdown-item" to="/createpost">Ajouter un cours</Link> {/*only if you're professor*/}
+                        <Link className="dropdown-item" to="/mypost">Mes cours</Link> {/*only if you're professor*/}
                         <Link className="dropdown-item" to="/settings">Settings</Link> {/*modification mot de passe*/}
                         <div className="dropdown-divider"></div>
                         <button className="dropdown-item" 

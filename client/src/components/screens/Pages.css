@@ -42,7 +42,6 @@ body{
 .filterDiv {
     display: none;
 }
-
 .show {
     display: flex;
     flex-direction: row;
@@ -110,3 +109,8 @@ body{
 }
 
 
+/* MES COURS */
+.myLessonCard{
+    display: flex;
+    flex-direction: row;
+}
