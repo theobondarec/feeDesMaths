@@ -31,12 +31,12 @@ body{
     flex-direction: column;
 }
 
-.mcl{
-    /* display: flex; */
-    /* flex: auto; */
-    /* justify-content: space-between; */
-    /* width: 100%; */
-}
+/* .mcl{
+    display: flex;
+    flex: auto;
+    justify-content: space-between;
+    width: 100%;
+} */
 
 /*Filtre*/
 .filterDiv {

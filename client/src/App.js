@@ -64,7 +64,7 @@ const Routing = ()=>{
 
 
       // {/*pour bosser la pagination d'un cours  ->  a suppr*/}
-      <Route path="/cours/precis">
+      <Route path="/cours/:id">
         <CoursPrecis />
       </Route>
     </Switch>

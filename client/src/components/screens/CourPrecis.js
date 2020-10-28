@@ -1,39 +1,70 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom'
 import './Pages.css'
 
 const CoursPrecis = ()=>{
+    const [cours ,setCours]=useState([])
+    const coursId = useParams()
+
+    useEffect(()=>{
+        fetch(`/precis/${coursId.id}`,{
+            headers:{
+                "Authorization":"Bearer "+localStorage.getItem("jwt")
+            }
+        }).then(res=>res.json())
+        .then(result=>{
+            console.log(result)
+            setCours(result)
+        })
+    },[])
+
+    // console.log(cours.postedBy)
+
+    var postedByName = null
+    if(cours.postedBy){
+        postedByName = cours.postedBy.name
+    }
     return(
         <div className="fullLessonPage">
-            <h1 className="lessonTitle">Titre Chapitre</h1>
-            <div class="progress progressBarLesson" style={{height: "40px"}}>
+            <h1 className="lessonTitle">{cours.chapitre}</h1>
+            <h5>created by {postedByName}</h5>
+
+            <div className="progress progressBarLesson" style={{height: "40px"}}>   
                 {/* {REFAIRE PROGRESS BAR en js} */}
-                <div class="progress-bar progress-bar-striped" style={{width: "10%"}} role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">Progression</div> 
+                <div className="progress-bar progress-bar-striped" style={{width: "10%"}} role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">Progression</div> 
             </div>
-            <img className="card-img lessonImage" src="https://altissia.org/wp-content/uploads/2018/07/illustrationss-15.png" alt="Cardimagecap"></img> 
+
+            <img className="card-img lessonImage" src={cours.photo} alt="Cardimagecap"></img> 
             <div className="card lessonDescription">
                 <h2 className="card-title">Description</h2>
                 <p className="card-body">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tempor orci at auctor pretium. Phasellus sagittis ultricies velit, sed mattis mi ultricies eget. Proin tempus, turpis at convallis condimentum, arcu sem tincidunt velit, id faucibus erat odio ac leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis sit amet felis ut urna gravida dictum. Sed rutrum tellus et arcu tincidunt, tristique volutpat dui pharetra. Etiam sit amet sollicitudin libero, at faucibus arcu. Aliquam volutpat iaculis imperdiet. Cras et ante vel augue scelerisque sodales sed in eros. Suspendisse sollicitudin turpis tortor, a consectetur diam egestas eleifend. Pellentesque egestas vel elit vel fermentum. Suspendisse sit amet mollis sem.
+                    {cours.description}
                 </p>
             </div>
-            <div className="lessonPlan">
-                <div class="list-group" id="list-tab" role="tablist">
-                    <a class="list-group-item list-group-item-action active" data-toggle="list" href="#list-home">Titre lecon 1</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-profile">Titre lecon 2</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-messages">Titre lecon 3</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-settings">Titre lecon 4</a>
+
+            {/*A FAIRE EN FONCTION DU NOMBRE DE LECON PAR MATIERE/CHAPITRE */}
+            <div className="lessonPlan">            
+                <div className="list-group" id="list-tab" role="tablist">
+                    <a className="list-group-item list-group-item-action active" data-toggle="list" href="#list-home">Titre lecon 1</a>
+                    <a className="list-group-item list-group-item-action" data-toggle="list" href="#list-profile">Titre lecon 2</a>
+                    <a className="list-group-item list-group-item-action" data-toggle="list" href="#list-messages">Titre lecon 3</a>
+                    <a className="list-group-item list-group-item-action" data-toggle="list" href="#list-settings">Titre lecon 4</a>
                 </div>
             </div>
+
             <div className="card lesson">
                 <h2 className="card-title">Cours</h2>
                 <p className="card-body">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tempor orci at auctor pretium. Phasellus sagittis ultricies velit, sed mattis mi ultricies eget. Proin tempus, turpis at convallis condimentum, arcu sem tincidunt velit, id faucibus erat odio ac leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis sit amet felis ut urna gravida dictum. Sed rutrum tellus et arcu tincidunt, tristique volutpat dui pharetra. Etiam sit amet sollicitudin libero, at faucibus arcu. Aliquam volutpat iaculis imperdiet. Cras et ante vel augue scelerisque sodales sed in eros. Suspendisse sollicitudin turpis tortor, a consectetur diam egestas eleifend. Pellentesque egestas vel elit vel fermentum. Suspendisse sit amet mollis sem.
-                    Ut sagittis dictum ex cursus imperdiet. Pellentesque at lacus eget orci condimentum venenatis nec sit amet nibh. Nam quis quam ut nunc blandit maximus vel finibus eros. Proin dapibus justo vel diam elementum maximus. Nunc vel elit vitae neque tempus accumsan. Maecenas sollicitudin lacinia efficitur. Donec nibh dui, malesuada sit amet feugiat in, viverra nec est. Fusce non velit nec lacus gravida blandit. Cras ac nisl arcu. Donec elementum ac orci convallis rutrum. Quisque eget commodo ipsum, et eleifend erat. Curabitur quis massa vel urna fringilla lacinia. Nulla rutrum ullamcorper enim quis cursus. Nullam tincidunt consectetur ante id sagittis. Cras pharetra, neque non porttitor convallis, nisl augue euismod dolor, at feugiat diam elit a tellus. Aliquam et odio ut arcu laoreet malesuada ut at lorem.
+                    {cours.cours}
                 </p>
             </div>
+
+            {/*AJOUT BOUTON TELECHARGEMENT PDF ACCES AU PDF VIA {cours.pdf} */}
+
+            {/*Passer à la lecon suivante ou precedente*/}
             <div className="buttons">
-                <a href="/modifLesson" class="btn btn-primary">lecon precedente</a>
-                <a href="/" class="btn btn-primary">Lecon suivante</a>
+                <a href="/modifLesson" className="btn btn-primary">lecon precedente</a>
+                <a href="/" className="btn btn-primary">Lecon suivante</a>
             </div>
         </div>
     )

@@ -101,7 +101,7 @@ const Cours = ()=>{
                                     <div className="card-body">
                                         {item.description}
                                     </div>
-                                    <Link to="/cours/precis" className="btn btn-primary">Voir le cours</Link>
+                                    <Link to={"/cours/" +item._id} className="btn btn-primary">Voir le cours</Link>
                                 </div>
                             </div>
                         )

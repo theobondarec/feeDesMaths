@@ -10,7 +10,6 @@ router.get('/cours', requireLogin, (req, res)=>{
     .populate("postedBy", "_id name")
     .then(posts=>{
         res.json({posts})
-        res.send(posts)
     })
     .catch(err=>{
         console.log(err)
@@ -48,6 +47,18 @@ router.get('/mypost',requireLogin, (req, res)=>{
     .populate("potedBy", "_id name")
     .then(mypost =>{
         res.json({mypost})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+router.get('/precis/:postId', requireLogin, (req,res)=>{
+    Post.findOne({_id:req.params.postId})
+    .populate("postedBy", "_id name")
+    .then(post=>{
+        // console.log(posts)
+        res.json(post)
     })
     .catch(err=>{
         console.log(err)
