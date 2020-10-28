@@ -61,9 +61,6 @@ const Routing = ()=>{
       <Route path="/createpost">
         <Addlesson />
       </Route>
-
-
-      // {/*pour bosser la pagination d'un cours  ->  a suppr*/}
       <Route path="/cours/:id">
         <CoursPrecis />
       </Route>
