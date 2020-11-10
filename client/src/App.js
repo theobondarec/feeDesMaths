@@ -1,5 +1,6 @@
 import React, {useEffect, createContext, useReducer, useContext} from 'react';
 import NavBar from './components/Navbar'
+import Header from './components/Header'
 import {BrowserRouter, Route, Switch, useHistory} from 'react-router-dom'
 
 import Home from './components/screens/Home'
@@ -74,6 +75,7 @@ function App() {
     <UserContext.Provider value={{state, dispatch}}>
       <BrowserRouter>
         {/* HEADER */}
+        <Header />
         <NavBar />                {/* */}
 
         {/*Body*/}                {/*visible que si login*/}
