@@ -27,7 +27,7 @@ module.exports=(req, res, next)=>{
         return next()
     })
     .catch(err=>{
-        console.log('Error with token : ',err)
+        console.log('Error with token : ',err.code)
         return res.status(403).json(err)
     })
 }

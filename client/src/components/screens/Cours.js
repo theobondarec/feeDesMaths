@@ -1,11 +1,22 @@
 import React, {useState, useEffect, useContext} from 'react'
 import './Pages.css'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import { UserContext } from '../../App'
 
 const Cours = ()=>{
     const [data, setData] = useState([])
     const {state, dispatch} = useContext(UserContext)
+    const history = useHistory()
+
+
+    /// SI tokenExpired => go to login page
+    const clearExpiredToken = (errorCode)=>{
+        if(errorCode === 'auth/id-token-expired'){
+            localStorage.clear()
+            dispatch({type:"CLEAR"})
+            history.push('/login')
+        }
+    }
 
     function filterSelection() {
         var inputState = document.getElementById("inputState");
@@ -50,9 +61,10 @@ const Cours = ()=>{
             }
         }).then(res=>res.json())
         .then(result=>{
-            setData(result.posts)
-            if(result.posts.length !== 0){
-                console.log(result.posts)
+            clearExpiredToken(result.code)
+            setData(result)
+            if(result.length !== 0){
+                // console.log(result)
                 filterSelection("all")
             }
         })
@@ -90,6 +102,7 @@ const Cours = ()=>{
             <div className="allCard">
                 {
                     data.map(item=>{
+                        // console.log(item.lessonId)
                         return( 
                             <div className={"card filterDiv " + item.matiere} key={item._id}>
                                 <img className="card-img imgTest" src={item.photo} alt="Cardimagecap"></img>
@@ -101,7 +114,7 @@ const Cours = ()=>{
                                     <div className="card-body">
                                         {item.description}
                                     </div>
-                                    <Link to={"/cours/" +item._id} className="btn btn-primary">Voir le cours</Link>
+                                    <Link to={"/cours/" +item.lessonId} className="btn btn-primary">Voir le cours</Link>
                                 </div>
                             </div>
                         )

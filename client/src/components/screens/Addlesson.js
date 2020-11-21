@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import {useHistory} from 'react-router-dom'
+import { UserContext } from '../../App'
 import './Pages.css'
 
 const Addlesson = ()=>{ 
@@ -12,6 +14,20 @@ const Addlesson = ()=>{
     const [pdf, setPdf] = useState("")
     const [url2, setUrl2] = useState("")
 
+    const {state, dispatch} = useContext(UserContext)
+    const history = useHistory()
+    // console.log(JSON.parse(localStorage.getItem("user")).userId)
+    const clearExpiredToken = (errorCode)=>{
+        if(errorCode === 'auth/id-token-expired'){
+            localStorage.clear()
+            dispatch({type:"CLEAR"})
+            history.push('/login')
+            return true
+        }
+        else{
+            return false
+        }
+    }
     //meilleure facon de async function ?
     useEffect(()=>{
         if(url2 && url){
@@ -28,10 +44,14 @@ const Addlesson = ()=>{
                         description,
                         cours,
                         photo:url,
-                        pdf:url2
+                        pdf:url2,
+                        postedBy:JSON.parse(localStorage.getItem("user")).userId
                     })
                 }).then(res=>res.json())
                 .then(data => {
+
+                    // console.log(data)
+                    // clearExpiredToken(data.code)
                     if(data.error){
                         window.alert(data.error)            //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
                         setUrl("")
@@ -61,6 +81,7 @@ const Addlesson = ()=>{
         })
         .then(res=>res.json())
         .then(data=>{
+            console.log(data)
             if(data.error){
                 window.alert("illustration error : " + data.error.message)
                 return

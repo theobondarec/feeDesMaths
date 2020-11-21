@@ -1,20 +1,34 @@
 import React, {useState, useEffect, useContext} from 'react'
-import './Pages.css'
+import {useHistory} from 'react-router-dom'
 import {Link} from 'react-router-dom'
 import {UserContext} from '../../App'
+import './Pages.css'
+
 
 const MesCours = ()=>{
     const [mesCours ,setCours]=useState([])
+    const {state, dispatch} = useContext(UserContext)
+    const history = useHistory()
     
+    const clearExpiredToken = (errorCode)=>{
+        if(errorCode === 'auth/id-token-expired'){
+            localStorage.clear()
+            dispatch({type:"CLEAR"})
+            history.push('/login')
+        }
+    }
+
     useEffect(()=>{
-        fetch('/mypost',{
+        const userId = JSON.parse(localStorage.getItem("user")).userId
+        // console.log(userId)
+        fetch(`/mypost/${userId}`,{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }
         }).then(res=>res.json())
         .then(result=>{
-            // console.log(result.mypost)
-            setCours(result.mypost)
+            clearExpiredToken(result.code)
+            setCours(result)
         })
     },[])
 
@@ -63,7 +77,7 @@ const MesCours = ()=>{
                                     onClick={()=>{deletePost(item._id)}}
                                     >
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                                        <path fillRule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                                     </svg>
                                     </button> 
                                     {/* } */}
@@ -71,7 +85,7 @@ const MesCours = ()=>{
                                 <div className="card-body">
                                     {item.description}
                                 </div>
-                                <Link to={"/cours/" +item._id} className="btn btn-primary">Voir le cours</Link>
+                                <Link to={"/cours/" +item.lessonId} className="btn btn-primary">Voir le cours</Link>
                             </div>
                         </div>
                        )
