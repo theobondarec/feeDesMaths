@@ -1,8 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState, useContext} from 'react'
 import './Pages.css'
 import {Link, useHistory} from 'react-router-dom'
+import {UserContext} from '../../App'
 
 const Signup = ()=>{
+    const {state, dispatch}= useContext(UserContext)
     const [name, setName]= useState("")
     const [isenId, setIsenId]= useState("")
     const [email, setEmail]= useState("")
@@ -34,7 +36,9 @@ const Signup = ()=>{
             else{
                 // window.alert(data.message)          //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
                 window.alert("user saved !")
-                history.push('/login')
+                localStorage.setItem("user",JSON.stringify(data.user))
+                dispatch({type:"USER", payload:data.user})
+                history.push('/')
             }
         }).catch(err=>{
             console.log(err)

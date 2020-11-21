@@ -57,7 +57,7 @@ router.post('/register', (req, res)=>{
         return res.status(400).json({error : errors})
     }
 
-    let token, userId
+    let token, userId, rank
     firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
     .then(data=>{
         userId = data.user.uid
@@ -65,16 +65,17 @@ router.post('/register', (req, res)=>{
     })
     .then(idToken=>{
         token = idToken
+        rank = "student"
         const newUserDb={
             name : newUser.name,
             isenId: newUser.isenId,
-            rank:"student"
+            userId,
+            rank
         }
-        // res.json({message:"user saved"})
         return db.collection('users').doc(`${userId}`).set(newUserDb)
     })
     .then(()=>{
-        return res.status(201).json({token})
+        return res.status(201).json({token, user:{userId, name, email, rank}})
     })
     .catch(err=>{
         console.error(err.message)
@@ -95,12 +96,19 @@ router.post('/login', (req, res)=>{
 
     if(Object.keys(errors).length > 0)  return res.status(400).json(errors)
 
+    let userId
     firebase.auth().signInWithEmailAndPassword(user.email, user.password)
     .then(data=>{
+        userId = data.user.uid
         return data.user.getIdToken()
     })
     .then(token =>{
-        return res.json({token})
+        db.collection('users').doc(`${userId}`).get()
+        .then(doc=>{
+            const rank = doc.data().rank
+            const name = doc.data().name
+            return res.json({token, user:{userId, name, email, rank}})
+        })       
     })
     .catch(err=>{
         console.error(err)
