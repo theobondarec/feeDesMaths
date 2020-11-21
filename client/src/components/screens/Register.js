@@ -28,10 +28,12 @@ const Signup = ()=>{
         }).then(res=>res.json())
         .then(data => {
             if(data.error){
+                console.log(data.error)
                 window.alert(data.error)            //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
             }
             else{
-                window.alert(data.message)          //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
+                // window.alert(data.message)          //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
+                window.alert("user saved !")
                 history.push('/login')
             }
         }).catch(err=>{
