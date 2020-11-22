@@ -96,9 +96,16 @@ router.get('/precis/:postId', FBAuth, (req,res)=>{
     })
 })
 
-// TODO :
 router.delete('/deletepost/:postId', FBAuth, (req, res)=>{
-
+    const postId = req.params.postId
+    // console.log(postId)
+    admin.firestore().collection('cours').doc(postId).delete()
+    .then(()=>{
+        res.json({message: "document delete successfully "})
+    })
+    .catch(err=>{
+        console.error(err)
+    })
 })
 
 module.exports = router

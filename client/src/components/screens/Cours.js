@@ -104,7 +104,7 @@ const Cours = ()=>{
                     data.map(item=>{
                         // console.log(item.lessonId)
                         return( 
-                            <div className={"card filterDiv " + item.matiere} key={item._id}>
+                            <div className={"card filterDiv " + item.matiere} key={item.lessonId}>
                                 <img className="card-img imgTest" src={item.photo} alt="Cardimagecap"></img>
                                 <div className="f">
                                     <div className="card-title">
