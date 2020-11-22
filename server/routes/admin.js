@@ -20,9 +20,7 @@ router.get('/admin', FBAuth, (req, res)=>{
 
 router.post('/admin/rankChange', FBAuth, (req, res)=>{
     const {userId, newRank} = req.body
-    console.log(userId, newRank)
-    //TODO : Modifier le rank
-    
+    // console.log(userId, newRank)   
     admin.firestore().collection('users').doc(userId).update({
         rank:newRank
     })
