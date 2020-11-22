@@ -101,7 +101,7 @@ router.delete('/deletepost/:postId', FBAuth, (req, res)=>{
     // console.log(postId)
     admin.firestore().collection('cours').doc(postId).delete()
     .then(()=>{
-        res.json({message: "document delete successfully "})
+        res.json({message: "document successfully delete"})
     })
     .catch(err=>{
         console.error(err)

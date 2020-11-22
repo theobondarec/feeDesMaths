@@ -51,12 +51,11 @@ const MesCours = ()=>{
         <div>
             <div>
                 <h1>Mes Cours</h1>
-                <h5>50 posts</h5>   
+                <h5>{mesCours.length} posts</h5>   
             </div>
             <div className="allCard">
                 {
                    mesCours.map(item=>{
-                    //    console.log(mesCours)
                        return(
                         <div className={"card myLessonCard"} key={item.lessonId}>
                             <img className="card-img imgTest" src={item.photo} alt="Cardimagecap"></img>

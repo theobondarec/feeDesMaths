@@ -22,6 +22,7 @@ app.use(cookieParser())
 
 app.use(require('./routes/auth'))
 app.use(require('./routes/post'))
+app.use(require('./routes/admin'))
 
 
 app.listen(PORT, ()=>{
