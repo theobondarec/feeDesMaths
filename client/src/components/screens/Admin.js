@@ -29,19 +29,6 @@ const Admin = ()=>{
         })
     },[])
 
-    // const actualisation = ()=>{
-    //     fetch('/admin',{
-    //         headers:{
-    //             Authorization:"Bearer "+localStorage.getItem("jwt")
-    //         }
-    //     }).then(res=>res.json())
-    //     .then(result=>{
-    //         clearExpiredToken(result.code)
-    //         setData(result)
-    //     })
-    // }
-
-
 
     let idValue, newRank
     const rankModification = ()=>{
@@ -66,7 +53,7 @@ const Admin = ()=>{
             })
         }).then(res=>res.json())
         .then((result)=>{
-            // console.log(result)
+            clearExpiredToken(result.code)
             setData(result)
         })
         .catch(err=>{
