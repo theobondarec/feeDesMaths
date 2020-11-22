@@ -19,6 +19,7 @@ router.get('/cours', FBAuth ,(req, res)=>{
     })
 })
 
+///TODO : modifier la maniere de créer un cours
 router.post('/createpost', FBAuth ,(req, res)=>{
     const {matiere, chapitre, lecon, description, cours, photo, pdf, postedBy} = req.body
     if(!matiere || !chapitre || !lecon || !description || !cours){
