@@ -6,27 +6,27 @@ import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 toast.configure()
 
-// const config = {
-//     "apiKey": process.env.REACT_APP_API_KEY,
-//     "authDomain": process.env.REACT_APP_API_authDomain,
-//     "databaseURL": process.env.REACT_APP_API_databaseURL,
-//     "projectId": process.env.REACT_APP_API_projectId,
-//     "storageBucket": process.env.REACT_APP_API_storageBucket,
-//     "messagingSenderId": process.env.REACT_APP_API_messagingSenderId,
-//     "appId": process.env.REACT_APP_API_appId,
-//     "measurementId": process.env.REACT_APP_API_measurementId
-// }
+const config = {
+    "apiKey": process.env.REACT_APP_API_KEY,
+    "authDomain": process.env.REACT_APP_API_authDomain,
+    "databaseURL": process.env.REACT_APP_API_databaseURL,
+    "projectId": process.env.REACT_APP_API_projectId,
+    "storageBucket": process.env.REACT_APP_API_storageBucket,
+    "messagingSenderId": process.env.REACT_APP_API_messagingSenderId,
+    "appId": process.env.REACT_APP_API_appId,
+    "measurementId": process.env.REACT_APP_API_measurementId
+}
 
-const firebaseConfig = {
-    "apiKey": "AIzaSyA5786F10yJCX7mnnhv5f1e6aPeAJ94Hz4",
-    "authDomain": "feedesmaths.firebaseapp.com",
-    "databaseURL": "https://feedesmaths.firebaseio.com",
-    "projectId": "feedesmaths",
-    "storageBucket": "feedesmaths.appspot.com",
-    "messagingSenderId": "477638654330",
-    "appId": "1:477638654330:web:c105c8501f087517bfbec3",
-    "measurementId": "G-W6MWMNRZH9"
-    }
+// const firebaseConfig = {
+//     "apiKey": "AIzaSyA5786F10yJCX7mnnhv5f1e6aPeAJ94Hz4",
+//     "authDomain": "feedesmaths.firebaseapp.com",
+//     "databaseURL": "https://feedesmaths.firebaseio.com",
+//     "projectId": "feedesmaths",
+//     "storageBucket": "feedesmaths.appspot.com",
+//     "messagingSenderId": "477638654330",
+//     "appId": "1:477638654330:web:c105c8501f087517bfbec3",
+//     "measurementId": "G-W6MWMNRZH9"
+//     }
 
 const Settings = ()=>{
     const [emailAddress, setEmailAddress] = useState("")
