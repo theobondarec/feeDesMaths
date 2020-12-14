@@ -40,27 +40,27 @@ const serviceAccount = {
 //     "client_x509_cert_url": process.env.client_x509_cert_url
 // }
 
-const firebaseConfig = {
-    "apiKey": "AIzaSyA5786F10yJCX7mnnhv5f1e6aPeAJ94Hz4",
-    "authDomain": "feedesmaths.firebaseapp.com",
-    "databaseURL": "https://feedesmaths.firebaseio.com",
-    "projectId": "feedesmaths",
-    "storageBucket": "feedesmaths.appspot.com",
-    "messagingSenderId": "477638654330",
-    "appId": "1:477638654330:web:c105c8501f087517bfbec3",
-    "measurementId": "G-W6MWMNRZH9"
-    }
-
 // const firebaseConfig = {
-//     "apiKey": process.env.apiKey,
-//     "authDomain": process.env.authDomain,
-//     "databaseURL": process.env.databaseURL,
-//     "projectId": process.env.projectId,
-//     "storageBucket": process.env.storageBucket,
-//     "messagingSenderId": process.env.messagingSenderId,
-//     "appId": process.env.appId,
-//     "measurementId": process.env.measurementId
-// }
+//     "apiKey": "AIzaSyA5786F10yJCX7mnnhv5f1e6aPeAJ94Hz4",
+//     "authDomain": "feedesmaths.firebaseapp.com",
+//     "databaseURL": "https://feedesmaths.firebaseio.com",
+//     "projectId": "feedesmaths",
+//     "storageBucket": "feedesmaths.appspot.com",
+//     "messagingSenderId": "477638654330",
+//     "appId": "1:477638654330:web:c105c8501f087517bfbec3",
+//     "measurementId": "G-W6MWMNRZH9"
+//     }
+
+const firebaseConfig = {
+    "apiKey": process.env.apiKey,
+    "authDomain": process.env.authDomain,
+    "databaseURL": process.env.databaseURL,
+    "projectId": process.env.projectId,
+    "storageBucket": process.env.storageBucket,
+    "messagingSenderId": process.env.messagingSenderId,
+    "appId": process.env.appId,
+    "measurementId": process.env.measurementId
+}
 
 
 const admin = require('firebase-admin')
