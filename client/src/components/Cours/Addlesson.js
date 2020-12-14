@@ -27,16 +27,6 @@ const config = {
     "measurementId": process.env.REACT_APP_API_measurementId
 }
 
-// const firebaseConfig = {
-//     "apiKey": "AIzaSyA5786F10yJCX7mnnhv5f1e6aPeAJ94Hz4",
-//     "authDomain": "feedesmaths.firebaseapp.com",
-//     "databaseURL": "https://feedesmaths.firebaseio.com",
-//     "projectId": "feedesmaths",
-//     "storageBucket": "feedesmaths.appspot.com",
-//     "messagingSenderId": "477638654330",
-//     "appId": "1:477638654330:web:c105c8501f087517bfbec3",
-//     "measurementId": "G-W6MWMNRZH9"
-//     }
 
 const Addlesson = () => {
     const [chapitre, setChapitre] = useState("")
