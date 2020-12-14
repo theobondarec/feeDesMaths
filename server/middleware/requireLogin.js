@@ -13,17 +13,8 @@ module.exports=(req, res, next)=>{
     }
 
     admin.auth().verifyIdToken(idToken)
-    .then(decodedToken=>{
-        req.user = decodedToken
-        // console.log(decodedToken)
-        return db.collection('users')
-        .where('userId', '==', req.user.uid)
-        .limit(1)
-        .get()
-    })
-    .then(data=>{
-        // console.log(data.docs[0].data())
-        req.user.rank = data.docs[0].data().rank
+    .then((decrypted)=>{
+        // console.log(decrypted)
         return next()
     })
     .catch(err=>{

@@ -1,0 +1,38 @@
+#spaceAddLesson{
+    padding-bottom: 5px;
+}
+#add-card-lesson{
+    border-width: 5px;
+    border-color: #f5ab36;
+    padding: 20px;
+    text-align: center;
+    max-width: 700px;
+    margin: 10px auto;
+}
+.add-card-AddLesson{
+    border-width: 5px;
+    border-color: #f5ab36;
+    padding: 20px;
+    text-align: center;
+    max-width: 700px;
+    margin: 10px auto;
+}
+.spaceAdd{
+    padding-bottom: 10px;
+}
+
+
+  /* NEVER USED
+.upload_btn {
+    width: 100%;
+    background: #E22146 !important;
+    color: white !important;
+}
+.upload_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    background-color: #E22146!important;
+}
+*/

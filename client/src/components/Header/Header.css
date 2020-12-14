@@ -1,0 +1,29 @@
+#head{
+    background-color: #f5ab36; 
+    
+}
+
+header #h1,#h2{
+    text-align: center;
+    color: #E22149;
+    width: 100%;
+}
+
+#logo
+{
+    position: absolute;
+    top:10px;
+    margin-left: 50px;
+    width: 80px;
+    height: 80px;
+}
+
+@media (max-width: 800px) {
+    #logo{
+        position: relative;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 4%;
+    }
+}

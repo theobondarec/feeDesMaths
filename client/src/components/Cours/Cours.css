@@ -1,0 +1,112 @@
+#lessonSelection{
+    display: flex;
+    justify-content: space-around;
+}
+#img{
+    max-width: 30%;
+}
+#listecours{
+    background-color: #F5F5F5;
+    box-shadow: 10px 15px 15px black;
+    
+}
+#lecon{
+    padding: 10px;
+    margin-top: 10px;    
+    border-width: 5px;
+    border-color: #f5ab36;
+
+}
+#nav_Cours{
+    margin-top: 5px;
+    padding-bottom: 5px;    
+}
+
+
+/* EN DEVELOPPEMENT */
+#sidenav {
+    background-color: #111; /* Black */
+    width: 140px;
+    overflow-x: hidden; /* Disable horizontal scroll */
+}
+  
+  /* The navigation menu links */
+#sidenav a {
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+  
+  /* When you mouse over the navigation links, change their color */
+#sidenav a:hover {
+    color: #f1f1f1;
+}
+
+@media (max-width: 800px) {
+    #sidenav{
+        display: none;
+    }
+    #phone{
+        width: 100%;
+    }
+}
+
+#user_card_course {
+    height: auto;
+    width: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background: #F5AB36;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 10px 15px 15px black;
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
+
+#title_course
+{
+    text-align: center;
+    width: 100%;
+    font-size: 50px;
+    color:#3E93A3;
+    margin-bottom: 20px;
+}
+
+#seecourse_btn {
+    background: #E22146 !important;
+    color: white !important;
+}
+#seecourse_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+
+
+
+
+/* NEVER USED
+#shadow{
+    box-shadow: 10px 15px 15px black;
+    
+}
+#texte{
+    margin-bottom: 10px;
+}
+.loginFooter{
+    display: flex;
+    flex-direction: column;
+}
+
+#display{
+    margin: 0;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+*/

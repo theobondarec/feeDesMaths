@@ -1,0 +1,58 @@
+#tableAdmin{
+    border: 5px solid #E22149;
+}
+#modif-card{
+    padding: 20px;
+    text-align: center;
+    max-width: 500px;
+    margin: 10px auto;
+}
+#formulaire{
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
+/* NEVER USED
+ #bg{
+    margin-top: 10px;
+    background-color: white;
+    
+}
+
+#modif{
+    bottom: 10px;
+    border: none;
+}
+
+.user_card1 {
+    height: 250px;
+    width: 400px;
+    margin-top: auto;
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #F5AB36;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
+
+.title{
+    text-align: center;
+    width: 100%;
+    font-size: 50px;
+    color:#3E93A3;
+    margin-bottom: 20px;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    background-color: #E22146!important;
+} */

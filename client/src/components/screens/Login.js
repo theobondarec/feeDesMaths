@@ -30,9 +30,15 @@ const Login = ()=>{
                 window.alert(data.error)            //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
             }
             else{
+
+                //////////// SUPPRIMER AVEC UTILISATION COOKIE
+
                 localStorage.setItem("jwt",data.token)
                 localStorage.setItem("user",JSON.stringify(data.user))
                 dispatch({type:"USER", payload:data.user})
+
+                ////////////
+
                 window.alert("signed in")          //PAS window.alert MAIS un TOAST AVEC BOOTSTRAP
                 history.push('/')
             }

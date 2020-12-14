@@ -1,0 +1,39 @@
+#myLessonCard{
+    display: flex;
+    flex-direction: row;
+    border-width: 5px;
+    border-color: #f5ab36;
+    margin-bottom: 10px;
+}
+#title{
+    display: flex;
+    text-align: center;
+    width: 100%;
+    font-size: 30px;
+    color:#3E93A3;
+    margin-bottom: 20px;
+    /* margin-left: 20px; */
+}
+#boutonMesCours{
+    margin-left: 20px;
+}
+#mescours{
+    background-color: white;
+    top: 10px;
+    box-shadow: 10px 15px 15px black;  
+}
+.warningMesCours{
+    border-width: 2px;
+    border-color: #e22149;
+    background-color: white;
+    margin-left: 10px;
+    margin-top: 5px;
+    color: #3e93a3;
+}
+.warningMesCours:hover{
+    background-color: #e22149;
+}
+#nav_mesCours{
+    margin-top: 5px;
+    padding-bottom: 5px;    
+}

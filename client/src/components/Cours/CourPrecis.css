@@ -1,0 +1,42 @@
+.card-title-coursPrecis{
+    display: flex;
+}
+#fullLessonPage{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+#lessonImage{
+    max-width: 50%;
+    margin: auto auto;
+    margin-bottom: 1%;
+}
+#lessonTitle{
+    text-align: center;
+    margin-bottom: 1%;
+}
+#progressBarLesson{
+    width: 80%;
+    margin: auto auto;
+    margin-bottom: 2%;
+}
+#lessonDescription{
+    width: 90%;
+    margin: auto auto;
+    margin-bottom: 1%;
+}
+#lessonPlan{
+    width: 90%;
+    margin: auto auto;
+    margin-bottom: 2%;
+}
+.leconPrecise{
+    width: 90%;
+    margin: auto auto;
+    margin-bottom: 1%;
+}
+#buttons{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1%;
+}

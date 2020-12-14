@@ -1,0 +1,27 @@
+.options_navbar{
+    display: flex;
+}
+
+#nav_navbar{
+    margin-top: 0px !important;
+    border-width: 1px !important;
+    border-color: #3e93a3 !important;
+    /* background-color: #3e93a3 !important; */
+    color: #ffffff;
+}
+
+/* .dropdown_menu_navbar{
+    background-color: #3e93a3;
+} */
+
+@media (max-width: 991px) {
+    .options_navbar{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* ul{
+    margin: auto;
+    width: auto;
+} */

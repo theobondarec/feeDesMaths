@@ -19,8 +19,7 @@ const MesCours = ()=>{
     }
 
     useEffect(()=>{
-        const userId = JSON.parse(localStorage.getItem("user")).userId
-        fetch(`/mypost/${userId}`,{
+        fetch(`/mypost`,{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }

@@ -44,8 +44,7 @@ const Addlesson = ()=>{
                         description,
                         cours,
                         photo:url,
-                        pdf:url2,
-                        postedBy:JSON.parse(localStorage.getItem("user")).userId
+                        pdf:url2
                     })
                 }).then(res=>res.json())
                 .then(data => {

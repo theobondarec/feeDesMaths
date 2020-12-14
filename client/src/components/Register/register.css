@@ -1,0 +1,47 @@
+#register_btn {
+    width: 100%;
+    background: #E22146 !important;
+    color: white !important;
+}
+#register_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+#brand_logo_container {
+    position: absolute;
+    height: 170px;
+    width: 170px;
+    top: -75px;
+    border-radius: 50%;
+    background: #3E93A3;
+    padding: 10px;
+    text-align: center;
+}
+#brand_logo {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+#form_container {
+    margin-top: 100px;
+}
+#register_container {
+    padding: 0 2rem;
+}
+#user_card_register {
+    height: 400px;
+    width: 350px;
+    margin-top: 100px;
+    margin-bottom: auto;
+    background: #F5AB36;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
