@@ -164,6 +164,7 @@ const Modification = ()=>{
             if(result.createlesson === true){
                 toast.success(`${leconTitle} updated`,{autoClose: 3000})
                 // window.alert(`${newChapter} added`)
+                history.push('/mypost')
             }
             else{
                 // toast(result.error)

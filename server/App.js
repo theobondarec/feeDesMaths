@@ -5,7 +5,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 
-app.use(express.static(path.join(__dirname, 'public/build')));
+// app.use(express.static(path.join(__dirname, 'public/build')));
 
 const PORT = process.env.PORT || 5000
 
@@ -67,9 +67,10 @@ app.use(require('./routes/course/updateLesson'))
 console.log(__dirname)
 
 
-app.get('*', (req, res)=>{
-    res.sendFile(path.join(__dirname, 'public/build/index.html'))
-})
+// app.get('*', (req, res)=>{
+//     res.sendFile(path.join(__dirname, 'public/build/index.html'))
+// })
+
 app.listen(PORT, ()=>{
     console.log(`server running on : http://localhost:${PORT}`)
 })
