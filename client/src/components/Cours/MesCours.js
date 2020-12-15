@@ -68,19 +68,13 @@ const MesCours = ()=>{
         .then((result)=>{
             if(result.allow === true){
                 const newCours = mesCours.filter(item=>{
-                    // console.log(item)
-                    return item.postId !== postId
+                    return item.lessonId !== postId
                 })
-                // toast(result.message)
                 toast.success(result.message, {autoClose: 3000})
-                // window.alert(result.message)
-
                 setCours(newCours)
             }
             else{
-                // toast(result.error)
                 toast.error(result.error, {autoClose: 3000})
-                // window.alert(result.error)
             }
         })
     }
@@ -97,20 +91,15 @@ const MesCours = ()=>{
                         {
                         mesCours.map(item=>{
                             return(
-                                <div className="card" id="myLessonCard" key={item.postId}>
+                                <div className="card" id="myLessonCard" key={item.lessonId}>
                                     {/* <img className="card-img imgTest" src={item.photo} height="300px" width="100px" alt="Cardimagecap"></img> */}
                                     <div className="f">
                                         <div className="card-title" id="title">
                                             <h2>{item.lessonTitle}</h2>
                 
-                                            <Link to={"/modification/"+item.postId} className="btn warningMesCours">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
-                                                                                                    {/*
-                                                                                                        Page speciale modif pour les prof ?
-                                                                                                        un formulaire pré remplis avec info bdd
-                                                                                                        et un bouton update qui change la bdd
-                                                                                                    */}
+                                            <Link to={"/modification/"+item.lessonId} className="btn warningMesCours">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
                                             <button type="button" className="btn warningMesCours"
-                                            onClick={()=>{deletePost(item.postId)}}
+                                            onClick={()=>{deletePost(item.lessonId)}}
                                             >
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path fillRule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
@@ -119,9 +108,9 @@ const MesCours = ()=>{
                                             {/* } */}
                                         </div>
                                         <div className="card-body">
-                                            <InlineTex texContent={item.lesson}/>
+                                            <InlineTex texContent={item.lessonContent}/>
                                         </div>
-                                        <Link to={"/lesson/"+item.postId} id="boutonMesCours" className="btn btn-primary">Voir le cours</Link>
+                                        <Link to={"/lesson/"+item.lessonId} id="boutonMesCours" className="btn btn-primary">Voir le cours</Link>
                                     </div>
                                 </div>
                             )

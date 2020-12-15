@@ -49,8 +49,6 @@ const LeconPrecise = ()=>{
             }
         }).then(res=>res.json())
         .then(result=>{
-            // lesson.push(result[0])
-            // console.log(result[0])
             setLesson(result[0])
         })
         .catch(err=>{

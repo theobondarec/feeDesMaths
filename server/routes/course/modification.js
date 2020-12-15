@@ -11,15 +11,12 @@ router.get('/api/modification/:postId', FBAuth, (req, res) => {
 
     let postById
     let monCours = []
-    admin.firestore().collectionGroup('lecons').where('postId', '==', postId).get()
+    admin.firestore().collectionGroup('lecons').where('lessonId', '==', postId).get()
     .then(data => {/// GET lecon
         data.forEach(doc => {
-            // console.log(doc.data())
             monCours.push(doc.data())
         })
-        // console.log(monCours)
         return res.send(monCours)
-        // return postById = monCours[0].postedBy
     })
     .catch(err => {
         console.log(err)

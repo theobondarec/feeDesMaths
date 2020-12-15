@@ -10,7 +10,7 @@ router.get('/api/getSpecificCourse/:postId', FBAuth, (req, res) => {
     const postId = req.params.postId
     let postById
     let monCours = []
-    admin.firestore().collectionGroup('chapitres').where('postId', '==', postId).get()
+    admin.firestore().collectionGroup('chapitres').where('chapterId', '==', postId).get()
     .then(data => {/// GET COURS
         data.forEach(doc => {
             monCours.push(doc.data())
@@ -30,7 +30,7 @@ router.get('/api/getSpecificCourse/:postId', FBAuth, (req, res) => {
             monCours.push({postedByName: postedByName})
         })
         .then(()=>{
-            admin.firestore().collection('cours').doc(monCours[0].subject.toLowerCase()).collection('chapitres').doc(monCours[0].nom.toLowerCase()).collection('lecons').get()
+            admin.firestore().collection('cours').doc(monCours[0].subject.toLowerCase()).collection('chapitres').doc(monCours[0].chapterId).collection('lecons').get()
             .then(data => { //// GET Lecons
                 let lecons = []
                 data.forEach(doc => {

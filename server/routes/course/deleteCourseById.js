@@ -23,7 +23,7 @@ router.delete('/api/deletepostById/:postId', FBAuth, (req, res) => {
         //////
         if(rank === "admin" || rank === "professor"){
             // console.log(postId)
-            admin.firestore().collectionGroup('lecons').where('postId','==',postId).get()
+            admin.firestore().collectionGroup('lecons').where('lessonId','==',postId).get()
                 .then((data) => {
                     data.forEach(doc => {
                         docToDel.push(doc.data())
@@ -31,7 +31,7 @@ router.delete('/api/deletepostById/:postId', FBAuth, (req, res) => {
                     return docToDel
                 })
                 .then(()=>{
-                    admin.firestore().collection('cours').doc(docToDel[0].subject.toLowerCase()).collection('chapitres').doc(docToDel[0].chapter.toLowerCase()).collection('lecons').doc(postId).delete()
+                    admin.firestore().collection('cours').doc(docToDel[0].subject.toLowerCase()).collection('chapitres').doc(docToDel[0].chapterId.toLowerCase()).collection('lecons').doc(postId).delete()
                     res.json({message: `${postId} successfully delete`, allow:true})
                 })
                 .catch(err => {

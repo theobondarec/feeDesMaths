@@ -47,7 +47,7 @@ router.post('/api/createSubject', FBAuth, (req, res)=>{
         const rank = decodedToken.rank
         //////
         if(rank === "professor" || rank === "admin"){
-            admin.firestore().collection('cours').doc(subject.toLowerCase()).set({nom:subject})
+            admin.firestore().collection('cours').doc(subject.toLowerCase()).set({name:subject})
             res.send({message:`subject added`, createSubject:true})
         }
         else{
@@ -77,17 +77,21 @@ router.post('/api/createChapter', FBAuth, (req,res)=>{
         const rank = decodedToken.rank
         ///////
         if(rank === "professor" || rank === "admin"){
+
+
+            ///////INCREMENTATION AUTO CHAPTERNUMBER
+            
             const uid = decodedToken.uid
-            const fireStore = admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapter.toLowerCase())
             const ID = Math.random().toString(36).substr(2, 13) + Math.random().toString(36).substr(2, 13) + Math.random().toString(36).substr(2, 13)
+            const fireStore = admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(ID)
             const chapter_details = {
                 description:chapterDesc,
                 illustration:chapterIllustration,
-                nom:chapter,
+                chapterTitle:chapter,
                 postedBy:uid,
-                postId:ID,
+                chapterId:ID,
                 subject,
-                chapNumber
+                chapterNumber:parseInt(chapNumber)
             }
             fireStore.set(chapter_details)
             res.send({message:`chapter added`, createChapter:true})
@@ -120,24 +124,30 @@ router.post('/api/createCourse' , FBAuth, (req, res)=>{
         const uid = decodedToken.uid
         /////////
         if(rank === "admin" || rank === "professor"){
-            const chemin = admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapter.toLowerCase()).collection('lecons').doc()
-            const lessonData = {
-                chapter,
-                subject,
-                lessonTitle,
-                lesson,
-                postedBy:uid,
-                postId:chemin.id,
-                lessonNumber
-            }
-            chemin.set(lessonData)
-            // console.log(lessonData)
-            res.send({message:`lesson added`, createlesson:true})
+            admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').where('chapterTitle', '==', chapter).get()
+            .then(data=>{
+                data.forEach(element => {
+                    const chapterId = element.data().chapterId
+                    const chemin = admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('lecons').doc()
+                    const lessonData = {
+                        chapter,
+                        chapterId,
+                        subject,
+                        lessonTitle,
+                        lessonContent:lesson,
+                        postedBy:uid,
+                        lessonId:chemin.id,
+                        lessonNumber:parseInt(lessonNumber)
+                    }
+                    chemin.set(lessonData)
+                    res.send({message:`lesson added`, createlesson:true})
+                })
+            })
         }
         else{
             return res.json({error:"you're not allow to access at this function, you're rank is too low", createlesson:false})
         }
-        /////////
+        ///////
     })
 })
 
@@ -147,9 +157,9 @@ router.get('/api/subjects', FBAuth, (req,res)=>{
     admin.firestore().collection('cours').get()
     .then((data)=>{
         data.forEach(doc=>{
-            if(doc.data().nom){
+            if(doc.data().name){
                 // console.log(doc.data().nom)
-                subjects.push(doc.data().nom)
+                subjects.push(doc.data().name)
             }
         })
         res.send({subjects, allow:true})
@@ -166,10 +176,11 @@ router.get('/api/chapters', FBAuth, (req,res)=>{
     admin.firestore().collectionGroup('chapitres').get()
     .then((data)=>{
         data.forEach(doc=>{
+            // console.log(doc.data().chapterTitle)
             // chapters.push(doc.data())
-            if(doc.data().nom){
+            if(doc.data().chapterTitle){
                 // console.log(doc.data().nom)
-                chapters.push(doc.data().nom)
+                chapters.push(doc.data().chapterTitle)
             }
         })
         res.send({chapters, allow:true})
@@ -186,9 +197,9 @@ router.post('/api/chaptersPrecis', FBAuth, (req,res)=>{
     admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').get()
     .then((data)=>{
         data.forEach(doc=>{
-            if(doc.data().nom){
-                // console.log(doc.data().nom)
-                chapters.push(doc.data().nom)
+            if(doc.data().chapterTitle){
+                // console.log(doc.data().chapterTitle)
+                chapters.push(doc.data().chapterTitle)
             }
         })
         res.send({chapters, allow:true})

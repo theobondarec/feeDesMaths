@@ -29,9 +29,7 @@ const firebaseConfig = {
 const admin = require('firebase-admin')
 
 router.post('/api/updateLesson' , FBAuth, (req, res)=>{
-    const {subject, chapter, lessonTitle, lesson, lessonNumber, leconId} = req.body
-    // console.log(subject, " ", chapter, " ", lessonTitle, " ", lesson, " ", lessonNumber)
-    // console.log(leconId)
+    const {subject, chapter, lessonTitle, lesson, lessonNumber, leconId, chapterId} = req.body
     if(!subject || !chapter || !lessonTitle || !lesson || !lessonNumber){
         return res.status(422).json({error:"please add all the fields"})
     }
@@ -49,18 +47,15 @@ router.post('/api/updateLesson' , FBAuth, (req, res)=>{
         const rank = decodedToken.rank
         //////////
         if(rank === "admin" || rank === "professor"){
-            const chemin = admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapter.toLowerCase()).collection('lecons').doc(leconId)
+            const chemin = admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('lecons').doc(leconId)
             const lessonData = {
                 chapter,
                 subject,
                 lessonTitle,
-                lesson,
-                lessonNumber
+                lessonContent:lesson,
+                lessonNumber:parseInt(lessonNumber)
             }
-            // console.log(lessonData)
-
             chemin.update(lessonData)
-            // console.log(lessonData)
             res.send({message:`lesson updated`, createlesson:true})
         }
         else{

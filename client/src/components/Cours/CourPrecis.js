@@ -45,13 +45,14 @@ const CoursPrecis = ()=>{
         }).then(res=>res.json())
             .then(result=>{
                 setCours(result)
+                console.log(result)
             })
     },[])
 
     if (cours.length > 0) {
         return (
             <div id="fullLessonPage">
-                <h1 id="lessonTitle">{cours[0].chapitre}</h1>
+                <h1 id="lessonTitle">{cours[0].chapterTitle}</h1>
                 <h5>created by {cours[1].postedByName}</h5>
 
                 <div className="progress" id="progressBarLesson" style={{height: "40px"}}>
@@ -74,7 +75,7 @@ const CoursPrecis = ()=>{
                         {cours[2].lecons.map(item=>{
                             //Avoir deja les lecon triée par ordre coirssant
                             return(
-                                <a href={`#${item.lessonNumber}`} className="list-group-item list-group-item-action" key={item.postId}/*onClick={()=>{currentLesson()}}*///data-toggle="list"
+                                <a href={`#${item.lessonNumber}`} className="list-group-item list-group-item-action" key={item.lessonId}/*onClick={()=>{currentLesson()}}*///data-toggle="list"
                                 >{item.lessonTitle}</a>
                             )
                         })}
@@ -84,10 +85,10 @@ const CoursPrecis = ()=>{
                 {cours[2].lecons.map(item=>{
                     // console.log(item)
                     return(
-                        <div className="card leconPrecise" id={`${item.lessonNumber}`} key={item.postId}>
+                        <div className="card leconPrecise" id={`${item.lessonNumber}`} key={item.lessonId}>
                             <h2 className="card-title card-title-coursPrecis">{`lecon N°${item.lessonNumber}`}</h2>
                             <p className="card-body">
-                                <InlineTex texContent={item.lesson}/>
+                                <InlineTex texContent={item.lessonContent}/>
                             </p>
                         </div>
                     )

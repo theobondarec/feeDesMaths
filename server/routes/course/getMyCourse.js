@@ -39,7 +39,7 @@ router.get('/api/getMyPost',FBAuth, (req, res)=>{
         else{
             return res.json({error:"you're not allow to access at this function, you're rank is too low"})
         }
-        //////      
+        //////
     })
 })
 

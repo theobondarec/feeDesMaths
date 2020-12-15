@@ -126,14 +126,14 @@ const Cours = ()=>{
                 {
                     data.map(item=>{
                         return(
-                            <div id="user_card_course" key={item.postId}>
+                            <div id="user_card_course" key={item.chapterId}>
                             <div id="lecon" className={"card" + item.subject}>
-                                <h1><font color="#E22146">{item.subject}: {item.nom}</font></h1>
+                                <h1><font color="#E22146">{item.subject}: {item.chapterTitle}</font></h1>
                                 <img className="card-img" id="img" src={item.illustration} alt="Cardimagecap"></img>
                                 <div className="card-body">
                                     <InlineTex texContent={item.description}/>
                                 </div>
-                                    <Link to={"/cours/" +item.postId} className="btn" id="seecourse_btn">Voir le cours</Link>
+                                    <Link to={"/cours/" +item.chapterId} className="btn" id="seecourse_btn">Voir le cours</Link>
                             </div>
                             </div>
                         )

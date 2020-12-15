@@ -64,7 +64,7 @@ const Modification = ()=>{
             setChapitre(result[0].chapter)
             setLessonNumber(result[0].lessonNumber)
             setLeconTitle(result[0].lessonTitle)
-            const coursHTML = convertFromHTML(result[0].lesson)
+            const coursHTML = convertFromHTML(result[0].lessonContent)
             setCours(EditorState.createWithContent(ContentState.createFromBlockArray(coursHTML.contentBlocks, coursHTML.entityMap)))
         })
         .catch(err=>{
@@ -144,6 +144,7 @@ const Modification = ()=>{
     },[matiere])
 
     const updateLesson = ()=>{
+        console.log(lesson)
         fetch('/api/updateLesson', {
             method: "post",
             headers: {
@@ -156,7 +157,8 @@ const Modification = ()=>{
                 lessonTitle:leconTitle,
                 lesson:draftToHtml(convertToRaw(cours.getCurrentContent())),
                 lessonNumber:lessNumber,
-                leconId:lesson.postId
+                leconId:lesson.lessonId,
+                chapterId:lesson.chapterId
             })
         })
         .then(res => res.json())

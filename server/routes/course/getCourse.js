@@ -10,7 +10,8 @@ router.get('/api/getCourse', FBAuth, (req,res)=>{
     admin.firestore().collectionGroup('chapitres').get()
     .then((data)=>{
         data.forEach(doc=>{
-            if(doc.data().nom){
+            // console.log(doc.data())
+            if(doc.data().chapterTitle){
                 // console.log(doc.data())
                 chapters.push(doc.data())
             }
@@ -29,7 +30,7 @@ router.post('/api/getCourseSubject', FBAuth, (req,res)=>{
     admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').get()
     .then((data)=>{
         data.forEach(doc=>{
-            if(doc.data().nom){
+            if(doc.data().chapterTitle){
                 chapters.push(doc.data())
             }
         })
@@ -44,20 +45,15 @@ router.post('/api/getCourseSubject', FBAuth, (req,res)=>{
 //// GET chapters by subjects
 router.get('/api/chapterBySubject', FBAuth, (req, res)=>{
     const {subject} = req.body
-
     let chapters = []
     admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').get()
     .then((data)=>{
         data.forEach(doc=>{
-            if(doc.data().nom){
+            if(doc.data().chapterTitle){
                 chapters.push(doc.data())
             }
         })
-        return chapters
-    })
-    .then(()=>{
-        // console.log(chapters)
-        res.send(chapters)
+        res.json(chapters)
     })
     .catch(err=>{
         console.log(err)

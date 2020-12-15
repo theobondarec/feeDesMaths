@@ -5,7 +5,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 
-// app.use(express.static(path.join(__dirname, 'public/build')));
+app.use(express.static(path.join(__dirname, 'public/build')));
 
 const PORT = process.env.PORT || 5000
 
@@ -14,8 +14,8 @@ const serviceAccount = {
     "type": process.env.type,
     "project_id": process.env.project_id,
     "private_key_id": process.env.private_key_id,
-    // "private_key": process.env.private_key.replace(/\\n/g, '\n'),
-    "private_key": process.env.private_key,              //POUR LE DEV DEPUIS LOCALHOST
+    "private_key": process.env.private_key.replace(/\\n/g, '\n'),
+    // "private_key": process.env.private_key,              //POUR LE DEV DEPUIS LOCALHOST
     "client_email": process.env.client_email,
     "client_id": process.env.client_id,
     "auth_uri": process.env.auth_uri,
@@ -67,9 +67,9 @@ app.use(require('./routes/course/updateLesson'))
 console.log(__dirname)
 
 
-// app.get('*', (req, res)=>{
-//     res.sendFile(path.join(__dirname, 'public/build/index.html'))
-// })
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, 'public/build/index.html'))
+})
 
 app.listen(PORT, ()=>{
     console.log(`server running on : http://localhost:${PORT}`)

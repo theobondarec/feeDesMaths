@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
 import { InlineTex } from 'react-tex'
 import './Addlesson.css'
+import dotenv from 'dotenv'
 
 import {Editor} from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -15,6 +16,8 @@ import storage from '@firebase/storage'
 import {toast} from 'react-toastify';  
 import 'react-toastify/dist/ReactToastify.css'; 
 toast.configure()
+
+dotenv.config()
 
 const config = {
     "apiKey": process.env.REACT_APP_API_KEY,
@@ -29,6 +32,11 @@ const config = {
 
 
 const Addlesson = () => {
+
+    // useEffect(()=>{
+    //     console.log(config)
+    // },[])
+
     const [chapitre, setChapitre] = useState("")
     const [matiere, setMatiere] = useState("")
 
@@ -114,6 +122,7 @@ const Addlesson = () => {
                 if(result.allow === true){
                     setChapters(result.chapters)
                     setAllowChapters(result.allow)
+                    // console.log(result)
                 }
                 else{
                     setErrorMessageChapter(result.error)
@@ -137,6 +146,7 @@ const Addlesson = () => {
     if(!firebase.apps.length){
         firebase.initializeApp(config)
     }
+
     const storage = firebase.storage()
     const submitButton = (file)=>{
         document.getElementById('buttonPostChapter').disabled = true
@@ -177,6 +187,7 @@ const Addlesson = () => {
         // console.log(imagePath)
         return imagePath;
     }
+
     const deleteFile = () =>{
         if(url){
             const imagePath = getPathStorageFromUrl()
@@ -206,7 +217,7 @@ const Addlesson = () => {
     const [cours, setCours] = useState("")
     const [lessNumber,setLessonNumber] = useState("")
     const postLesson = ()=>{
-        fetch('/createCourse', {
+        fetch('/api/createCourse', {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -225,18 +236,13 @@ const Addlesson = () => {
             if(result.createlesson === true){
                 document.getElementById('inputStateMatiere').value = "undifined"
                 document.getElementById('inputStateChapitre').value = "undifined"
-                document.getElementById('leconTitle').value = ""
-                document.getElementById('lessNumber').value = ""
-                // document.getElementById('cours').value = ""
-                // onEditorStateChangeCours("")
-                toast.success(`${newChapter} added`, {autoClose: 3000})
-                
-                // window.alert(`${newChapter} added`)
+                setLecon("")
+                setLessonNumber("")
+                setCours(EditorState.createWithContent(ContentState.createFromText("")))
+                toast.success(`${newChapter} added`, {autoClose: 3000})                
             }
             else{
-                // toast(result.error)
                 toast.error(result.error, {autoClose: 3000})
-                // window.alert(result.error)
             }
         })
         .catch(err=>{
@@ -250,7 +256,7 @@ const Addlesson = () => {
     const [chapNumber, setChapNumber] = useState("")
     const [desc, setDesc] = useState("")
     const postChapter = ()=>{
-        fetch('/createChapter', {
+        fetch('/api/createChapter', {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -270,20 +276,16 @@ const Addlesson = () => {
             if(result.createChapter === true){
                 setChapters([...chapters, newChapter])
                 document.getElementById('inputStateChapter').value = "undifined"
-                document.getElementById('chapNumber').value = ""
-                document.getElementById('newChapter').value = ""
-                // document.getElementById('submitButton').value = ""
-                // document.getElementById('desc').value = ""
+                setChapNumber("")
+                setNewChapter("")
                 document.getElementById('progressBar').value = 0
-                setCours("")
-                // toast(`${newChapter} added`)
+                document.getElementById('submitButton').value = ""
+                setDesc(EditorState.createWithContent(ContentState.createFromText("")))
+
                 toast.success(`${newChapter} added`, {autoClose: 3000})
-                // window.alert(`${newChapter} added`)
             }
             else{
-                // toast(result.error)
                 toast.error(result.error, {autoClose: 3000})
-                // window.alert(result.error)
             }
         })
         .catch(err=>{
@@ -296,7 +298,7 @@ const Addlesson = () => {
         if (document.getElementById("newSubject")) {
             document.getElementById('newSubject').value = ""
         }
-        fetch('/createSubject', {
+        fetch('/api/createSubject', {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -310,14 +312,11 @@ const Addlesson = () => {
         .then((result)=>{
             if(result.createSubject === true){
                 setsubjects([...subjects, newSubject])
-                // toast(`${newSubject} added`)
+                setNewSubject("")
                 toast.success(`${newSubject} added`, {autoClose: 3000})
-                // window.alert(`${newSubject} added`)
             }
             else{
-                // toast(result.error)
                 toast.error(result.error, {autoClose: 3000})
-                // window.alert(result.error)
             }
         })
         .catch(err=>{
@@ -354,7 +353,7 @@ const Addlesson = () => {
                             <a href="#addChapter">Ajouter un chapitre</a>
                         </div>
                         <div className="col">
-                            <input type="number" className="form-control" placeholder="chapitre N°" id="lessNumber"
+                            <input type="number" className="form-control" placeholder="lecon N°" id="lessNumber"
                                 value={lessNumber}
                                 onChange={(e) => setLessonNumber(e.target.value)}
                             />
