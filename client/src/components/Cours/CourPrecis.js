@@ -21,7 +21,7 @@ const CoursPrecis = ()=>{
             history.push('/login')
     }
     useEffect(()=>{
-        fetch('/tokenIsOk',{
+        fetch('/api/tokenIsOk',{
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("jwt")
             }
@@ -38,7 +38,7 @@ const CoursPrecis = ()=>{
     },[])
 
     useEffect(()=>{
-        fetch(`/getSpecificCourse/${coursId.id}`,{
+        fetch(`/api/getSpecificCourse/${coursId.id}`,{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }

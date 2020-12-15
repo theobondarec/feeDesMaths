@@ -4,7 +4,7 @@ const FBAuth = require('../../middleware/requireLogin')
 const admin = require('firebase-admin')
 //// GET Lesson
 
-router.get('/modification/:postId', FBAuth, (req, res) => {
+router.get('/api/modification/:postId', FBAuth, (req, res) => {
     const postId = req.params.postId
     // res.send(postId)
     // console.log(postId)

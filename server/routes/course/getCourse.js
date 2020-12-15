@@ -5,7 +5,7 @@ const FBAuth = require('../../middleware/requireLogin')
 const admin = require('firebase-admin')
 
 //// GET all Chapters
-router.get('/getCourse', FBAuth, (req,res)=>{
+router.get('/api/getCourse', FBAuth, (req,res)=>{
     let chapters = []
     admin.firestore().collectionGroup('chapitres').get()
     .then((data)=>{
@@ -23,7 +23,7 @@ router.get('/getCourse', FBAuth, (req,res)=>{
     })
 })
 
-router.post('/getCourseSubject', FBAuth, (req,res)=>{
+router.post('/api/getCourseSubject', FBAuth, (req,res)=>{
     const {subject} = req.body
     let chapters = []
     admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').get()
@@ -42,7 +42,7 @@ router.post('/getCourseSubject', FBAuth, (req,res)=>{
 })
 
 //// GET chapters by subjects
-router.get('/chapterBySubject', FBAuth, (req, res)=>{
+router.get('/api/chapterBySubject', FBAuth, (req, res)=>{
     const {subject} = req.body
 
     let chapters = []

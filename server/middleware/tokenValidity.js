@@ -4,7 +4,7 @@ const router = express.Router()
 const admin = require('firebase-admin')
 const { decode } = require('jsonwebtoken')
 
-router.get('/tokenIsOk', (req,res)=>{
+router.get('/api/tokenIsOk', (req,res)=>{
     let idToken
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
         idToken = req.headers.authorization.split('Bearer ')[1]

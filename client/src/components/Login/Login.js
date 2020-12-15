@@ -23,7 +23,7 @@ const Login = ()=>{
         //     toast.error('Password empty', {autoClose: 3000})
         //     return
         // }
-        fetch("/login",{
+        fetch("/api/login",{
             method:"post",
             headers:{
                 "Content-Type":"application/json"

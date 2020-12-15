@@ -6,7 +6,7 @@ const admin = require('firebase-admin')
 
 
 //// GET CHAPTER
-router.get('/lesson/:postId', FBAuth, (req, res) => {
+router.get('/api/lesson/:postId', FBAuth, (req, res) => {
     const postId = req.params.postId
     // res.send(postId)
     // console.log(postId)

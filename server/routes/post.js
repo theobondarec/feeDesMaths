@@ -64,7 +64,7 @@ router.post('/createpost', FBAuth ,(req, res)=>{
     })
 })
 
-router.get('/mypost',FBAuth, (req, res)=>{
+router.get('/api/mypost',FBAuth, (req, res)=>{
   ///use Token to access db and get rank
   let idToken
   let uid
@@ -121,7 +121,7 @@ router.get('/mypost',FBAuth, (req, res)=>{
   })
 })
 
-router.get('/precis/:postId', FBAuth, (req,res)=>{
+router.get('/api/precis/:postId', FBAuth, (req,res)=>{
     const postId = req.params.postId
     let postById
     let postedByName
@@ -152,7 +152,7 @@ router.get('/precis/:postId', FBAuth, (req,res)=>{
     })
 })
 
-router.delete('/deletepost/:postId', FBAuth, (req, res)=>{
+router.delete('/api/deletepost/:postId', FBAuth, (req, res)=>{
     const postId = req.params.postId
     // console.log(postId)
     admin.firestore().collection('cours').doc(postId).delete()
@@ -165,62 +165,3 @@ router.delete('/deletepost/:postId', FBAuth, (req, res)=>{
 })
 
 module.exports = router
-
-
-
-
-
-//   ///use Token to access db and get rank
-//   let idToken
-//   let uid
-//   if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
-//       idToken = req.headers.authorization.split('Bearer ')[1]
-//   }
-//   else{
-//       console.error('No token found')
-//       return res.status(403).json({error: 'Unauthorized'})
-//   }
-//   admin.auth().verifyIdToken(idToken)
-//   .then(decodedToken=>{
-//       uid = decodedToken.uid
-//       return uid
-//   })
-//   .then(()=>{
-//       // console.log(uid)
-//       admin.firestore().collection('users').where('userId', '==', uid).limit(1).get()
-//       .then(data=>{
-//           let profilInfo =[]
-//           data.forEach(doc => {
-//               profilInfo.push(doc.data())
-//           })
-//           rank = profilInfo[0].rank
-//           //////
-//           console.log(rank)
-//           if(rank == "admin" || rank === "professsor" || rank==="student"){
-
-//             admin.firestore().collection('cours').where('postedBy', '==', req.user.uid).get()
-//             .then(data=>{
-//                 let mesCours =[]
-//                 data.forEach(doc => {
-//                     mesCours.push(doc.data())
-//                 })
-//                 // console.log(mesCours)
-//                 return res.json(mesCours)
-//             })
-//             .catch(err=>{
-//                 console.log(err)
-//             })
-
-//           }
-//           else{
-//               return res.json({error:"you're not allow to access at this function, you're rank is too low"})
-//           }
-//           //////
-//       })
-//       .catch(err=>{
-//           console.log(err)
-//       })
-//   })
-//   .catch(err=>{
-//       console.log(err)
-//   })

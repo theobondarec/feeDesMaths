@@ -28,7 +28,7 @@ const firebaseConfig = {
 
 const admin = require('firebase-admin')
 
-router.post('/updateLesson' , FBAuth, (req, res)=>{
+router.post('/api/updateLesson' , FBAuth, (req, res)=>{
     const {subject, chapter, lessonTitle, lesson, lessonNumber, leconId} = req.body
     // console.log(subject, " ", chapter, " ", lessonTitle, " ", lesson, " ", lessonNumber)
     // console.log(leconId)

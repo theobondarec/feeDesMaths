@@ -21,7 +21,7 @@ const LeconPrecise = ()=>{
             history.push('/login')
     }
     useEffect(()=>{
-        fetch('/tokenIsOk',{
+        fetch('/api/tokenIsOk',{
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("jwt")
             }
@@ -43,7 +43,7 @@ const LeconPrecise = ()=>{
     // let lesson = []
     const [lesson ,setLesson]=useState([])
     useEffect(()=>{
-        fetch(`/lesson/${postId.id}`,{
+        fetch(`/api/lesson/${postId.id}`,{
             headers:{
                 Authorization: "Bearer " + localStorage.getItem("jwt")
             }

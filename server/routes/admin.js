@@ -4,7 +4,7 @@ const FBAuth = require('../middleware/requireLogin')
 
 const admin = require('firebase-admin')
 
-router.get('/admin', FBAuth, (req, res)=>{
+router.get('/api/admin', FBAuth, (req, res)=>{
     ///use Token to access db and get rank
     let idToken
     let uid
@@ -43,7 +43,7 @@ router.get('/admin', FBAuth, (req, res)=>{
     })
 })
 
-router.post('/admin/rankChange', FBAuth, (req, res)=>{
+router.post('/api/admin/rankChange', FBAuth, (req, res)=>{
     ///use Token to access db and get rank
     let idToken, uid
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){

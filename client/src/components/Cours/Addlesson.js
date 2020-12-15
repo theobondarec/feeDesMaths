@@ -42,7 +42,7 @@ const Addlesson = () => {
 }
 
     useEffect(()=>{
-        fetch('/tokenIsOk',{
+        fetch('/api/tokenIsOk',{
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("jwt")
             }
@@ -63,7 +63,7 @@ const Addlesson = () => {
     const [errorMessage, setErrorMessage] = useState([])
     const [allow, setAllow] = useState([])
     useEffect(()=>{
-        fetch('/subjects',{
+        fetch('/api/subjects',{
             headers:{
                 Authorization: "Bearer " + localStorage.getItem("jwt")
             }
@@ -84,7 +84,7 @@ const Addlesson = () => {
     const [allowChapters, setAllowChapters] = useState([])
     useEffect(()=>{
         if(matiere === "" || matiere === "undifined"){
-            fetch('/chapters',{
+            fetch('/api/chapters',{
                 headers:{
                     Authorization: "Bearer " + localStorage.getItem("jwt")
                 }
@@ -100,7 +100,7 @@ const Addlesson = () => {
             })
         }
         else{
-            fetch('/chaptersPrecis',{
+            fetch('/api/chaptersPrecis',{
                 method: "post",
                 headers:{
                     "Content-Type": "application/json",

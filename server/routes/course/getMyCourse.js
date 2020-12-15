@@ -4,7 +4,7 @@ const FBAuth = require('../../middleware/requireLogin')
 
 const admin = require('firebase-admin')
 
-router.get('/getMyPost',FBAuth, (req, res)=>{
+router.get('/api/getMyPost',FBAuth, (req, res)=>{
     ///use Token to access db and get rank
     let idToken
     let uid

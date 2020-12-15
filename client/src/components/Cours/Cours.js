@@ -14,7 +14,7 @@ const Cours = ()=>{
             history.push('/login')
     }
     useEffect(()=>{
-        fetch('/tokenIsOk',{
+        fetch('/api/tokenIsOk',{
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("jwt")
             }
@@ -35,7 +35,7 @@ const Cours = ()=>{
     const [errorMessage, setErrorMessage] = useState("")
     const [allow, setAllow] = useState("")
     useEffect(()=>{
-        fetch('/subjects',{
+        fetch('/api/subjects',{
             headers:{
                 Authorization: "Bearer " + localStorage.getItem("jwt")
             }
@@ -58,7 +58,7 @@ const Cours = ()=>{
     const [data, setData] = useState([])
     useEffect(()=>{
         if(matiere === "" || matiere === "undifined"){
-            fetch('/getCourse',{
+            fetch('/api/getCourse',{
                 headers:{
                     Authorization: "Bearer " + localStorage.getItem("jwt")
                 }
@@ -77,7 +77,7 @@ const Cours = ()=>{
         }
         else{
             // console.log(matiere)
-            fetch('/getCourseSubject',{
+            fetch('/api/getCourseSubject',{
                 method: "post",
                 headers:{
                     "Content-Type": "application/json",

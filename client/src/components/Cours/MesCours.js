@@ -22,7 +22,7 @@ const MesCours = ()=>{
             history.push('/login')
     }
     useEffect(()=>{
-        fetch('/tokenIsOk',{
+        fetch('/api/tokenIsOk',{
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("jwt")
             }
@@ -39,7 +39,7 @@ const MesCours = ()=>{
     },[])
 
     useEffect(()=>{
-        fetch('/getMyPost',{
+        fetch('/api/getMyPost',{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }
@@ -59,7 +59,7 @@ const MesCours = ()=>{
     },[])
 
     const deletePost = (postId)=>{
-        fetch(`/deletepostById/${postId}`,{
+        fetch(`/api/deletepostById/${postId}`,{
             method:"delete",
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("jwt")

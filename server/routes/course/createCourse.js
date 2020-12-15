@@ -28,7 +28,7 @@ const firebaseConfig = {
 
 const admin = require('firebase-admin')
 
-router.post('/createSubject', FBAuth, (req, res)=>{
+router.post('/api/createSubject', FBAuth, (req, res)=>{
     const {subject} = req.body
     if(!subject){
         return res.status(422).json({error:"please add all the fields"})
@@ -57,7 +57,7 @@ router.post('/createSubject', FBAuth, (req, res)=>{
     })
 })
 
-router.post('/createChapter', FBAuth, (req,res)=>{
+router.post('/api/createChapter', FBAuth, (req,res)=>{
     const {subject, chapter, chapterIllustration, chapterDesc, chapNumber} = req.body
     // console.log(req.body)
     if(!subject || !chapter || !chapterIllustration || !chapterDesc || !chapNumber){
@@ -99,7 +99,7 @@ router.post('/createChapter', FBAuth, (req,res)=>{
     })
 })
 
-router.post('/createCourse' , FBAuth, (req, res)=>{
+router.post('/api/createCourse' , FBAuth, (req, res)=>{
     const {subject, chapter, lessonTitle, lesson, lessonNumber} = req.body
     // console.log(lesson)
     if(!subject || !chapter || !lessonTitle || !lesson || !lessonNumber){
@@ -142,7 +142,7 @@ router.post('/createCourse' , FBAuth, (req, res)=>{
 })
 
 //// Return les chapitres et les matieres pour les dropdown ajout une lesson
-router.get('/subjects', FBAuth, (req,res)=>{
+router.get('/api/subjects', FBAuth, (req,res)=>{
     let subjects = []
     admin.firestore().collection('cours').get()
     .then((data)=>{
@@ -160,7 +160,7 @@ router.get('/subjects', FBAuth, (req,res)=>{
     })
 })
 
-router.get('/chapters', FBAuth, (req,res)=>{
+router.get('/api/chapters', FBAuth, (req,res)=>{
     // const {subject} = req.body
     let chapters = []
     admin.firestore().collectionGroup('chapitres').get()
@@ -180,7 +180,7 @@ router.get('/chapters', FBAuth, (req,res)=>{
     })
 })
 
-router.post('/chaptersPrecis', FBAuth, (req,res)=>{
+router.post('/api/chaptersPrecis', FBAuth, (req,res)=>{
     const {subject} = req.body
     let chapters = []
     admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').get()

@@ -26,7 +26,7 @@ const isEmail = (email) => {
     }
 }
 
-router.post('/register', (req, res) => {
+router.post('/api/register', (req, res) => {
     const {name, email, password} = req.body
     const newUser = {
         name,
@@ -76,7 +76,7 @@ router.post('/register', (req, res) => {
         })
 })
 
-router.post('/login', (req, res) => {
+router.post('/api/login', (req, res) => {
     let errors = {}
     const {email, password} = req.body
     const user = {

@@ -11,33 +11,8 @@ import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 toast.configure()
 
-// const config = {
-//     "apiKey": process.env.REACT_APP_API_KEY,
-//     "authDomain": process.env.REACT_APP_API_authDomain,
-//     "databaseURL": process.env.REACT_APP_API_databaseURL,
-//     "projectId": process.env.REACT_APP_API_projectId,
-//     "storageBucket": process.env.REACT_APP_API_storageBucket,
-//     "messagingSenderId": process.env.REACT_APP_API_messagingSenderId,
-//     "appId": process.env.REACT_APP_API_appId,
-//     "measurementId": process.env.REACT_APP_API_measurementId
-// }
-
 const NavBar = () =>{
-
-    // let rang
-    // if(!firebase.apps.length){
-    //     firebase.initializeApp(config)
-    // }
-    // const idToken = localStorage.getItem("jwt")
-    // console.log(idToken.claims.rank)
-
-    // firebase.auth().getIdTokenResult()
-    // .then((idToken)=>{
-    //     console.log(idToken.rank)
-    // })
-    // firebase.getAuthTokenClaims()
-
-    
+  
 
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
@@ -45,7 +20,6 @@ const NavBar = () =>{
         var rang
         if(state){
             rang = state.rank
-            // console.log(rang)
         }
 
 

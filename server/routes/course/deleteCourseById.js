@@ -5,7 +5,7 @@ const FBAuth = require('../../middleware/requireLogin')
 const admin = require('firebase-admin')
 
 //// DELETE LESSON
-router.delete('/deletepostById/:postId', FBAuth, (req, res) => {
+router.delete('/api/deletepostById/:postId', FBAuth, (req, res) => {
     const postId = req.params.postId
     let idToken, uid
     let docToDel=[]

@@ -13,7 +13,7 @@ const Profile = ()=>{
             history.push('/login')
     }
     useEffect(()=>{
-        fetch('/tokenIsOk',{
+        fetch('/api/tokenIsOk',{
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("jwt")
             }

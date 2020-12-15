@@ -20,7 +20,7 @@ const Signup = ()=>{
         //     // window.alert('Invalid Email !')
         //     return
         // }
-        fetch("/register",{
+        fetch("/api/register",{
             method:"post",
             headers:{
                 "Content-Type":"application/json"

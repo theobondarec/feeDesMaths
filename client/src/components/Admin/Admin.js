@@ -23,7 +23,7 @@ const Admin = () => {
     }
 
     useEffect(()=>{
-        fetch('/tokenIsOk',{
+        fetch('/api/tokenIsOk',{
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("jwt")
             }
@@ -41,7 +41,7 @@ const Admin = () => {
 
     // let accessToken
     useEffect(() => {
-        fetch('/admin',{
+        fetch('/api/admin',{
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("jwt")/*accessToken*/
             }
@@ -70,7 +70,7 @@ const Admin = () => {
             idValue = inputId.value
             document.getElementById('inputId').value = "";
         }
-        fetch(`/admin/rankChange`, {
+        fetch(`/api/admin/rankChange`, {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
