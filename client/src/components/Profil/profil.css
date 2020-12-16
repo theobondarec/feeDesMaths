@@ -11,7 +11,6 @@
 
 /* STYLISER DANS LE JS */
 #progress-bar1{
-    width: 10%;
     color: black;
     background-color: red;
 
@@ -26,15 +25,11 @@
     width: 80%;
     color: black;
     background-color: green;
-
 }
 
 
 
-/* NEVER USED
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.teeeet{
+    display: flex;
+    align-items: center;
 }
-
-*/

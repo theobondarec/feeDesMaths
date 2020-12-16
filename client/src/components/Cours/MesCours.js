@@ -110,7 +110,7 @@ const MesCours = ()=>{
                                         <div className="card-body">
                                             <InlineTex texContent={item.lessonContent}/>
                                         </div>
-                                        <Link to={"/lesson/"+item.lessonId} id="boutonMesCours" className="btn btn-primary">Voir le cours</Link>
+                                        <Link to={"/lessonProf/"+item.lessonId} id="boutonMesCours" className="btn btn-primary">Voir le cours</Link>
                                     </div>
                                 </div>
                             )

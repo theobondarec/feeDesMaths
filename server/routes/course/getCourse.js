@@ -7,7 +7,7 @@ const admin = require('firebase-admin')
 //// GET all Chapters
 router.get('/api/getCourse', FBAuth, (req,res)=>{
     let chapters = []
-    admin.firestore().collectionGroup('chapitres').get()
+    admin.firestore().collectionGroup('chapitres').orderBy('chapterNumber','asc').get()
     .then((data)=>{
         data.forEach(doc=>{
             // console.log(doc.data())
@@ -27,7 +27,7 @@ router.get('/api/getCourse', FBAuth, (req,res)=>{
 router.post('/api/getCourseSubject', FBAuth, (req,res)=>{
     const {subject} = req.body
     let chapters = []
-    admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').get()
+    admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').orderBy('chapterNumber','asc').get()
     .then((data)=>{
         data.forEach(doc=>{
             if(doc.data().chapterTitle){
@@ -46,7 +46,7 @@ router.post('/api/getCourseSubject', FBAuth, (req,res)=>{
 router.get('/api/chapterBySubject', FBAuth, (req, res)=>{
     const {subject} = req.body
     let chapters = []
-    admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').get()
+    admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').orderBy('chapterNumber','asc').get()
     .then((data)=>{
         data.forEach(doc=>{
             if(doc.data().chapterTitle){

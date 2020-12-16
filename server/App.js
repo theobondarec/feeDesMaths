@@ -63,6 +63,9 @@ app.use(require('./routes/course/getMyCourse'))
 app.use(require('./routes/course/getLesson'))
 app.use(require('./routes/course/modification'))
 app.use(require('./routes/course/updateLesson'))
+app.use(require('./routes/course/validateProgression'))
+app.use(require('./routes/course/checkPrc'))
+// app.use(require('./routes/course/getLessonsChap'))
 
 console.log(__dirname)
 

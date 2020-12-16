@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext, Component} from 'react'
-import {useParams, useHistory} from 'react-router-dom'
+import {Link, useParams, useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
 import './CourPrecis.css';
 
@@ -8,6 +8,11 @@ import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import { InlineTex } from 'react-tex'
 import {EditorState, convertToRaw, ContentState} from 'draft-js';
+
+import {toast} from 'react-toastify';  
+import 'react-toastify/dist/ReactToastify.css';  
+toast.configure()
+
 
 const CoursPrecis = ()=>{
     const [cours ,setCours]=useState([])
@@ -37,6 +42,7 @@ const CoursPrecis = ()=>{
         })
     },[])
 
+
     useEffect(()=>{
         fetch(`/api/getSpecificCourse/${coursId.id}`,{
             headers:{
@@ -45,9 +51,49 @@ const CoursPrecis = ()=>{
         }).then(res=>res.json())
             .then(result=>{
                 setCours(result)
-                console.log(result)
+                // console.log(result)
             })
     },[])
+
+    const [buttonUsed ,setButtonUsed] = useState("")
+    const validate = (lessonId, chapterId)=>{
+        setButtonUsed(lessonId)
+        fetch('/api/validateProgression', {
+            method: "post",
+            headers:{
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                chapterId,
+                lessonId
+            })
+        // })
+        }).then(res=>res.json())
+        .then(result=>{
+            // console.log(result)
+            toast.success(result.message, {autoClose: 3000})
+        })
+        .catch(err=>{
+            console.log(err)
+            // toast.error(err, {autoClose: 3000})
+        })
+    }
+
+
+    /////ACTUALISATION DES QUE BTN VALIDER
+    const [percentage ,setPercentage]=useState([])
+    useEffect(()=>{
+        fetch(`/api/checkProgression/${coursId.id}`,{
+            headers:{
+                Authorization: "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then(res=>res.json())
+        .then(result=>{
+            // console.log(result)
+            setPercentage(result.chapterProgression)
+        })
+    },[buttonUsed])
 
     if (cours.length > 0) {
         return (
@@ -57,8 +103,8 @@ const CoursPrecis = ()=>{
 
                 <div className="progress" id="progressBarLesson" style={{height: "40px"}}>
                     {/* {REFAIRE PROGRESS BAR en js} */}
-                    <div className="progress-bar progress-bar-striped" style={{width: "10%"}} role="progressbar"
-                         aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">Progression
+                    <div className="progress-bar progress-bar-striped" style={{width: `${percentage}%`}} role="progressbar"
+                         aria-valuenow={percentage} aria-valuemin="0" aria-valuemax="100">Progression
                     </div>
                 </div>
 
@@ -72,17 +118,29 @@ const CoursPrecis = ()=>{
 
                 <div id="lessonPlan">
                     <div className="list-group" id="list-tab" role="tablist">
+                        <h2 className="list-group-item" id="coursPrecisLeconTitre">Leçons :</h2>
                         {cours[2].lecons.map(item=>{
-                            //Avoir deja les lecon triée par ordre coirssant
+                            // console.log(item)
                             return(
-                                <a href={`#${item.lessonNumber}`} className="list-group-item list-group-item-action" key={item.lessonId}/*onClick={()=>{currentLesson()}}*///data-toggle="list"
-                                >{item.lessonTitle}</a>
+                                // <a href={`#${item.lessonNumber}`} className="list-group-item list-group-item-action" key={item.lessonId}/*onClick={()=>{currentLesson()}}*///data-toggle="list"
+                                <div key={item.lessonId} className="list-group-item">
+                                    <Link to={'/lesson/'+item.lessonId} className="list-group-item list-group-item-action" id="lessonPlanItems">
+                                        {`leçon ${item.lessonNumber} : ${item.lessonTitle}`}
+                                    </Link>
+                                    <button type="button" className="btn btn-primary" onClick={()=>{validate(item.lessonId, item.chapterId)}}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check2-square" viewBox="0 0 16 16">
+                                            <path fillRule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+                                            <path fillRule="evenodd" d="M1.5 13A1.5 1.5 0 0 0 3 14.5h10a1.5 1.5 0 0 0 1.5-1.5V8a.5.5 0 0 0-1 0v5a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5h8a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 3v10z"></path>
+                                        </svg>
+                                        {/* Valider */}
+                                    </button>
+                                </div>
                             )
                         })}
                     </div>
                 </div>
 
-                {cours[2].lecons.map(item=>{
+                {/* {cours[2].lecons.map(item=>{
                     // console.log(item)
                     return(
                         <div className="card leconPrecise" id={`${item.lessonNumber}`} key={item.lessonId}>
@@ -94,11 +152,10 @@ const CoursPrecis = ()=>{
                     )
                 })}
 
-                {/*Passer à la lecon suivante ou precedente*/}
                 <div id="buttons">
-                    <a /*href={`#${id-1}`}*/ className="btn btn-primary">lecon precedente</a>
-                    <a /*href={`#${id+1}`}*/  className="btn btn-primary">Lecon suivante</a>
-                </div>
+                    <a className="btn btn-primary">lecon precedente</a>
+                    <a className="btn btn-primary">Lecon suivante</a>
+                </div> */}
             </div>
         )
     }

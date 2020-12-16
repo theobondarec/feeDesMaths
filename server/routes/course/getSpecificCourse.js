@@ -30,13 +30,12 @@ router.get('/api/getSpecificCourse/:postId', FBAuth, (req, res) => {
             monCours.push({postedByName: postedByName})
         })
         .then(()=>{
-            admin.firestore().collection('cours').doc(monCours[0].subject.toLowerCase()).collection('chapitres').doc(monCours[0].chapterId).collection('lecons').get()
+            admin.firestore().collection('cours').doc(monCours[0].subject.toLowerCase()).collection('chapitres').doc(monCours[0].chapterId).collection('lecons').orderBy('lessonNumber', 'asc').get()
             .then(data => { //// GET Lecons
                 let lecons = []
                 data.forEach(doc => {
                     lecons.push(doc.data())
                 })
-                // console.log(lecons[1].lesson)
                 monCours.push({lecons:lecons})
                 res.send(monCours)
             })

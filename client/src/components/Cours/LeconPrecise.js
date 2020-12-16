@@ -10,7 +10,9 @@ import draftToHtml from 'draftjs-to-html';
 import { InlineTex } from 'react-tex'
 import {EditorState, convertToRaw, ContentState} from 'draft-js';
 
-
+import {toast} from 'react-toastify';  
+import 'react-toastify/dist/ReactToastify.css';  
+toast.configure()
 
 const LeconPrecise = ()=>{
     const {state, dispatch} = useContext(UserContext)
@@ -39,8 +41,6 @@ const LeconPrecise = ()=>{
 
 
     const postId = useParams()
-    // console.log(postId.id)
-    // let lesson = []
     const [lesson ,setLesson]=useState([])
     useEffect(()=>{
         fetch(`/api/lesson/${postId.id}`,{
@@ -56,9 +56,31 @@ const LeconPrecise = ()=>{
         })
     },[])
 
-    // console.log(postId)
-    // console.log(lesson)
 
+    const goToChapter = (lessonId, chapterId)=>{
+        fetch('/api/validateProgression', {
+            method: "post",
+            headers:{
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                chapterId,
+                lessonId
+            })
+        // })
+        }).then(res=>res.json())
+        .then(result=>{
+            // console.log(result)
+            toast.success(result.message, {autoClose: 3000})
+        })
+        .catch(err=>{
+            console.log(err)
+            // toast.error(err, {autoClose: 3000})
+        })
+        history.push(`/cours/${lesson.chapterId}`)
+    }
+    
     if(!lesson){
         return(
             <div>
@@ -80,6 +102,13 @@ const LeconPrecise = ()=>{
         return(
             <div>
                 <h1>{lesson.lessonTitle}</h1>
+                <InlineTex texContent={lesson.lessonContent}/>
+                <button type="button" className="btn btn-primary" onClick={()=>{goToChapter(lesson.lessonId, lesson.chapterId)}}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"></path>
+                    </svg>
+                Retour au chapitre
+              </button>
             </div>
         )
     }

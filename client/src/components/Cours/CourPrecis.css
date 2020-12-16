@@ -40,3 +40,11 @@
     justify-content: space-around;
     margin-bottom: 1%;
 }
+#coursPrecisLeconTitre{
+    margin-bottom: 0px;
+}
+
+.list-group-item{
+    display: flex;
+    justify-content: space-between;
+}

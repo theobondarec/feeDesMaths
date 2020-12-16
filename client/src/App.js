@@ -15,6 +15,7 @@ import Addlesson from './components/Cours/Addlesson'
 import Mescours from './components/Cours/MesCours'
 import Juridique from './components/Juridique/Juridique'
 import LeconPrecise from './components/Cours/LeconPrecise'
+import LeconChap from './components/Cours/LeconChap'
 import Modification from './components/Cours/Modification'
 import {reducer, initialState} from './reducer/userReducer'
 import './App.css'
@@ -78,6 +79,9 @@ const Routing = () => {
             <Route path="/modification/:id">
                 <Modification />
             </Route>
+            {/* <Route path="/lesson/:id">
+                <LeconChap/>
+            </Route> */}
         </Switch>
     )
 }
