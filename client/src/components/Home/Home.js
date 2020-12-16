@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Home.css';
 import mathe from '../../Images/math.jpg'
-import hommeordi from '../../Images/hommeordi.jpg'
+// import hommeordi from '../../Images/hommeordi.jpg'
 import ecriture from '../../Images/ecriture.jpg'
 
 class Home extends Component {
@@ -34,7 +34,8 @@ export const Carrousel = () => {
                         <img className="d-block w-100" src={mathe} height="300px" alt="First slide"></img>
                     </div>
                     <div className="carousel-item">
-                        <img class="d-block w-100" src={hommeordi} height="300px" alt="First slide"></img>
+                        {/* <img class="d-block w-100" src={hommeordi} height="300px" alt="First slide"></img> */}
+                        <img class="d-block w-100"  height="300px" alt="First slide"></img>
                     </div>
                 </div>
             </div>

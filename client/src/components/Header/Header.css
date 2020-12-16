@@ -1,11 +1,12 @@
-#head{
+/* #head{
     background-color: #f5ab36; 
     
-}
+} */
 
 header #h1,#h2{
     text-align: center;
-    color: #E22149;
+    /* color: #E22149; */
+    color: black;
     width: 100%;
 }
 

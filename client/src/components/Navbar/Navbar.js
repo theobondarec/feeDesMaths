@@ -3,35 +3,38 @@ import {Link, useHistory} from 'react-router-dom'
 import './Navbar.css';
 import {UserContext} from '../../App'
 
-
 import firebase from '@firebase/app'
-
 
 import {toast} from 'react-toastify';  
 import 'react-toastify/dist/ReactToastify.css'; 
 toast.configure()
 
 const NavBar = () =>{
-  
-
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
     const renderList=()=>{
-        var rang
+        let rang
         if(state){
             rang = state.rank
         }
-
-
-
-        
         if(localStorage.getItem("user")){
             const user = JSON.parse(localStorage.getItem("user"))
             rang = user.rank
         }
-
-
-
+        
+        // fetch('/api/checkRank',{
+        //     headers:{
+        //         Authorization:"Bearer "+localStorage.getItem("jwt")
+        //     }
+        // })
+        // .then(res=>res.json())
+        // .then((result)=>{
+        //     console.log(result.rank)
+        //     rang = result.rank
+        // })
+        // .catch(err=>{
+        //     console.log(err)
+        // })
 
         if(rang === "student"){
             return [
@@ -64,9 +67,7 @@ const NavBar = () =>{
             ]
         }
         if(rang === "professor"){
-            // console.log("PROFESSOR")
             return[
-                // key={Math.random()}
                 <div key={Math.random()} className="options_navbar">
                     <li className="nav-item">
                         <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
@@ -97,7 +98,6 @@ const NavBar = () =>{
             ]
         }
         if(rang === "admin"){
-            // console.log("ADMIN")
             return[
                 <div key={Math.random()} className="options_navbar">
                     <li className="nav-item">
@@ -108,8 +108,8 @@ const NavBar = () =>{
                         profile
                         </Link>
                         <div className="dropdown-menu dropdown_menu_navbar" aria-labelledby="navbarDropdown">
-                            <Link className="dropdown-item" to="/admin">Admin page</Link> {/*only if you're admin*/}
-                            <Link className="dropdown-item" to="/settings">Settings</Link> {/*modification mot de passe*/}
+                            <Link className="dropdown-item" to="/admin">Admin page</Link>
+                            <Link className="dropdown-item" to="/settings">Settings</Link>
                             <div className="dropdown-divider"></div>
                             <button className="dropdown-item" 
                             onClick={()=>{
@@ -125,11 +125,7 @@ const NavBar = () =>{
             ]
         }
         else{
-            return [                //SI RELOAD la page on tombe comme si aucune info en localStorage
-                ////Uncom if CAN ACCESS TO HOME
-                // <li className="nav-item">
-                //     <Link className="nav-link" to="/cours">Home <span className="sr-only">(current)</span></Link>
-                // </li>,
+            return [
                 <div key={Math.random()} className="options_navbar">
                     <li className="nav-item">
                         <Link className="nav-link" to="/login">Login</Link>
@@ -148,7 +144,7 @@ const NavBar = () =>{
             to={
                 state?"/":"/login",
                 localStorage.getItem("user")?"/":"/"
-            }>Fée des maths</Link>
+            }></Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>

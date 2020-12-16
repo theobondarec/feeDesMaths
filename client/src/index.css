@@ -19,7 +19,7 @@ code {
 }
 
 #root{
-  background: linear-gradient(to bottom,#3e93a3,35%, #f5ab36);
+  background: linear-gradient(to bottom,#f5ab36,35%,#3e93a3);
   min-height: 100vh;
   display: flex;
   flex-direction: column;

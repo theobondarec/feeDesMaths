@@ -1,15 +1,17 @@
 footer{
     width: 100%;
     /* position: relative; */
-    background-color: #f5ab36; 
+    /* background-color: #f5ab36;  */
 }
 .textFooter{
     margin-top: 10px;
-    color: #E22149;  
+    /* color: #E22149;   */
+    color: black;
 }
 
 #logofoo{
     display: block;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
     width: 80px;
