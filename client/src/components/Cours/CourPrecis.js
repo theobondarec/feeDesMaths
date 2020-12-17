@@ -56,7 +56,7 @@ const CoursPrecis = ()=>{
     },[])
 
     const [buttonUsed ,setButtonUsed] = useState("")
-    const validate = (lessonId, chapterId)=>{
+    const validate = (subject, lessonId, chapterTitle, chapterId)=>{
         setButtonUsed(lessonId)
         fetch('/api/validateProgression', {
             method: "post",
@@ -73,6 +73,21 @@ const CoursPrecis = ()=>{
         .then(result=>{
             // console.log(result)
             toast.success(result.message, {autoClose: 3000})
+        })
+        .then(()=>{
+            fetch('/api/globalProgression',{
+                method: "post",
+                headers:{
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                },
+                body: JSON.stringify({
+                    subject,
+                    chapterId,
+                    lessonId,
+                    chapterTitle
+                })  
+            })
         })
         .catch(err=>{
             console.log(err)
@@ -127,7 +142,7 @@ const CoursPrecis = ()=>{
                                     <Link to={'/lesson/'+item.lessonId} className="list-group-item list-group-item-action" id="lessonPlanItems">
                                         {`leçon ${item.lessonNumber} : ${item.lessonTitle}`}
                                     </Link>
-                                    <button type="button" className="btn btn-primary" onClick={()=>{validate(item.lessonId, item.chapterId)}}>
+                                    <button type="button" className="btn btn-primary" onClick={()=>{validate(item.subject, item.lessonId, item.chapter, item.chapterId)}}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check2-square" viewBox="0 0 16 16">
                                             <path fillRule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
                                             <path fillRule="evenodd" d="M1.5 13A1.5 1.5 0 0 0 3 14.5h10a1.5 1.5 0 0 0 1.5-1.5V8a.5.5 0 0 0-1 0v5a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5h8a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 3v10z"></path>

@@ -7,29 +7,3 @@
 #tableProfile{
     border: 5px solid #E22149;
 }
-
-
-/* STYLISER DANS LE JS */
-#progress-bar1{
-    color: black;
-    background-color: red;
-
-}
-#progress-bar2{
-    width: 30%;
-    color: black;
-    background-color: orange;
-
-}
-#progress-bar3{
-    width: 80%;
-    color: black;
-    background-color: green;
-}
-
-
-
-.teeeet{
-    display: flex;
-    align-items: center;
-}

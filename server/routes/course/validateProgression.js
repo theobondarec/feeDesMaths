@@ -35,4 +35,113 @@ router.post('/api/validateProgression', FBAuth, (req, res)=>{
     })
 })
 
+router.post('/api/globalProgression', FBAuth, (req,res)=>{
+    const {subject, lessonId, chapterTitle, chapterId} = req.body
+    if(!chapterId || !lessonId){
+        return res.status(422).json({error:"error with IDs"})
+    }
+    let idToken
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
+        idToken = req.headers.authorization.split('Bearer ')[1]
+    }
+    else{
+        console.error('No token found')
+        return res.status(403).json({error: 'Unauthorized'})
+    }
+
+    admin.auth().verifyIdToken(idToken)
+    .then(decodedToken =>{
+        const uid = decodedToken.uid
+        ////// CALCUL %
+        admin.firestore().collectionGroup('lecons').where('chapterId', '==', chapterId).get()
+        .then((data)=>{
+            const totalChapterSize = data.size
+            admin.auth().verifyIdToken(idToken)
+            .then(verifyIdToken=>{
+                const uid = verifyIdToken.uid
+                let chapterDone
+                admin.firestore().collection('users').doc(uid).collection('progression').doc(chapterId).get()
+                .then(data=>{
+                    // console.log(data.data())
+                    if(data.data() != undefined){
+                        // console.log(data.data())
+                        chapterDone = Object.keys(data.data()).length
+                    }
+                    else if(data.data() === undefined){
+                        // console.log("undifined",data.data())
+                        chapterDone = 0
+                    }
+                    const chapterProgression = (chapterDone/totalChapterSize)*100
+                    // admin.firestore().collection('users').doc(uid).collection('progressionG').doc(chapterId).set({[chapterTitle]:chapterProgression}, {merge: true})
+                    admin.firestore().collection('users').doc(uid).collection('progressionG').doc(chapterId).set({chapterTitle, progression:chapterProgression, subject}, {merge: true})
+                    console.log('push successfully')
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        })
+        .catch(err=>{
+            console.error(err)
+        })
+    })
+})
+
+
+router.get('/api/getGlobalProgression', FBAuth, (req,res)=>{
+    let idToken
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
+        idToken = req.headers.authorization.split('Bearer ')[1]
+    }
+    else{
+        console.error('No token found')
+        return res.status(403).json({error: 'Unauthorized'})
+    }
+    let uid 
+    admin.auth().verifyIdToken(idToken)
+        .then(verifyIdToken=>{
+            uid = verifyIdToken.uid
+            // console.log(uid)
+            let progression = []
+            admin.firestore().collection('users').doc(uid).collection('progressionG').get()
+            .then(data=>{
+                data.forEach(doc=>{
+                    // console.log(doc.data())
+                    progression.push(doc.data())
+                })
+                res.json(progression)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+})
+
+
 module.exports = router
+
+
+// var data = {
+//     {}: {
+//       "4079823456": "Text message content 1 here",
+//       "4079323457": "Text message content 2 here",
+//       "4079823458": "Text message content 3 here"
+//     }
+//   }
+  
+//   var prog = {}
+//   for (var matiere in data) {
+//     for (var key in data[matiere]) {
+//       prog = {
+//             matiereProg : matiere
+//           chapterName : key,
+//             chapterProgression : data[matiere][key] //progression
+//       }
+//     }
+//   }

@@ -29,12 +29,46 @@ const Profile = ()=>{
         })
     },[])
 
+    const [progression ,setProgression] = useState([])
+    // let progression = []
+    useEffect(()=>{
+        fetch('/api/getGlobalProgression',{
+            headers:{
+                Authorization:"Bearer "+localStorage.getItem("jwt")
+            }
+        })
+        .then(res=>res.json())
+        .then(result=>{
+            // console.log(result)
+            setProgression(result)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    },[])
+
     return(
-        <div classname="displayProfile">
-            {/* <div>
+        <div className="displayProfile">
+            <div>
                 <h1>Progression des chapitres</h1>
-                <Progression/>
-            </div> */}
+                {progression.map(item=>{
+                    // console.log(item)
+                    return(
+                        <div>
+                            <h1>{item.subject}</h1>
+                            <div>
+                                <h3>{item.chapterTitle}</h3>
+                                <div className="progress" id="progressBarLesson" style={{height: "40px"}}>
+                                    <div className="progress-bar progress-bar-striped" style={{width: `${item.progression}%`}} role="progressbar"
+                                        aria-valuenow={item.progression} aria-valuemin="0" aria-valuemax="100">Progression
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
+                {/* <Progression/> */}
+            </div>
             <div>
                 <h1>Notes QCM</h1>
                 <div className="table-responsive">
@@ -63,84 +97,3 @@ const Profile = ()=>{
 }
 
 export default Profile
-
-export const Progression = () =>{
-    // mettre du code js ici si besoin
-
-
-    const [subjects, setsubjects] = useState([])
-    useEffect(()=>{
-        fetch('/api/subjects',{
-            headers:{
-                Authorization: "Bearer " + localStorage.getItem("jwt")
-            }
-        }).then(res=>res.json())
-        .then(result=>{
-            console.log(result.subjects)
-            setsubjects(result.subjects)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    },[])
-
-
-
-
-
-    return(
-        <div className="col-12 table-responsive displayProfile">
-            <div className="subjectProfile">
-                <h1>Math</h1>
-                {subjects.map(item=>{
-                    console.log(item)
-                    return(
-                        <div className="teeeet">
-                            <h3>{item}</h3>
-                            <div className="progress" id="progressBarLesson" style={{height: "40px"}}>
-                                {/* {REFAIRE PROGRESS BAR en js} */}
-                                <div className="progress-bar progress-bar-striped" style={{width: `40%`}} role="progressbar"
-                                    aria-valuenow={40} aria-valuemin="0" aria-valuemax="100">Progression
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
-        </div>
-    )
-}
-
-// <div className="col-12 table-responsive displayProfile">
-// <div>Math
-//     <div className="progress">
-//         <div className="progress-bar progress-bar-striped" id="progress-bar1"  aria-valuemin="0" aria-valuemax="100">10%</div>
-//     </div>
-// </div>
-
-// <div>Physique
-//     <div className="progress">
-//         <div className="progress-bar progress-bar-striped" id="progress-bar2"  aria-valuemin="0" aria-valuemax="100">30%</div>
-//     </div>
-// </div>
-
-// <div>Elec
-//     <div className="progress">
-//         <div className="progress-bar progress-bar-striped" id="progress-bar3"  aria-valuemin="0" aria-valuemax="100">70%</div>
-//     </div>
-// </div>
-// </div>
-
-
-{/* <table className='table'>
-    <tbody>
-        <tr >
-            <th>Math</th>
-            <td className="progressG progress-bar progress-bar-striped" id="progress-bar1" style={{width: `20%`}} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">10%</td>
-        </tr>
-        <tr className="progressG">
-            <th>Math</th>
-            <td className="progress-bar progress-bar-striped" id="progress-bar1" style={{width: `20%`}} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">10%</td>
-        </tr>
-    </tbody>
-</table> */}
