@@ -98,7 +98,7 @@ const Admin = () => {
         })
     }
 
-    if(data){
+    if(data.length > 0){
         if(allow === true){
             return(
                 <div className="adminClass">

@@ -324,6 +324,34 @@ const Addlesson = () => {
         })
     }
 
+
+    // POPUP
+    const popUpChapitre = ()=>{
+        const modal = document.getElementById("popUpChapter");
+        modal.style.display = "block";      
+    }
+    const popUpMatiere = ()=>{
+        const modal = document.getElementById("popUpSubject");
+        modal.style.display = "block";
+    }
+    const closePopUp = ()=>{
+        const modal = document.getElementById("popUpSubject");
+        const chapter = document.getElementById("popUpChapter");
+        modal.style.display = "none";
+        chapter.style.display = "none";
+    }
+    window.onclick = function(event) {
+        const modal = document.getElementById("popUpSubject");
+        const chapter = document.getElementById("popUpChapter");
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+        if (event.target == chapter) {
+            chapter.style.display = "none";
+        }
+    }
+
+
     return (
         <div>
             <div className="form-row mcl">
@@ -339,7 +367,7 @@ const Addlesson = () => {
                                     )
                                 })}
                             </select>
-                            <a href="#addSubject">Ajouter une matière</a>
+                            <button className="btn btn-primary btn_PopUp" onClick={()=>{popUpMatiere()}}>Ajout matière</button>
                         </div>
                         <div className="col">
                             <select id="inputStateChapitre" className="form-control" onChange={(e)=>{setChapitre(e.target.value)}}>
@@ -350,7 +378,9 @@ const Addlesson = () => {
                                     )
                                 })}
                             </select>
-                            <a href="#addChapter">Ajouter un chapitre</a>
+                            {/* <a href="#addChapter">Ajouter un chapitre</a> */}
+                            <button className="btn btn-primary btn_PopUp" onClick={()=>{popUpChapitre()}}>Ajout chapitre</button>
+
                         </div>
                         <div className="col">
                             <input type="number" className="form-control" placeholder="lecon N°" id="lessNumber"
@@ -366,13 +396,20 @@ const Addlesson = () => {
                         </div>
                     </div>
                     <Editor
-                        // rows="16" cols="50"
                         id="cours"
                         editorState={cours}
                         toolbarClassName="toolbarClassName"
                         wrapperClassName="wrapperClassName"
                         editorClassName="editorClassName"
                         onEditorStateChange={onEditorStateChangeCours}
+                        toolbar={{
+                            fontFamily: {
+                                options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana', 'Chalkduster Regular'],
+                                className: undefined,
+                                component: undefined,
+                                dropdownClassName: undefined,
+                            },
+                        }}
                     />
                     <button type="button" className="btn btn-primary" onClick={() => postLesson()}>Upload</button>
                 </div>
@@ -385,86 +422,106 @@ const Addlesson = () => {
                         }
                     </div>
                 </div>
-            </div>                
-            {/* ajoute chapitre */}
-            <div className="form-row mcl">
-                <div className="card col add-card-AddLesson" id="addChapter">
-                    <h1>Ajouter un chapitre</h1>
-                    <div className="form-row mcl spaceAdd">
-                        <div className="col">
-                            <select id="inputStateChapter" className="form-control" onChange={(e)=>{setMatiereForChapter(e.target.value)}}>
-                                <option  className="defaultValue" value="undifined">Matière : </option>
-                                {subjects.map(subject=>{
-                                    return(
-                                        <option key={subject} value={subject}>{subject}</option>
-                                    )
-                                })}
-                            </select>
-                        </div>
-                        <div className="col">
-                            <input type="number" className="form-control" placeholder="chapitre N°" id="chapNumber"
-                                value={chapNumber}
-                                onChange={(e) => setChapNumber(e.target.value)}
-                            />
-                        </div>
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="titre du chapitre" id="newChapter"
-                                value={newChapter}
-                                onChange={(e) => setNewChapter(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <div className="input-group spaceAdd">
-                        <div className="custom-file">
-                            <input type="file" id="submitButton" onChange={(e)=>submitButton(e.target.files[0])}/>
-                            <div>
-                                <progress value="0" max="100" id="progressBar">0%</progress>    
-                            </div>
-                            <button id="buttonDeleteIllu" className="btn" onClick={()=>{deleteFile()}}><i className="fa fa-close"></i></button>
-                        </div>
-                    </div>
+            </div>       
 
-                    <Editor
-                        id = "desc"
-                        editorState={desc}
-                        toolbarClassName="toolbarClassName"
-                        wrapperClassName="wrapperClassName"
-                        editorClassName="editorClassName"
-                        onEditorStateChange={onEditorStateChangeDescription}
-                    />
-                    <button id="buttonPostChapter" type="button" className="btn btn-primary"
-                            onClick={() => postChapter()}
-                    >
-                        Upload
-                    </button>
-                </div>
-                <div className="card col" id="add-card-lesson">
-                    <h1>Prévisualtion description chapitre</h1>
-                    <div>
-                        {
-                            desc !== "" ?
-                                <InlineTex texContent={draftToHtml(convertToRaw(desc.getCurrentContent()))}/> : ""
-                        }
+
+
+
+            {/* ajoute chapitre */}
+            <div id="popUpChapter">
+            <span className="close" onClick={()=>{closePopUp()}}>&times;</span>
+                <div className="form-row mcl">
+                    <div className="card col add-card-AddLesson" id="addChapter">
+                        <h1>Ajouter un chapitre</h1>
+                        <div className="form-row mcl spaceAdd">
+                            <div className="col">
+                                <select id="inputStateChapter" className="form-control" onChange={(e)=>{setMatiereForChapter(e.target.value)}}>
+                                    <option  className="defaultValue" value="undifined">Matière : </option>
+                                    {subjects.map(subject=>{
+                                        return(
+                                            <option key={subject} value={subject}>{subject}</option>
+                                        )
+                                    })}
+                                </select>
+                            </div>
+                            <div className="col">
+                                <input type="number" className="form-control" placeholder="chapitre N°" id="chapNumber"
+                                    value={chapNumber}
+                                    onChange={(e) => setChapNumber(e.target.value)}
+                                />
+                            </div>
+                            <div className="col">
+                                <input type="text" className="form-control" placeholder="titre du chapitre" id="newChapter"
+                                    value={newChapter}
+                                    onChange={(e) => setNewChapter(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <div className="input-group spaceAdd">
+                            <div className="custom-file">
+                                <input type="file" id="submitButton" onChange={(e)=>submitButton(e.target.files[0])}/>
+                                <div>
+                                    <progress value="0" max="100" id="progressBar">0%</progress>    
+                                </div>
+                                <button id="buttonDeleteIllu" className="btn" onClick={()=>{deleteFile()}}><i className="fa fa-close"></i></button>
+                            </div>
+                        </div>
+
+                        <Editor
+                            id = "desc"
+                            editorState={desc}
+                            toolbarClassName="toolbarClassName"
+                            wrapperClassName="wrapperClassName"
+                            editorClassName="editorClassName"
+                            onEditorStateChange={onEditorStateChangeDescription}
+                            toolbar={{
+                                fontFamily: {
+                                    options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana', 'Chalkduster Regular'],
+                                    className: undefined,
+                                    component: undefined,
+                                    dropdownClassName: undefined,
+                                },
+                            }}
+                        />
+                        <button id="buttonPostChapter" type="button" className="btn btn-primary"
+                                onClick={() => postChapter()}
+                        >
+                            Upload
+                        </button>
+                    </div>
+                    <div className="card col" id="add-card-lesson">
+                        <h1>Prévisualtion description chapitre</h1>
+                        <div>
+                            {
+                                desc !== "" ?
+                                    <InlineTex texContent={draftToHtml(convertToRaw(desc.getCurrentContent()))}/> : ""
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
             
+
+
             {/* ajoute matiere */}
-            <div className="card add-card-AddLesson" id="addSubject">
-                <h1>Ajouter une matiere</h1>
-                <div className="form-row mcl" id="spaceAddLesson">
-                    <div className="col">
-                        <input type="text" className="form-control" placeholder="Titre de la matière" id="newSubject"
-                            value={newSubject}
-                            onChange={(e) => setNewSubject(e.target.value)}
-                        />
-                    </div>
-                    <div className="col">
-                        <button id="boutonSubject" type="button" className="btn btn-primary"
-                                onClick={() => postSubject()}
-                        >
-                            Upload
-                        </button>
+            <div id="popUpSubject">
+                <div className="card add-card-AddLesson" id="addSubject">
+                <span className="close" onClick={()=>{closePopUp()}}>&times;</span>
+                    <h1>Ajouter une matiere</h1>
+                    <div className="form-row mcl" id="spaceAddLesson">
+                        <div className="col">
+                            <input type="text" className="form-control" placeholder="Titre de la matière" id="newSubject"
+                                value={newSubject}
+                                onChange={(e) => setNewSubject(e.target.value)}
+                            />
+                        </div>
+                        <div className="col">
+                            <button id="boutonSubject" type="button" className="btn btn-primary"
+                                    onClick={() => postSubject()}
+                            >
+                                Upload
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

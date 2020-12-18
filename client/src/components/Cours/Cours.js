@@ -104,7 +104,7 @@ const Cours = ()=>{
     },[matiere])
 
 
-    if(data){
+    if(data.length > 0){
         return(
             <div className="col-10 offset-1" id="listecours">
                 <h1 id="title_course">Tous les cours</h1>

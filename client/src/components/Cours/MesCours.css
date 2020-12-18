@@ -4,6 +4,7 @@
     border-width: 5px;
     border-color: #f5ab36;
     margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 #title{
     display: flex;

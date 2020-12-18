@@ -30,6 +30,8 @@ const Profile = ()=>{
     },[])
 
     const [progression ,setProgression] = useState([])
+    const [matiere ,setMatiere] = useState([])
+    const [progressionG ,setProgressionG] = useState([])
     // let progression = []
     useEffect(()=>{
         fetch('/api/getGlobalProgression',{
@@ -40,34 +42,64 @@ const Profile = ()=>{
         .then(res=>res.json())
         .then(result=>{
             // console.log(result)
-            setProgression(result)
+            setProgression(result.progression)
+            setMatiere(result.chapterName)
         })
         .catch(err=>{
             console.log(err)
         })
     },[])
 
-    return(
+    useEffect(()=>{
+        // console.log(progression, matiere)
+        var progress = []
+        if(progression){
+            matiere.forEach(mat=>{
+                progress[mat] = []
+            })
+            progression.forEach(ele =>{
+                // console.log(ele)
+                progress[ele.subject].unshift(ele)
+            })
+            // console.log(progress)
+            setProgressionG(progress)
+        }
+        else{
+            return
+        }
+    },[matiere])
+
+
+    if(progressionG[matiere[0]]){
+        return(
         <div className="displayProfile">
             <div>
                 <h1>Progression des chapitres</h1>
-                {progression.map(item=>{
-                    // console.log(item)
-                    return(
+                {matiere.map(item=>{
+                    console.log(item)
+                    const cours = []
+                    for(var i = 0; i < progressionG[item].length; i++){
+                        cours.push(progressionG[item][i])
+                    }
+                    return (
                         <div>
-                            <h1>{item.subject}</h1>
-                            <div>
-                                <h3>{item.chapterTitle}</h3>
-                                <div className="progress" id="progressBarLesson" style={{height: "40px"}}>
-                                    <div className="progress-bar progress-bar-striped" style={{width: `${item.progression}%`}} role="progressbar"
-                                        aria-valuenow={item.progression} aria-valuemin="0" aria-valuemax="100">Progression
+                            <h1>{item}</h1>
+                            {cours.map(items=>{
+                                console.log(items)
+                                return (
+                                    <div>
+                                        <h3>{items.chapterTitle}</h3>
+                                        <div className="progress" id="progressBarLesson" style={{height: "40px"}}>
+                                            <div className="progress-bar progress-bar-striped" style={{width: `${items.progression}%`}} role="progressbar"
+                                                aria-valuenow={items.progression} aria-valuemin="0" aria-valuemax="100">Progression
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                )
+                            })}
                         </div>
                     )
                 })}
-                {/* <Progression/> */}
             </div>
             <div>
                 <h1>Notes QCM</h1>
@@ -93,7 +125,25 @@ const Profile = ()=>{
                 </div>
             </div>
         </div>
-    )
+        )
+    }
+    else{
+        return(
+            <div>
+                <h1>Chargement de la base de donnée</h1>
+                <div className="cs-loader">
+                    <div className="cs-loader-inner">
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                        <label>●</label>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
 
 export default Profile

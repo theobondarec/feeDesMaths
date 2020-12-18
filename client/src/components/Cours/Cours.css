@@ -80,33 +80,12 @@
 #seecourse_btn {
     background: #E22146 !important;
     color: white !important;
+    margin-top: 10px;
 }
 #seecourse_btn:focus {
     box-shadow: none !important;
     outline: 0px !important;
 }
-
-
-
-
-
-/* NEVER USED
-#shadow{
-    box-shadow: 10px 15px 15px black;
-    
+#description{
+    float: right;
 }
-#texte{
-    margin-bottom: 10px;
-}
-.loginFooter{
-    display: flex;
-    flex-direction: column;
-}
-
-#display{
-    margin: 0;
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-}
-*/

@@ -38,3 +38,10 @@ code {
 .footer{
   flex-shrink: 0;
 }
+
+@font-face {
+  font-family: 'Chalkduster Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Chalkduster Regular'), url('./font/Chalkduster/Chalkduster.woff') format('woff');
+}

@@ -21,7 +21,7 @@
     justify-content: center;
     flex-direction: column;
     padding: 10px;
-    box-shadow: 10px 15px 15px black;
+    box-shadow: 3px 3px 10px black;
     -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
 }
@@ -44,16 +44,3 @@
 #form_container_login {
     margin-top: 100px;
 }
-
-
-/* NEVERUSED 
-#display{
-    margin: 0;
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-}
-.form_container {
-    margin-top: 0px;
-}
-*/

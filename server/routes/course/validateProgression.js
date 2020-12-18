@@ -104,19 +104,48 @@ router.get('/api/getGlobalProgression', FBAuth, (req,res)=>{
     admin.auth().verifyIdToken(idToken)
         .then(verifyIdToken=>{
             uid = verifyIdToken.uid
-            // console.log(uid)
             let progression = []
+            let chapterName = []
             admin.firestore().collection('users').doc(uid).collection('progressionG').get()
             .then(data=>{
                 data.forEach(doc=>{
-                    // console.log(doc.data())
+                    chapterName.push(doc.data().subject)
                     progression.push(doc.data())
                 })
-                res.json(progression)
             })
-            .catch(err=>{
-                console.log(err)
+            .then(()=>{
+                chapterName = new Set(chapterName)
+                chapterName = [...chapterName]
+                // console.log(chapterName)
+                res.json({progression, chapterName})
             })
+        //     .then(()=>{
+        //         let count = 0
+        //         let title = []
+                // chapterName.forEach(element=>{
+                //     title[element] = []
+                //     admin.firestore().collection('users').doc(uid).collection('progressionG').where('subject', '==', element).get()
+                //     .then(data=>{
+                //         data.forEach(doc=>{
+                //             title[element].unshift(doc.data())
+                //         })
+                //         count += 1
+                //         if(count == chapterName.length){
+                //             // console.log(title)
+                //             progression.push(title)
+                //             // console.log(progression)
+                //             res.json(progression)
+
+                //         }
+                //     })
+                //     .catch(err=>{
+                //         console.log(err)
+                //     })
+                // })
+        //     })
+        //     .catch(err=>{
+        //         console.log(err)
+        //     })
         })
         .catch(err=>{
             console.log(err)
@@ -125,23 +154,3 @@ router.get('/api/getGlobalProgression', FBAuth, (req,res)=>{
 
 
 module.exports = router
-
-
-// var data = {
-//     {}: {
-//       "4079823456": "Text message content 1 here",
-//       "4079323457": "Text message content 2 here",
-//       "4079823458": "Text message content 3 here"
-//     }
-//   }
-  
-//   var prog = {}
-//   for (var matiere in data) {
-//     for (var key in data[matiere]) {
-//       prog = {
-//             matiereProg : matiere
-//           chapterName : key,
-//             chapterProgression : data[matiere][key] //progression
-//       }
-//     }
-//   }
