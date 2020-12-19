@@ -51,7 +51,7 @@ const CoursPrecis = ()=>{
         }).then(res=>res.json())
             .then(result=>{
                 setCours(result)
-                // console.log(result)
+                console.log(result)
             })
     },[])
 
@@ -154,23 +154,6 @@ const CoursPrecis = ()=>{
                         })}
                     </div>
                 </div>
-
-                {/* {cours[2].lecons.map(item=>{
-                    // console.log(item)
-                    return(
-                        <div className="card leconPrecise" id={`${item.lessonNumber}`} key={item.lessonId}>
-                            <h2 className="card-title card-title-coursPrecis">{`lecon N°${item.lessonNumber}`}</h2>
-                            <p className="card-body">
-                                <InlineTex texContent={item.lessonContent}/>
-                            </p>
-                        </div>
-                    )
-                })}
-
-                <div id="buttons">
-                    <a className="btn btn-primary">lecon precedente</a>
-                    <a className="btn btn-primary">Lecon suivante</a>
-                </div> */}
             </div>
         )
     }

@@ -60,7 +60,7 @@ router.post('/api/createSubject', FBAuth, (req, res)=>{
 router.post('/api/createChapter', FBAuth, (req,res)=>{
     const {subject, chapter, chapterIllustration, chapterDesc, chapNumber} = req.body
     // console.log(req.body)
-    if(!subject || !chapter || !chapterIllustration || !chapterDesc || !chapNumber){
+    if(!subject || !chapter || !chapterDesc || !chapNumber){
         return res.status(422).json({error:"please add all the fields"})
     }
     let idToken, uid
@@ -104,7 +104,7 @@ router.post('/api/createChapter', FBAuth, (req,res)=>{
 })
 
 router.post('/api/createCourse' , FBAuth, (req, res)=>{
-    const {subject, chapter, lessonTitle, lesson, lessonNumber} = req.body
+    const {subject, chapter, lessonTitle, lesson, lessonNumber, lessonClip} = req.body
     // console.log(lesson)
     if(!subject || !chapter || !lessonTitle || !lesson || !lessonNumber){
         return res.status(422).json({error:"please add all the fields"})
@@ -135,6 +135,7 @@ router.post('/api/createCourse' , FBAuth, (req, res)=>{
                         subject,
                         lessonTitle,
                         lessonContent:lesson,
+                        lessonClip,
                         postedBy:uid,
                         lessonId:chemin.id,
                         lessonNumber:parseInt(lessonNumber)

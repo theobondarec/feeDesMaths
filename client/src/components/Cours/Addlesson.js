@@ -216,6 +216,7 @@ const Addlesson = () => {
     const [leconTitle, setLecon] = useState("")
     const [cours, setCours] = useState("")
     const [lessNumber,setLessonNumber] = useState("")
+    const [lessonClip,setLessonClip] = useState("")
     const postLesson = ()=>{
         fetch('/api/createCourse', {
             method: "post",
@@ -227,6 +228,7 @@ const Addlesson = () => {
                 subject:matiere,
                 chapter:chapitre,
                 lessonTitle:leconTitle,
+                lessonClip,
                 lesson:draftToHtml(convertToRaw(cours.getCurrentContent())),
                 lessonNumber:lessNumber
             })
@@ -238,6 +240,7 @@ const Addlesson = () => {
                 document.getElementById('inputStateChapitre').value = "undifined"
                 setLecon("")
                 setLessonNumber("")
+                setLessonClip("")
                 setCours(EditorState.createWithContent(ContentState.createFromText("")))
                 toast.success(`${newChapter} added`, {autoClose: 3000})                
             }
@@ -272,7 +275,6 @@ const Addlesson = () => {
         })
         .then(res => res.json())
         .then((result)=>{
-            // console.log(result)
             if(result.createChapter === true){
                 setChapters([...chapters, newChapter])
                 document.getElementById('inputStateChapter').value = "undifined"
@@ -281,6 +283,7 @@ const Addlesson = () => {
                 document.getElementById('progressBar').value = 0
                 document.getElementById('submitButton').value = ""
                 setDesc(EditorState.createWithContent(ContentState.createFromText("")))
+                closePopUp()
 
                 toast.success(`${newChapter} added`, {autoClose: 3000})
             }
@@ -313,6 +316,7 @@ const Addlesson = () => {
             if(result.createSubject === true){
                 setsubjects([...subjects, newSubject])
                 setNewSubject("")
+                closePopUp()
                 toast.success(`${newSubject} added`, {autoClose: 3000})
             }
             else{
@@ -382,6 +386,8 @@ const Addlesson = () => {
                             <button className="btn btn-primary btn_PopUp" onClick={()=>{popUpChapitre()}}>Ajout chapitre</button>
 
                         </div>
+                    </div>
+                    <div className="form-row mcl">
                         <div className="col">
                             <input type="number" className="form-control" placeholder="lecon N°" id="lessNumber"
                                 value={lessNumber}
@@ -392,6 +398,12 @@ const Addlesson = () => {
                             <input type="text" className="form-control" placeholder="Titre de la leçon" id="leconTitle"
                                 value={leconTitle}
                                 onChange={(e) => setLecon(e.target.value)}
+                            />
+                        </div>
+                        <div className="col">
+                            <input type="text" className="form-control" placeholder="Video Url ou video id" id="lessonClip"
+                                value={lessonClip}
+                                onChange={(e) => setLessonClip(e.target.value)}
                             />
                         </div>
                     </div>

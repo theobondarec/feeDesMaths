@@ -15,6 +15,7 @@ router.get('/api/lesson/:postId', FBAuth, (req, res) => {
     .then(data => {/// GET lecon
         data.forEach(doc => {
             monCours.push(doc.data())
+            // console.log(doc.data())
         })
         return res.send(monCours)
     })

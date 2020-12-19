@@ -79,6 +79,22 @@ const MesCours = ()=>{
         })
     }
 
+    const popUpDel = ()=>{
+        const modal = document.getElementById("popUpDel");
+        modal.style.display = "block";
+
+    }
+    const closePopUp = ()=>{
+        const modal = document.getElementById("popUpDel");
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        const modal = document.getElementById("popUpDel");
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+    }
+
     if(mesCours){
         if(allow === true){
             return(
@@ -90,27 +106,40 @@ const MesCours = ()=>{
                     <div className="allCard">
                         {
                         mesCours.map(item=>{
+                            // console.log(item)
                             return(
                                 <div className="card" id="myLessonCard" key={item.lessonId}>
-                                    {/* <img className="card-img imgTest" src={item.photo} height="300px" width="100px" alt="Cardimagecap"></img> */}
                                     <div className="f">
                                         <div className="card-title" id="title">
                                             <h2>{item.lessonTitle}</h2>
                 
                                             <Link to={"/modification/"+item.lessonId} className="btn warningMesCours">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
                                             <button type="button" className="btn warningMesCours"
-                                            onClick={()=>{deletePost(item.lessonId)}}
+                                            /*onClick={()=>{deletePost(item.lessonId)}}*/
+                                            onClick={()=>{popUpDel()}}
                                             >
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path fillRule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                                             </svg>
                                             </button> 
-                                            {/* } */}
+                                            <div id="popUpDel">
+                                                <div className="card">
+                                                    <span className="close" onClick={()=>{closePopUp()}}>&times;</span>
+                                                    <h1 className="card-title">êtes-vous sûr de vouloir supprimer la lecon ?</h1>
+                                                    <button type="button" className="btn warningMesCours"
+                                                    onClick={()=>{deletePost(item.lessonId)}}
+                                                    >
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fillRule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                                                    </svg>
+                                                    </button> 
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className="card-body">
                                             <InlineTex texContent={item.lessonContent}/>
                                         </div>
-                                        <Link to={"/lessonProf/"+item.lessonId} id="boutonMesCours" className="btn warningMesCours">Voir le cours</Link>
+                                        <Link to={"/lesson/"+item.lessonId} id="boutonMesCours" className="btn warningMesCours">Voir le cours</Link>
                                     </div>
                                 </div>
                             )

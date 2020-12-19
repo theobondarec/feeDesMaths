@@ -66,7 +66,7 @@ const Cours = ()=>{
             .then(result=>{
                 // console.log(matiere)
                 if(result.allow === true){
-                    // console.log(result.chapters)
+                    console.log(result.chapters)
                     setData(result.chapters)
                     setAllowChapters(result.allow)
                 }
@@ -103,6 +103,13 @@ const Cours = ()=>{
         }
     },[matiere])
 
+    const IllustrationSetUp = (illustration)=>{
+        if(illustration != ""){
+            return(
+                <img className="card-img" id="img" src={illustration} alt="Cardimagecap"></img>
+            )
+        }
+    }
 
     if(data.length > 0){
         return(
@@ -125,15 +132,22 @@ const Cours = ()=>{
             <div className="allCard" >
                 {
                     data.map(item=>{
+                        console.log(item)
                         return(
                             <div id="user_card_course" key={item.chapterId}>
                             <div id="lecon" className={"card" + item.subject}>
                                 <h1><font color="#E22146">{item.subject}: {item.chapterTitle}</font></h1>
-                                <img className="card-img" id="img" src={item.illustration} alt="Cardimagecap"></img>
+                                {
+                                    IllustrationSetUp(item.illustration)
+                                }
                                 <div className="card-body">
                                     <InlineTex texContent={item.description}/>
                                 </div>
-                                    <Link to={"/cours/" +item.chapterId} className="btn" id="seecourse_btn">Voir le cours</Link>
+                                {/* {
+                                    getLesson(item.subject, item.chapterId)
+                                } */}
+
+                                <Link to={"/cours/" +item.chapterId} className="btn" id="seecourse_btn">Voir le chapitre</Link>
                             </div>
                             </div>
                         )
