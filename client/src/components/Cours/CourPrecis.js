@@ -95,6 +95,13 @@ const CoursPrecis = ()=>{
         })
     }
 
+    const IllustrationSetUp = (illustration)=>{
+        if(illustration != ""){
+            return(
+                <img className="card-img" id="lessonImage" src={illustration} alt="Cardimagecap"></img>
+            )
+        }
+    }
 
     /////ACTUALISATION DES QUE BTN VALIDER
     const [percentage ,setPercentage]=useState([])
@@ -123,7 +130,10 @@ const CoursPrecis = ()=>{
                     </div>
                 </div>
 
-                <img className="card-img" id="lessonImage" src={cours[0].illustration} alt="Cardimagecap"></img>
+                {/* <img className="card-img" id="lessonImage" src={cours[0].illustration} alt="Cardimagecap"></img> */}
+                {
+                    IllustrationSetUp(cours[0].illustration)
+                }
                 <div className="card" id="lessonDescription">
                     <h2 className="card-title card-title-coursPrecis">Description</h2>
                     <p className="card-body">
