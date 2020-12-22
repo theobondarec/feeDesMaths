@@ -17,6 +17,7 @@ import Juridique from './components/Juridique/Juridique'
 import LeconPrecise from './components/Cours/LeconPrecise'
 import Modification from './components/Cours/Modification'
 import {reducer, initialState} from './reducer/userReducer'
+import Addquiz from './components/Cours/AddQuiz'
 import './App.css'
 // {/*Pagination cours precis  ->  a suppr*/}
 import CoursPrecis from './components/Cours/CourPrecis'
@@ -77,6 +78,9 @@ const Routing = () => {
             </Route>
             <Route path="/modification/:id">
                 <Modification />
+            </Route>
+            <Route path='/createQuiz'>
+                <Addquiz />
             </Route>
             {/* <Route path="/lesson/:id">
                 <LeconChap/>

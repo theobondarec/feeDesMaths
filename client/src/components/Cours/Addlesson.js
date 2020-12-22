@@ -11,6 +11,7 @@ import draftToHtml from 'draftjs-to-html';
 import {EditorState, convertToRaw, ContentState} from 'draft-js';
 
 import firebase from '@firebase/app'
+// eslint-disable-next-line
 import storage from '@firebase/storage'
 
 import {toast} from 'react-toastify';  

@@ -1,8 +1,9 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import './Navbar.css';
 import {UserContext} from '../../App'
 
+// eslint-disable-next-line
 import firebase from '@firebase/app'
 
 import {toast} from 'react-toastify';  
@@ -81,6 +82,7 @@ const NavBar = () =>{
                         </Link>
                         <div className="dropdown-menu dropdown_menu_navbar" aria-labelledby="navbarDropdown">
                             <Link className="dropdown-item" to="/createpost">Ajouter un cours</Link> {/*only if you're professor*/}
+                            <Link className="dropdown-item" to="/createQuiz">Ajouter un quiz</Link> {/*only if you're professor*/}
                             <Link className="dropdown-item" to="/mypost">Mes leçons</Link> {/*only if you're professor*/}
                             <Link className="dropdown-item" to="/settings">Settings</Link> {/*modification mot de passe*/}
                             <div className="dropdown-divider"></div>

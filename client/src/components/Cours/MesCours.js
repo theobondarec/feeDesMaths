@@ -13,6 +13,7 @@ const MesCours = ()=>{
     const [errorMessage, setErrorMessage] = useState([])
     const [allow, setAllow] = useState([])
 
+    // eslint-disable-next-line
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
 

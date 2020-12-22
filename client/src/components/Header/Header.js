@@ -1,6 +1,4 @@
-import React, {useContext, useEffect} from 'react'
-import {Link, useHistory} from 'react-router-dom'
-import {UserContext} from '../../App'
+import React from 'react'
 import './Header.css'
 import logo from '../../Images/logo.png'
 

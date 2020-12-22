@@ -56,18 +56,6 @@ router.post('/api/getCourseSubject', FBAuth, (req,res)=>{
             }
         })
         res.send({chapters, allow:true})
-        // console.log(chapters)
-        // if(chapters.subject){
-        //     // console.log(chapters)
-        //     admin.firestore().collection('cours').doc(chapters.subject.toLowerCase()).collection('chapitres').doc(chapters.chapterId).collection('lecons').orderBy('lessonNumber', 'asc').get()
-        //     .then((lessons)=>{
-        //         lessons.forEach(tab=>{
-        //             console.log(tab.data())
-        //             // chapters.push(doc.data())
-        //         })
-        //         // res.json(chapters)
-            // })
-        // }
     })
     .catch(err=>{
         console.log(err)

@@ -1,6 +1,7 @@
-import React,{useState, useContext} from 'react'
+import React,{useState} from 'react'
 import './Settings.css'
 import firebase from '@firebase/app'
+// eslint-disable-next-line
 import auth from '@firebase/auth'
 import {toast} from 'react-toastify';  
 import 'react-toastify/dist/ReactToastify.css'; 

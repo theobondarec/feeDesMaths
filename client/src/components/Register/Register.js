@@ -8,7 +8,7 @@ toast.configure()
 
 const Signup = ()=>{
     const [name, setName]= useState("")
-    const [isenId, setIsenId]= useState("")
+    // const [isenId, setIsenId]= useState("")
     const [email, setEmail]= useState("")
     const [password, setPassword]= useState("")
     const history = useHistory()
@@ -27,7 +27,7 @@ const Signup = ()=>{
             },
             body:JSON.stringify({
                 name,
-                isenId,
+                // isenId,
                 email,
                 password
             })

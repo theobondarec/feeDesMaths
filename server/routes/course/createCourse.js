@@ -55,6 +55,9 @@ router.post('/api/createSubject', FBAuth, (req, res)=>{
         }
         //////
     })
+    .catch(err=>{
+        console.log(err)
+    })
 })
 
 router.post('/api/createChapter', FBAuth, (req,res)=>{
@@ -100,6 +103,9 @@ router.post('/api/createChapter', FBAuth, (req,res)=>{
             return res.json({error:"you're not allow to access at this function, you're rank is too low"})
         }
         //////
+    })
+    .catch(err=>{
+        console.log(err)
     })
 })
 
@@ -149,6 +155,9 @@ router.post('/api/createCourse' , FBAuth, (req, res)=>{
             return res.json({error:"you're not allow to access at this function, you're rank is too low", createlesson:false})
         }
         ///////
+    })
+    .catch(err=>{
+        console.log(err)
     })
 })
 
