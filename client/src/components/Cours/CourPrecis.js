@@ -311,7 +311,7 @@ const CoursPrecis = ()=>{
     }
 
     const quizQuestion = () =>{
-        if(questions.length>0){
+        if(questions.length<0){
             return(
             <div className="containerQuiz mt-sm-5 my-1">
                 <div className="question ml-sm-5 pl-sm-5 pt-2">
