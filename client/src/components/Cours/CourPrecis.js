@@ -168,8 +168,8 @@ const CoursPrecis = ()=>{
                 Authorization: "Bearer " + localStorage.getItem("jwt")
             },
             body:JSON.stringify({
-                subject:cours.subject,
-                chapterId:cours.chapterId,
+                subject:cours[0].subject,
+                chapterId:cours[0].chapterId,
                 lessonId:"undifined"
             })
         })
