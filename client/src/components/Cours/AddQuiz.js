@@ -308,11 +308,11 @@ const Addquiz = () => {
             .catch(err=>{
                 console.log(err)
             })
-            console.log("fetch")
+            // console.log("fetch")
         }
-        else{
-            console.log('nothing')
-        }
+        // else{
+            // console.log('nothing')
+        // }
     },[matiere, chapitre, lecon])
 
 
@@ -536,7 +536,7 @@ const Addquiz = () => {
                                 existingQuiz.map(question=>{
                                     return(
                                         <div id="singleQuestion" key={question.question}>
-                                            <label className="form-control">{<InlineTex texContent={`quest :${question.question}`}/>}</label>
+                                            <label className="form-control">{<InlineTex texContent={`${question.question}`}/>}</label>
                                             <label className="form-control" id="existingQuestionNumber">{`N° ${question.questionNumber}`}</label>
                                         </div>
                                     )

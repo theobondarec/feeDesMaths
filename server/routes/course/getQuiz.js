@@ -9,6 +9,9 @@ router.post('/api/getQuiz', FBAuth, (req, res) => {
     var {subject, chapter, lessonId} = req.body
     lessonId === "undifined" ? lessonId = "" : lessonId
 
+    console.log(subject, chapter, lessonId)
+
+
     let idToken
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
         idToken = req.headers.authorization.split('Bearer ')[1]
@@ -34,7 +37,7 @@ router.post('/api/getQuiz', FBAuth, (req, res) => {
             .then(()=>{
                 if(!lessonId){
                     // admin.firestore().collectionGroup('questions').where('chapterId', '==', chapterId).get()
-                    admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('questions').get()
+                    admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('questions').orderBy('questionNumber','asc').get()
                     .then(data=>{
                         // console.log(data)
                         let quiz = []
@@ -52,7 +55,7 @@ router.post('/api/getQuiz', FBAuth, (req, res) => {
                     // console.log(subject, chapter, lessonId, " chapterId ", chapterId)
         
                     // admin.firestore().collectionGroup('questions').where('lessonId', '==', lessonId).get()
-                    admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('lecons').doc(lessonId).collection('questions').get()
+                    admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('lecons').doc(lessonId).collection('questions').orderBy('questionNumber','asc').get()
                     .then(data=>{
                         let quiz = []
                         data.forEach(doc=>{
@@ -76,5 +79,66 @@ router.post('/api/getQuiz', FBAuth, (req, res) => {
     })
 })
 
+
+router.post('/api/getQuizWChapterId', FBAuth, (req, res) => {
+    var {subject, chapterId, lessonId} = req.body
+    lessonId === "undifined" ? lessonId = "" : lessonId
+
+    // console.log(subject, chapterId, lessonId)
+
+
+    let idToken
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
+        idToken = req.headers.authorization.split('Bearer ')[1]
+    }
+    else{
+        console.error('No token found')
+        return res.status(403).json({error: 'Unauthorized'})
+    }
+
+    admin.auth().verifyIdToken(idToken)
+    .then(decodedToken =>{
+        const rank = decodedToken.rank
+        /////////
+        if(rank === "admin" || rank === "professor"){
+            if(!lessonId){
+                // admin.firestore().collectionGroup('questions').where('chapterId', '==', chapterId).get()
+                admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('questions').orderBy('questionNumber','asc').get()
+                .then(data=>{
+                    // console.log(data)
+                    let quiz = []
+                    data.forEach(doc=>{
+                        // console.log(doc.data())
+                        quiz.push(doc.data())
+                    })
+                    res.send(quiz)
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
+            }
+            else{
+                // console.log(subject, chapter, lessonId, " chapterId ", chapterId)
+    
+                // admin.firestore().collectionGroup('questions').where('lessonId', '==', lessonId).get()
+                admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('lecons').doc(lessonId).collection('questions').orderBy('questionNumber','asc').get()
+                .then(data=>{
+                    let quiz = []
+                    data.forEach(doc=>{
+                        // console.log(doc.data())
+                        quiz.push(doc.data())
+                    })
+                    res.send(quiz)
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
+            }
+        }
+        else{
+            return res.json({error:"you're not allow to access at this function, you're rank is too low", createlesson:false})
+        }
+    })
+})
 
 module.exports = router

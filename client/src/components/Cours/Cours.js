@@ -66,7 +66,7 @@ const Cours = ()=>{
             .then(result=>{
                 // console.log(matiere)
                 if(result.allow === true){
-                    console.log(result.chapters)
+                    // console.log(result.chapters)
                     setData(result.chapters)
                     setAllowChapters(result.allow)
                 }
@@ -132,7 +132,7 @@ const Cours = ()=>{
             <div className="allCard" >
                 {
                     data.map(item=>{
-                        console.log(item)
+                        // console.log(item)
                         return(
                             <div id="user_card_course" key={item.chapterId}>
                             <div id="lecon" className={"card" + item.subject}>

@@ -21,6 +21,7 @@ import Addquiz from './components/Cours/AddQuiz'
 import './App.css'
 // {/*Pagination cours precis  ->  a suppr*/}
 import CoursPrecis from './components/Cours/CourPrecis'
+import Quiz from './components/Cours/Quiz'
 
 
 export const UserContext = createContext()
@@ -81,6 +82,9 @@ const Routing = () => {
             </Route>
             <Route path='/createQuiz'>
                 <Addquiz />
+            </Route>
+            <Route path='/quiz'>
+                <Quiz />
             </Route>
             {/* <Route path="/lesson/:id">
                 <LeconChap/>

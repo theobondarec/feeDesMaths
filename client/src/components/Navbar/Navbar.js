@@ -153,7 +153,7 @@ const NavBar = () =>{
 
             <div className="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto" id="test">
-                    {renderList()}                          {/*WARNING BECAUSE OF THIS LINE*/}
+                    {renderList()}
                 </ul>
             </div>
         </nav>
