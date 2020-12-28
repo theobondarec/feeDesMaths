@@ -53,6 +53,7 @@ const CoursPrecis = ()=>{
             // console.log(result)
             setCours(result)
             getScore(result)
+            // searchQuiz(result[0])
         })
         .catch(err=>{
             console.log(err)
@@ -167,8 +168,8 @@ const CoursPrecis = ()=>{
                 Authorization: "Bearer " + localStorage.getItem("jwt")
             },
             body:JSON.stringify({
-                subject:cours[0].subject,
-                chapterId:cours[0].chapterId,
+                subject:cours.subject,
+                chapterId:cours.chapterId,
                 lessonId:"undifined"
             })
         })
@@ -311,7 +312,8 @@ const CoursPrecis = ()=>{
     }
 
     const quizQuestion = () =>{
-        if(questions.length<0){
+        // console.log(questions)
+        if(questions.length>0){
             return(
             <div className="containerQuiz mt-sm-5 my-1">
                 <div className="question ml-sm-5 pl-sm-5 pt-2">
