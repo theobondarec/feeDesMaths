@@ -74,7 +74,7 @@ router.post('/api/globalProgression', FBAuth, (req,res)=>{
                     const chapterProgression = (chapterDone/totalChapterSize)*100
                     // admin.firestore().collection('users').doc(uid).collection('progressionG').doc(chapterId).set({[chapterTitle]:chapterProgression}, {merge: true})
                     admin.firestore().collection('users').doc(uid).collection('progressionG').doc(chapterId).set({chapterTitle, progression:chapterProgression, subject}, {merge: true})
-                    console.log('push successfully')
+                    // console.log('push successfully')
                 })
                 .catch(err=>{
                     console.log(err)
@@ -119,38 +119,49 @@ router.get('/api/getGlobalProgression', FBAuth, (req,res)=>{
                 // console.log(chapterName)
                 res.json({progression, chapterName})
             })
-        //     .then(()=>{
-        //         let count = 0
-        //         let title = []
-                // chapterName.forEach(element=>{
-                //     title[element] = []
-                //     admin.firestore().collection('users').doc(uid).collection('progressionG').where('subject', '==', element).get()
-                //     .then(data=>{
-                //         data.forEach(doc=>{
-                //             title[element].unshift(doc.data())
-                //         })
-                //         count += 1
-                //         if(count == chapterName.length){
-                //             // console.log(title)
-                //             progression.push(title)
-                //             // console.log(progression)
-                //             res.json(progression)
-
-                //         }
-                //     })
-                //     .catch(err=>{
-                //         console.log(err)
-                //     })
-                // })
-        //     })
-        //     .catch(err=>{
-        //         console.log(err)
-        //     })
         })
         .catch(err=>{
             console.log(err)
         })
 })
 
+router.get('/api/getScores', FBAuth, (req,res)=>{
+    let idToken
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
+        idToken = req.headers.authorization.split('Bearer ')[1]
+    }
+    else{
+        console.error('No token found')
+        return res.status(403).json({error: 'Unauthorized'})
+    }
+    let uid 
+    admin.auth().verifyIdToken(idToken)
+    .then(verifyIdToken=>{
+        uid = verifyIdToken.uid
+        let notes = []
+        let chapterName = []
+        admin.firestore().collection('users').doc(uid).collection('notes').get()
+        .then(data=>{
+            data.forEach(doc=>{
+                // console.log(doc.data())
+                chapterName.push(doc.data().subject)
+                notes.push(doc.data())
+            })
+        })
+        .then(()=>{
+            chapterName = new Set(chapterName)
+            chapterName = [...chapterName]
+            notes = notes.reverse()
+            // console.log(notes)
+            res.json({notes, chapterName})
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
 
 module.exports = router

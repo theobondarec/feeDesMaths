@@ -318,64 +318,64 @@ const Addquiz = () => {
 
     const displayIfAnswerA = ()=>{
         if(!answersA){
-            return(<label className="row form-control">{<InlineTex texContent={"answer A is empty"}/>}</label>)
+            return(<label  className="row form-control labelAddQuiz">{<InlineTex texContent={"answer A is empty"}/>}</label>)
         }
         else{
-            return(<label className="row form-control">{<InlineTex texContent={answersA}/>}</label>)
+            return(<label  className="row form-control labelAddQuiz">{<InlineTex texContent={answersA}/>}</label>)
         }
     }
     const displayIfAnswerB = ()=>{
         if(!answersB){
-            return(<label className="row form-control">{<InlineTex texContent={"answer B is empty"}/>}</label>)
+            return(<label  className="row form-control labelAddQuiz">{<InlineTex texContent={"answer B is empty"}/>}</label>)
         }
         else{
-            return(<label className="row form-control">{<InlineTex texContent={answersB}/>}</label>)
+            return(<label  className="row form-control labelAddQuiz">{<InlineTex texContent={answersB}/>}</label>)
         }
     }
     const displayIfAnswerC = ()=>{
         if(!answersC){
-            return(<label className="row form-control">{<InlineTex texContent={"answer C is empty"}/>}</label>)
+            return(<label  className="row form-control labelAddQuiz">{<InlineTex texContent={"answer C is empty"}/>}</label>)
         }
         else{
-            return(<label className="row form-control">{<InlineTex texContent={answersC}/>}</label>)
+            return(<label  className="row form-control labelAddQuiz">{<InlineTex texContent={answersC}/>}</label>)
         }
     }
     const displayIfAnswerD = ()=>{
         if(!answersD){
-            return(<label className="row form-control">{<InlineTex texContent={"answer D is empty"}/>}</label>)
+            return(<label  className="row form-control labelAddQuiz">{<InlineTex texContent={"answer D is empty"}/>}</label>)
         }
         else{
-            return(<label className="row form-control">{<InlineTex texContent={answersD}/>}</label>)
+            return(<label  className="row form-control labelAddQuiz">{<InlineTex texContent={answersD}/>}</label>)
         }
     }
 
     const displaySubject = ()=>{
         if(!matiere){
-            return(<label className="form-control">{"Selectionnez une matiere"}</label>)
+            return(<label  className="form-control labelAddQuiz">{"Selectionnez une matiere"}</label>)
         }
         else{
-            return(<label className="form-control">{matiere}</label>)
+            return(<label  className="form-control labelAddQuiz">{matiere}</label>)
         }
     }
     const displayChapter = ()=>{
         if(!chapitre){
-            return(<label className="form-control">{"Selectionnez un chapitre"}</label>)
+            return(<label  className="form-control labelAddQuiz">{"Selectionnez un chapitre"}</label>)
         }
         else{
-            return(<label className="form-control">{chapitre}</label>)
+            return(<label  className="form-control labelAddQuiz">{chapitre}</label>)
         }
     }
     const displayLesson = ()=>{
         if(lecon){
-            return(<label className="form-control">{`${lecon}`}</label>)
+            return(<label  className="form-control labelAddQuiz">{`${lecon}`}</label>)
         }
     }
     const displayQuestionNumber = ()=>{
         if(!questionNumber){
-            return(<label className="form-control" id="questNumber">{`N° de la question`}</label>)
+            return(<label  className="form-control labelAddQuiz" id="questNumber">{`N° de la question`}</label>)
         }
         else{
-            return(<label className="form-control" id="questNumber">{`N° ${questionNumber}`}</label>)
+            return(<label  className="form-control labelAddQuiz" id="questNumber">{`N° ${questionNumber}`}</label>)
         }
     }
 
@@ -509,7 +509,7 @@ const Addquiz = () => {
                             <div id="sizeQuestionRender">
                                 {
                                     question !== "" ?
-                                    <label className="form-control">{<InlineTex texContent={draftToHtml(convertToRaw(question.getCurrentContent()))}/>}</label>
+                                    <label  className="form-control labelAddQuiz">{<InlineTex texContent={draftToHtml(convertToRaw(question.getCurrentContent()))}/>}</label>
                                     : ""
                                 }
                             </div>
@@ -536,8 +536,8 @@ const Addquiz = () => {
                                 existingQuiz.map(question=>{
                                     return(
                                         <div id="singleQuestion" key={question.question}>
-                                            <label className="form-control">{<InlineTex texContent={`${question.question}`}/>}</label>
-                                            <label className="form-control" id="existingQuestionNumber">{`N° ${question.questionNumber}`}</label>
+                                            <label  className="form-control labelAddQuiz">{<InlineTex texContent={`${question.question}`}/>}</label>
+                                            <label  className="form-control labelAddQuiz" id="existingQuestionNumber">{`N° ${question.questionNumber}`}</label>
                                         </div>
                                     )
                                 })

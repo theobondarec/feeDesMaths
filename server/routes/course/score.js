@@ -78,13 +78,15 @@ router.post('/api/postQuizzScore', FBAuth, (req, res)=>{
     admin.auth().verifyIdToken(idToken)
     .then(decodedToken =>{
         const uid = decodedToken.uid
-
         const data={
             subject,
             chapterTitle,
             lessonTitle,
             note:parseInt(note)
         }
+
+        // console.log(data)
+
         admin.firestore().collection('users').doc(uid).collection('notes').doc().set(data)
 
         return res.send({message:`score posted`})

@@ -9,9 +9,6 @@ router.post('/api/getQuiz', FBAuth, (req, res) => {
     var {subject, chapter, lessonId} = req.body
     lessonId === "undifined" ? lessonId = "" : lessonId
 
-    console.log(subject, chapter, lessonId)
-
-
     let idToken
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
         idToken = req.headers.authorization.split('Bearer ')[1]
@@ -87,6 +84,7 @@ router.post('/api/getQuizWChapterId', FBAuth, (req, res) => {
     // console.log(subject, chapterId, lessonId)
 
     if(!lessonId){
+        // admin.firestore().collectionGroup('questions').where('chapterId', '==', chapterId).get()
         admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('questions').orderBy('questionNumber','asc').get()
         .then(data=>{
             // console.log(data)
@@ -95,7 +93,6 @@ router.post('/api/getQuizWChapterId', FBAuth, (req, res) => {
                 // console.log(doc.data())
                 quiz.push(doc.data())
             })
-            // console.log(quiz)
             res.send(quiz)
         })
         .catch(err=>{
@@ -113,7 +110,6 @@ router.post('/api/getQuizWChapterId', FBAuth, (req, res) => {
                 // console.log(doc.data())
                 quiz.push(doc.data())
             })
-            // console.log(quiz)
             res.send(quiz)
         })
         .catch(err=>{

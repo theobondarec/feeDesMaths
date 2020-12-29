@@ -53,7 +53,6 @@ const CoursPrecis = ()=>{
             // console.log(result)
             setCours(result)
             getScore(result)
-            // searchQuiz(result[0])
         })
         .catch(err=>{
             console.log(err)
@@ -312,7 +311,6 @@ const CoursPrecis = ()=>{
     }
 
     const quizQuestion = () =>{
-        // console.log(questions)
         if(questions.length>0){
             return(
             <div className="containerQuiz mt-sm-5 my-1">
@@ -397,43 +395,52 @@ const CoursPrecis = ()=>{
                 </div>
                 <div id="lessonPlan">
                     <div className="list-group" id="list-tab" role="tablist">
-                        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                            <div className="navbar-nav">
-                                <button className="btn btn-sm" type="button" onClick={()=>{displayLessons()}}>Leçons :</button>
-                                <button className="btn btn-sm" type="button" onClick={()=>{displayQuestions()}}>quiz :</button>
+                        <div className="card">
+                            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                                <div className="navbar-nav">
+                                    <button className="btn btn-sm" type="button" onClick={()=>{displayLessons()}}>Leçons :</button>
+                                    <button className="btn btn-sm" type="button" onClick={()=>{displayQuestions()}}>quiz :</button>
+                                </div>
+                            </nav>
+                            <div id="lecons">
+                                <h2 className="list-group-item" id="coursPrecisLeconTitreLecons">Leçons :</h2>
+                                {cours[2].lecons.map(item=>{
+                                    // console.log(item)
+                                    return(
+                                        // <a href={`#${item.lessonNumber}`} className="list-group-item list-group-item-action" key={item.lessonId}/*onClick={()=>{currentLesson()}}*///data-toggle="list"
+                                        <div key={item.lessonId} className="list-group-item">
+                                            <Link to={'/lesson/'+item.lessonId} className="list-group-item list-group-item-action" id="lessonPlanItems">
+                                                {`leçon ${item.lessonNumber} : ${item.lessonTitle}`}
+                                            </Link>
+                                            <button type="button" className="btn btn-primary" onClick={()=>{validate(item.subject, item.lessonId, item.chapter, item.chapterId)}}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check2-square" viewBox="0 0 16 16">
+                                                    <path fillRule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+                                                    <path fillRule="evenodd" d="M1.5 13A1.5 1.5 0 0 0 3 14.5h10a1.5 1.5 0 0 0 1.5-1.5V8a.5.5 0 0 0-1 0v5a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5h8a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 3v10z"></path>
+                                                </svg>
+                                                {/* Valider */}
+                                            </button>
+                                        </div>
+                                    )
+                                })}
                             </div>
-                        </nav>
-                        <div id="lecons">
-                            <h2 className="list-group-item" id="coursPrecisLeconTitreLecons">Leçons :</h2>
-                            {cours[2].lecons.map(item=>{
-                                // console.log(item)
-                                return(
-                                    // <a href={`#${item.lessonNumber}`} className="list-group-item list-group-item-action" key={item.lessonId}/*onClick={()=>{currentLesson()}}*///data-toggle="list"
-                                    <div key={item.lessonId} className="list-group-item">
-                                        <Link to={'/lesson/'+item.lessonId} className="list-group-item list-group-item-action" id="lessonPlanItems">
-                                            {`leçon ${item.lessonNumber} : ${item.lessonTitle}`}
-                                        </Link>
-                                        <button type="button" className="btn btn-primary" onClick={()=>{validate(item.subject, item.lessonId, item.chapter, item.chapterId)}}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check2-square" viewBox="0 0 16 16">
-                                                <path fillRule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
-                                                <path fillRule="evenodd" d="M1.5 13A1.5 1.5 0 0 0 3 14.5h10a1.5 1.5 0 0 0 1.5-1.5V8a.5.5 0 0 0-1 0v5a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V3a.5.5 0 0 1 .5-.5h8a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 3v10z"></path>
-                                            </svg>
-                                            {/* Valider */}
-                                        </button>
-                                    </div>
-                                )
-                            })}
+
+
+                            <div id="quiz">
+                                {note?showNote():quizQuestion()}
+                            </div>
+                            <div id="showScore">
+                                {note?showNote():waiting()}
+                            </div>
                         </div>
-                        <div id="quiz">
-                            {note?showNote():quizQuestion()}
-                        </div>
-                        <div id="showScore">
-                            {note?showNote():waiting()}
-                        </div>
+
                     </div>
                 </div>
             </div>
         )
+
+
+
+
     }
     else{
         return(
