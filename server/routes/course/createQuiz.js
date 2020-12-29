@@ -50,7 +50,7 @@ router.post('/api/createQuiz', FBAuth, (req, res) => {
                         subject,
                         chapterId
                     }
-                    console.log(questionQuiz)
+                    // console.log(questionQuiz)
                     
                     admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('questions').doc().set(questionQuiz)
                     // console.log("Creation quiz pour chapitre")
@@ -69,7 +69,7 @@ router.post('/api/createQuiz', FBAuth, (req, res) => {
                         chapterId,
                         lessonId
                     }
-                    console.log(questionQuiz)
+                    // console.log(questionQuiz)
 
                     admin.firestore().collection('cours').doc(subject).collection('chapitres').doc(chapterId).collection('lecons').doc(lessonId).collection('questions').doc().set(questionQuiz)
                     // console.log("Creation quiz pour lecon")

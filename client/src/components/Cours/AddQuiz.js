@@ -127,7 +127,7 @@ const Addquiz = () => {
 
     const postQuiz = async ()=>{
         const tab = await checkCorrectAnswer()
-        if(tab !== []){
+        if(tab.length > 0){
             fetch('/api/createQuiz', {
                 method: "post",
                 headers: {
@@ -287,7 +287,7 @@ const Addquiz = () => {
     const [existingQuiz, setExistingQuiz] = useState([])
     useEffect(()=>{
         if(matiere && chapitre){
-            console.log(matiere, chapitre, lecon)
+            // console.log(matiere, chapitre, lecon)
             fetch('/api/getQuiz',{
                 method: "post",
                 headers:{
@@ -302,7 +302,7 @@ const Addquiz = () => {
             })
             .then(res => res.json())
             .then((result)=>{
-                console.log(result)
+                // console.log(result)
                 setExistingQuiz(result)
             })
             .catch(err=>{
@@ -390,7 +390,7 @@ const Addquiz = () => {
                                 <option  className="defaultValue" value="undifined">Matières : </option>
                                 {subjects.map(subject=>{
                                     return(
-                                        <option key={subject} value={subject}>{subject}</option>
+                                        <option key={Math.random()} value={subject}>{subject}</option>
                                     )
                                 })}
                             </select>
@@ -400,7 +400,7 @@ const Addquiz = () => {
                                 <option  className="defaultValue" value="undifined">Chapitres : </option>
                                 {chapters.map(chapter=>{
                                     return(
-                                        <option key={chapter} value={chapter}>{chapter}</option>
+                                        <option key={Math.random()} value={chapter}>{chapter}</option>
                                     )
                                 })}
                             </select>
@@ -410,7 +410,7 @@ const Addquiz = () => {
                                 <option  className="defaultValue" value="undifined">Lecon : </option>
                                 {lessons.map(lesson=>{
                                     return(
-                                        <option key={lesson.lessonId} value={lesson.lessonId}>{lesson.lessonTitle}</option>
+                                        <option key={Math.random()} value={lesson.lessonId}>{lesson.lessonTitle}</option>
                                     )
                                 })}
                             </select>
@@ -535,7 +535,7 @@ const Addquiz = () => {
                             {
                                 existingQuiz.map(question=>{
                                     return(
-                                        <div id="singleQuestion" key={question.question}>
+                                        <div id="singleQuestion" key={Math.random()}>
                                             <label  className="form-control labelAddQuiz">{<InlineTex texContent={`${question.question}`}/>}</label>
                                             <label  className="form-control labelAddQuiz" id="existingQuestionNumber">{`N° ${question.questionNumber}`}</label>
                                         </div>
