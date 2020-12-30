@@ -2,6 +2,8 @@ import React, {useContext} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import './Navbar.css';
 import {UserContext} from '../../App'
+import Cookies from 'universal-cookie';
+
 
 // eslint-disable-next-line
 import firebase from '@firebase/app'
@@ -11,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 const NavBar = () =>{
+    const cookies = new Cookies()
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
     const renderList=()=>{
@@ -57,6 +60,7 @@ const NavBar = () =>{
                             <button className="dropdown-item" 
                             onClick={()=>{
                                 localStorage.clear()
+                                cookies.remove('jwt', {path:'/'})
                                 dispatch({type:"CLEAR"})
                                 history.push('/login')
                                 toast.info('Logged out !',{autoClose: 3000})
@@ -89,6 +93,7 @@ const NavBar = () =>{
                             <button className="dropdown-item" 
                             onClick={()=>{
                                 localStorage.clear()
+                                cookies.remove('jwt', {path:'/'})
                                 dispatch({type:"CLEAR"})
                                 history.push('/login')
                                 toast.info('Logged out !',{autoClose: 3000})
@@ -116,6 +121,7 @@ const NavBar = () =>{
                             <button className="dropdown-item" 
                             onClick={()=>{
                                 localStorage.clear()
+                                cookies.remove('jwt', {path:'/'})
                                 dispatch({type:"CLEAR"})
                                 history.push('/login')
                                 toast.info('Logged out !',{autoClose: 3000})

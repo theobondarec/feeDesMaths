@@ -1,9 +1,8 @@
 import React, {useEffect, useState, useContext, Component} from 'react'
 import {useParams, useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
-// import './Cours.css';
-// import '../screens/Pages.css'
 import './Modification.css';
+import Cookies from 'universal-cookie';
 
 import { convertFromHTML, convertFromRaw} from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -18,17 +17,22 @@ toast.configure()
 
 
 const Modification = ()=>{
+    const cookies = new Cookies()
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
     const testExpiredToken = () => {
-            localStorage.clear()
-            dispatch({type: "CLEAR"})
-            history.push('/login')
-    }
+        localStorage.clear()
+        //Clear Cookies
+        cookies.remove('jwt', {path:'/'})
+        // Clear Cookies
+        dispatch({type: "CLEAR"})
+        history.push('/login')
+	}
     useEffect(()=>{
         fetch('/api/tokenIsOk',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         })
         .then(res=>res.json())
@@ -55,7 +59,8 @@ const Modification = ()=>{
     useEffect(()=>{
         fetch(`/api/modification/${postId.id}`,{
             headers:{
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         }).then(res=>res.json())
         .then(result=>{
@@ -86,7 +91,8 @@ const Modification = ()=>{
     useEffect(()=>{
         fetch('/api/subjects',{
             headers:{
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         }).then(res=>res.json())
         .then(result=>{
@@ -107,7 +113,8 @@ const Modification = ()=>{
         if(matiere === "" || matiere === "undifined"){
             fetch('/api/chapters',{
                 headers:{
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
                 }
             }).then(res=>res.json())
             .then(result=>{
@@ -125,7 +132,8 @@ const Modification = ()=>{
                 method: "post",
                 headers:{
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
                 },
                 body:JSON.stringify({
                     subject:matiere
@@ -149,7 +157,8 @@ const Modification = ()=>{
             method: "post",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
+                // "Authorization": "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             },
             body: JSON.stringify({
                 subject:matiere,
@@ -180,7 +189,84 @@ const Modification = ()=>{
     }
 
 
-    if(!lesson){
+    if(lesson){
+        if(allow === true){
+            return(
+                <div className="form-row mcl">
+                    <div className="card col add-card-Modification">
+                        <h1>Modifier une leçon</h1>
+                        <div className="form-row mcl" id="spaceModification">
+                            <div className="col">
+                                <select id="inputStateMatiere" className="form-control" onChange={(e)=>{setMatiere(e.target.value)}}>
+                                    <option  className="defaultValue" value={lesson.subject}>{lesson.subject}</option>
+                                    <option disabled>──────────</option>
+                                    {subjects.map(subject=>{
+                                        return(
+                                            <option key={subject} value={subject}>{subject}</option>
+                                        )
+                                    })}
+                                </select>
+                            </div>
+                            <div className="col">
+                                <select id="inputStateChapitre" className="form-control" onChange={(e)=>{setChapitre(e.target.value)}}>
+                                    <option  className="defaultValue" value={lesson.chapter}>{lesson.chapter}</option>
+                                    <option disabled>──────────</option>
+                                    {chapters.map(chapter=>{
+                                        return(
+                                            <option key={chapter} value={chapter}>{chapter}</option>
+                                        )
+                                    })}
+                                </select>
+                            </div>
+                            <div className="col">
+                                <input type="number" className="form-control" placeholder="chapitre N°" id="lessNumber"
+                                    value={lessNumber}
+                                    onChange={(e) => setLessonNumber(e.target.value)}
+                                />
+                            </div>
+                            <div className="col">
+                                <input type="text" className="form-control" placeholder="Titre de la leçon" id="leconTitle"
+                                    value={leconTitle}
+                                    onChange={(e) => setLeconTitle(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        
+                        <Editor
+                            editorState={cours}
+                            // toolbarClassName="toolbarClassName"
+                            // wrapperClassName="wrapperClassName"
+                            editorClassName='editorClassName'
+                            onEditorStateChange={onEditorStateChangeCours}
+                        /> 
+                        
+                        <button type="button" className="btn btn-primary"
+                                onClick={() => updateLesson()}
+                        >
+                            Mettre à jour
+                        </button>
+                    </div>
+                    <div className="card col add-card-Modification">
+                        <h1>Prévisualtion leçon</h1>
+                        <div>
+                            {
+                                cours !== "" ?
+                                    <InlineTex texContent={draftToHtml(convertToRaw(cours.getCurrentContent()))}/> : ""
+                            }
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        else{
+            return(
+                <div>
+                    <h1>{errorMessage}</h1>
+                </div>
+            )
+        }
+    }
+    else{
         return(
             <div>
                 <h1>Chargement de la base de donnée</h1>
@@ -192,74 +278,6 @@ const Modification = ()=>{
                         <label>●</label>
                         <label>●</label>
                         <label>●</label>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-    else{
-        return(
-            <div className="form-row mcl">
-                <div className="card col add-card-Modification">
-                    <h1>Modifier une leçon</h1>
-                    <div className="form-row mcl" id="spaceModification">
-                        <div className="col">
-                            <select id="inputStateMatiere" className="form-control" onChange={(e)=>{setMatiere(e.target.value)}}>
-                                <option  className="defaultValue" value={lesson.subject}>{lesson.subject}</option>
-                                <option disabled>──────────</option>
-                                {subjects.map(subject=>{
-                                    return(
-                                        <option key={subject} value={subject}>{subject}</option>
-                                    )
-                                })}
-                            </select>
-                        </div>
-                        <div className="col">
-                            <select id="inputStateChapitre" className="form-control" onChange={(e)=>{setChapitre(e.target.value)}}>
-                                <option  className="defaultValue" value={lesson.chapter}>{lesson.chapter}</option>
-                                <option disabled>──────────</option>
-                                {chapters.map(chapter=>{
-                                    return(
-                                        <option key={chapter} value={chapter}>{chapter}</option>
-                                    )
-                                })}
-                            </select>
-                        </div>
-                        <div className="col">
-                            <input type="number" className="form-control" placeholder="chapitre N°" id="lessNumber"
-                                value={lessNumber}
-                                onChange={(e) => setLessonNumber(e.target.value)}
-                            />
-                        </div>
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="Titre de la leçon" id="leconTitle"
-                                value={leconTitle}
-                                onChange={(e) => setLeconTitle(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    
-                    <Editor
-                        editorState={cours}
-                        // toolbarClassName="toolbarClassName"
-                        // wrapperClassName="wrapperClassName"
-                        editorClassName='editorClassName'
-                        onEditorStateChange={onEditorStateChangeCours}
-                    /> 
-                    
-                    <button type="button" className="btn btn-primary"
-                            onClick={() => updateLesson()}
-                    >
-                        Mettre à jour
-                    </button>
-                </div>
-                <div className="card col add-card-Modification">
-                    <h1>Prévisualtion leçon</h1>
-                    <div>
-                        {
-                            cours !== "" ?
-                                <InlineTex texContent={draftToHtml(convertToRaw(cours.getCurrentContent()))}/> : ""
-                        }
                     </div>
                 </div>
             </div>

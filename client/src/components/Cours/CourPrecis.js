@@ -2,6 +2,8 @@ import React, {useEffect, useState, useContext, Component} from 'react'
 import {Link, useParams, useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
 import './CourPrecis.css';
+import Cookies from 'universal-cookie';
+
 
 import { convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -15,20 +17,26 @@ toast.configure()
 
 
 const CoursPrecis = ()=>{
+    const cookies = new Cookies()
+
     const [cours ,setCours]=useState([])
     const {state, dispatch} = useContext(UserContext)
     const coursId = useParams()
     const history = useHistory()
 
     const testExpiredToken = () => {
-            localStorage.clear()
-            dispatch({type: "CLEAR"})
-            history.push('/login')
+        localStorage.clear()
+        //Clear Cookies
+        cookies.remove('jwt', {path:'/'})
+        // Clear Cookies
+        dispatch({type: "CLEAR"})
+        history.push('/login')
     }
     useEffect(()=>{
         fetch('/api/tokenIsOk',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
             }
         })
         .then(res=>res.json())
@@ -46,7 +54,8 @@ const CoursPrecis = ()=>{
     useEffect(()=>{
         fetch(`/api/getSpecificCourse/${coursId.id}`,{
             headers:{
-                "Authorization":"Bearer "+localStorage.getItem("jwt")
+                // "Authorization":"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         }).then(res=>res.json())
         .then(result=>{
@@ -64,7 +73,9 @@ const CoursPrecis = ()=>{
         const chapterTitle = res[0].chapterTitle
         fetch(`/api/getQuizScoreForChapter/${chapterTitle}`, {
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+
             }
         }).then(res=>res.json())
         .then(result=>{
@@ -85,7 +96,9 @@ const CoursPrecis = ()=>{
             method: "post",
             headers:{
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+
             },
             body: JSON.stringify({
                 chapterId,
@@ -102,7 +115,9 @@ const CoursPrecis = ()=>{
                 method: "post",
                 headers:{
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
+
                 },
                 body: JSON.stringify({
                     subject,
@@ -131,7 +146,9 @@ const CoursPrecis = ()=>{
     useEffect(()=>{
         fetch(`/api/checkProgression/${coursId.id}`,{
             headers:{
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+
             }
         }).then(res=>res.json())
         .then(result=>{
@@ -164,7 +181,9 @@ const CoursPrecis = ()=>{
             method: "post",
             headers:{
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+
             },
             body:JSON.stringify({
                 subject:cours[0].subject,
@@ -266,7 +285,9 @@ const CoursPrecis = ()=>{
             method: "post",
             headers:{
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+
             },
             body: JSON.stringify({
                 chapterTitle:cours[0].chapterTitle,

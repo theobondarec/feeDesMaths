@@ -1,21 +1,26 @@
 import React, {useState, useEffect, useContext}from 'react'
 import {useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
+import Cookies from 'universal-cookie';
 import './profil.css'
 
 const Profile = ()=>{
-
+    const cookies = new Cookies()
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
     const testExpiredToken = () => {
-            localStorage.clear()
-            dispatch({type: "CLEAR"})
-            history.push('/login')
-    }
+        localStorage.clear()
+        //Clear Cookies
+        cookies.remove('jwt', {path:'/'})
+        // Clear Cookies
+        dispatch({type: "CLEAR"})
+        history.push('/login')
+	}
     useEffect(()=>{
         fetch('/api/tokenIsOk',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         })
         .then(res=>res.json())
@@ -36,7 +41,8 @@ const Profile = ()=>{
     useEffect(()=>{
         fetch('/api/getGlobalProgression',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         })
         .then(res=>res.json())
@@ -75,7 +81,8 @@ const Profile = ()=>{
     useEffect(()=>{
         fetch('/api/getScores',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         })
         .then(res=>res.json())

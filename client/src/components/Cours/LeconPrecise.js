@@ -9,24 +9,31 @@ import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import { InlineTex } from 'react-tex'
 import {EditorState, convertToRaw, ContentState} from 'draft-js';
+import Cookies from 'universal-cookie';
 
 import {toast} from 'react-toastify';  
 import 'react-toastify/dist/ReactToastify.css';  
 toast.configure()
 
 const LeconPrecise = ()=>{
+    const cookies = new Cookies()
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
 
     const testExpiredToken = () => {
-            localStorage.clear()
-            dispatch({type: "CLEAR"})
-            history.push('/login')
+        localStorage.clear()
+        //Clear Cookies
+        cookies.remove('jwt', {path:'/'})
+        // Clear Cookies
+        dispatch({type: "CLEAR"})
+        history.push('/login')
     }
+    
     useEffect(()=>{
         fetch('/api/tokenIsOk',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         })
         .then(res=>res.json())
@@ -47,7 +54,8 @@ const LeconPrecise = ()=>{
     useEffect(()=>{
         fetch(`/api/lesson/${lessonId.id}`,{
             headers:{
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         }).then(res=>res.json())
         .then(result=>{
@@ -63,7 +71,8 @@ const LeconPrecise = ()=>{
         const lessonTitle = res.lessonTitle
         fetch(`/api/getQuizScoreForLesson/${lessonTitle}`, {
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         }).then(res=>res.json())
         .then(result=>{
@@ -83,7 +92,8 @@ const LeconPrecise = ()=>{
             method: "post",
             headers:{
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             },
             body:JSON.stringify({
                 subject:lesson.subject,
@@ -109,7 +119,8 @@ const LeconPrecise = ()=>{
             method: "post",
             headers:{
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             },
             body: JSON.stringify({
                 chapterId,
@@ -126,7 +137,8 @@ const LeconPrecise = ()=>{
                 method: "post",
                 headers:{
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
                 },
                 body: JSON.stringify({
                     subject,
@@ -164,15 +176,15 @@ const LeconPrecise = ()=>{
         if(clip){
             if(clip.length > 15){
                 const clipId = youtube_parser(clip)    
-                console.log(clipId) 
+                // console.log(clipId)
                 return(
-                    <iframe width="560" height="315" src={`http://www.youtube.com/embed/${clipId}`} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="560" height="315" src={`http://www.youtube.com/embed/${clipId}`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 )
             }
             else{
                 const clipId = clip
                 return(
-                    <iframe width="560" height="315" src={`http://www.youtube.com/embed/${clipId}`} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="560" height="315" src={`http://www.youtube.com/embed/${clipId}`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 )
             }
         }
@@ -345,7 +357,9 @@ const LeconPrecise = ()=>{
             method: "post",
             headers:{
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+
             },
             body: JSON.stringify({
                 chapterTitle:lesson.chapter,
@@ -395,9 +409,9 @@ const LeconPrecise = ()=>{
                     </nav>
                     <div className="card-body" id="lecons">
                         {/* <h2 className="list-group-item" id="coursPrecisLeconTitreLecons">Leçons :</h2> */}
-                        {/* {
+                        {
                             showClip(lesson.lessonClip)
-                        } */}
+                        }
                         <InlineTex texContent={lesson.lessonContent}/>
 
                         <button type="button" className="btn btn-primary" onClick={()=>{goToChapter(lesson.subject, lesson.lessonId, lesson.chapter, lesson.chapterId)}}>

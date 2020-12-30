@@ -3,20 +3,28 @@ import './Cours.css';
 import {Link, useHistory} from 'react-router-dom'
 import { UserContext } from '../../App'
 import { InlineTex } from 'react-tex'
+import Cookies from 'universal-cookie';
 
 const Cours = ()=>{
+    const cookies = new Cookies()
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
 
     const testExpiredToken = () => {
-            localStorage.clear()
-            dispatch({type: "CLEAR"})
-            history.push('/login')
+        localStorage.clear()
+        //Clear Cookies
+        cookies.remove('jwt', {path:'/'})
+        // Clear Cookies
+        dispatch({type: "CLEAR"})
+        history.push('/login')
     }
+    
     useEffect(()=>{
         fetch('/api/tokenIsOk',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+
             }
         })
         .then(res=>res.json())
@@ -35,9 +43,10 @@ const Cours = ()=>{
     const [errorMessage, setErrorMessage] = useState("")
     const [allow, setAllow] = useState("")
     useEffect(()=>{
-        fetch('/api/subjects',{
+        fetch('/api/subjectsCours',{
             headers:{
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         }).then(res=>res.json())
         .then(result=>{
@@ -60,7 +69,8 @@ const Cours = ()=>{
         if(matiere === "" || matiere === "undifined"){
             fetch('/api/getCourse',{
                 headers:{
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
                 }
             }).then(res=>res.json())
             .then(result=>{
@@ -81,7 +91,8 @@ const Cours = ()=>{
                 method: "post",
                 headers:{
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
                 },
                 body:JSON.stringify({
                     subject:matiere

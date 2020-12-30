@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext}from 'react'
 import {useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
 import './Admin.css';
+import Cookies from 'universal-cookie';
 
 import {toast} from 'react-toastify';  
 import 'react-toastify/dist/ReactToastify.css';  
@@ -10,6 +11,7 @@ toast.configure()
 // import {testExpiredToken} from './clearToken'
 
 const Admin = () => {
+    const cookies = new Cookies()
     const [data, setData] = useState([])
     const [errorMessage, setErrorMessage] = useState([])
     const [allow, setAllow] = useState([])
@@ -19,6 +21,9 @@ const Admin = () => {
     const history = useHistory()
     const testExpiredToken = () => {
             localStorage.clear()
+            //Clear Cookies
+            cookies.remove('jwt', {path:'/'})
+            // Clear Cookies
             dispatch({type: "CLEAR"})
             history.push('/login')
     }
@@ -26,7 +31,8 @@ const Admin = () => {
     useEffect(()=>{
         fetch('/api/tokenIsOk',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         })
         .then(res=>res.json())
@@ -44,7 +50,9 @@ const Admin = () => {
     useEffect(() => {
         fetch('/api/admin',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")/*accessToken*/
+                Authorization:"Bearer "+ cookies.get('jwt')
+                // Authorization:"Bearer "+localStorage.getItem("jwt")/*accessToken*/
+                
             }
         }).then(res=>res.json())
         .then(result=>{
@@ -75,7 +83,9 @@ const Admin = () => {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+
+                // "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({
                 userId: idValue,

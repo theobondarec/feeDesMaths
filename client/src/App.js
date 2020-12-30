@@ -4,6 +4,11 @@ import Header from './components/Header/Header'
 import Footer from "./components/Footer/Footer";
 import {BrowserRouter, Route, Switch, useHistory} from 'react-router-dom'
 
+
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
+
+
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import Profile from './components/Profil/Profile'
@@ -18,10 +23,8 @@ import LeconPrecise from './components/Cours/LeconPrecise'
 import Modification from './components/Cours/Modification'
 import {reducer, initialState} from './reducer/userReducer'
 import Addquiz from './components/Cours/AddQuiz'
-import './App.css'
-// {/*Pagination cours precis  ->  a suppr*/}
 import CoursPrecis from './components/Cours/CourPrecis'
-import Quiz from './components/Cours/Quiz'
+import './App.css'
 
 
 export const UserContext = createContext()
@@ -33,16 +36,38 @@ const Routing = () => {
         const user = JSON.parse(localStorage.getItem("user"))
         if (user) {
             dispatch({type: "USER", playload: user})
-            // history.push('/')            if user reload go to home page
         } else {
-            history.push('/login')          /////////////if user can access home without signin change path to '/'
+            history.push('/login')
         }
     }, [])
 
     return (
         <Switch>
+            <PublicRoute restricted={false} component={Home} path="/" exact />
+            <PublicRoute restricted={false} component={Juridique} path="/juridique" />
+            <PublicRoute restricted={false} component={Settings} path="/settings" exact />
+
+            <PublicRoute restricted={true} component={Login} path="/login" exact />
+            <PublicRoute restricted={true} component={Register} path="/register" exact />
+
+            <PrivateRoute component={Profile} path="/profile" exact />
+            <PrivateRoute component={Admin} path="/admin" exact />
+            <PrivateRoute component={Cours} path="/cours" exact />
+            <PrivateRoute component={Mescours} path="/mypost" exact />
+            <PrivateRoute component={Addlesson} path="/createpost" exact />
+            <PrivateRoute component={CoursPrecis} path="/cours/:id" />
+            <PrivateRoute component={LeconPrecise} path="/lesson/:id"  />
+            <PrivateRoute component={Modification} path="/modification/:id" />
+            <PrivateRoute component={Addquiz} path="/createQuiz" exact />
+            {/*
+            <Route exact path="/juridique">
+                <Juridique/>
+            </Route>
             <Route exact path="/">
                 <Home/>
+            </Route>
+            <Route path="/settings">
+                <Settings/>
             </Route>
             <Route path="/login">
                 <Login/>
@@ -56,9 +81,6 @@ const Routing = () => {
             <Route path="/admin">
                 <Admin/>
             </Route>
-            <Route path="/settings">
-                <Settings/>
-            </Route>
             <Route exact path="/cours">
                 <Cours/>
             </Route>
@@ -70,9 +92,6 @@ const Routing = () => {
             </Route>
             <Route path="/cours/:id">
                 <CoursPrecis/>
-            </Route>
-            <Route exact path="/juridique">
-                <Juridique/>
             </Route>
             <Route path="/lesson/:id">
                 <LeconPrecise />
@@ -86,9 +105,7 @@ const Routing = () => {
             <Route path='/quiz'>
                 <Quiz />
             </Route>
-            {/* <Route path="/lesson/:id">
-                <LeconChap/>
-            </Route> */}
+            */}
         </Switch>
     )
 }
@@ -98,17 +115,14 @@ function App() {
     return (
         <UserContext.Provider value={{state, dispatch}}>
             <BrowserRouter>
-            <div className="content">
-                {/* HEADER */}
-                <Header/>
-                <NavBar/> {/* */}
-                {/*Body*/} {/*visible que si login*/}
-                <Routing/>
-            </div>
-            <div className="footer">
-                {/* FOOTER */}
-                <Footer/>  
-            </div>
+                <div className="content">
+                    <Header/>
+                    <NavBar/>
+                    <Routing/>
+                </div>
+                <div className="footer">
+                    <Footer/>  
+                </div>
             </BrowserRouter>
         </UserContext.Provider>
     );

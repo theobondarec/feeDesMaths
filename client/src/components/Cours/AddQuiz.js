@@ -4,6 +4,7 @@ import {UserContext} from '../../App'
 import { InlineTex } from 'react-tex'
 import './AddQuiz.css'
 import dotenv from 'dotenv'
+import Cookies from 'universal-cookie';
 
 import {Editor} from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -18,19 +19,25 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 const Addquiz = () => {
+    const cookies = new Cookies()
+
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory()
 
     const testExpiredToken = () => {
         localStorage.clear()
+        //Clear Cookies
+        cookies.remove('jwt', {path:'/'})
+        // Clear Cookies
         dispatch({type: "CLEAR"})
         history.push('/login')
-    }
+}
 
     useEffect(()=>{
         fetch('/api/tokenIsOk',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
             }
         })
         .then(res=>res.json())
@@ -68,29 +75,31 @@ const Addquiz = () => {
 
 
     useEffect(()=>{
-        if(!answersA){
-            document.getElementById("checkA").disabled = true;
-        }
-        else{
-            document.getElementById("checkA").disabled = false;
-        }
-        if(!answersB){
-            document.getElementById("checkB").disabled = true;
-        }
-        else{
-            document.getElementById("checkB").disabled = false;
-        }
-        if(!answersC){
-            document.getElementById("checkC").disabled = true;
-        }
-        else{
-            document.getElementById("checkC").disabled = false;
-        }
-        if(!answersD){
-            document.getElementById("checkD").disabled = true;
-        }
-        else{
-            document.getElementById("checkD").disabled = false;
+        if(allow === true){
+            if(!answersA){
+                document.getElementById("checkA").disabled = true;
+            }
+            else{
+                document.getElementById("checkA").disabled = false;
+            }
+            if(!answersB){
+                document.getElementById("checkB").disabled = true;
+            }
+            else{
+                document.getElementById("checkB").disabled = false;
+            }
+            if(!answersC){
+                document.getElementById("checkC").disabled = true;
+            }
+            else{
+                document.getElementById("checkC").disabled = false;
+            }
+            if(!answersD){
+                document.getElementById("checkD").disabled = true;
+            }
+            else{
+                document.getElementById("checkD").disabled = false;
+            }
         }
     },[answersA, answersB, answersC, answersD])
 
@@ -132,7 +141,8 @@ const Addquiz = () => {
                 method: "post",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
+                    // "Authorization": "Bearer " + localStorage.getItem("jwt")
                 },
                 body: JSON.stringify({
                     // ACCESDB
@@ -170,17 +180,18 @@ const Addquiz = () => {
 
     const [subjects, setsubjects] = useState([])
     const [errorMessage, setErrorMessage] = useState([])
-    // const [allow, setAllow] = useState([])
+    const [allow, setAllow] = useState([])
     useEffect(()=>{
         fetch('/api/subjects',{
             headers:{
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         }).then(res=>res.json())
         .then(result=>{
             if(result.allow === true){
                 setsubjects(result.subjects)
-                // setAllow(result.allow)
+                setAllow(result.allow)
             }
             else{
                 setErrorMessage(result.error)
@@ -194,7 +205,9 @@ const Addquiz = () => {
         if(matiere === "" || matiere === "undifined"){
             fetch('/api/chapters',{
                 headers:{
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
+
                 }
             }).then(res=>res.json())
             .then(result=>{
@@ -212,7 +225,9 @@ const Addquiz = () => {
                 method: "post",
                 headers:{
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
+
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
                 },
                 body:JSON.stringify({
                     subject:matiere
@@ -241,7 +256,8 @@ const Addquiz = () => {
         if((matiere === "" || matiere === "undifined") || ( chapitre === "" || chapitre === "undifined")){
             fetch('/api/lesson',{
                 headers:{
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
                 }
             }).then(res=>res.json())
             .then(result=>{
@@ -262,7 +278,8 @@ const Addquiz = () => {
                 method: "post",
                 headers:{
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
                 },
                 body:JSON.stringify({
                     subject:matiere,
@@ -292,7 +309,8 @@ const Addquiz = () => {
                 method: "post",
                 headers:{
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
                 },
                 body:JSON.stringify({
                     subject:matiere,
@@ -379,176 +397,184 @@ const Addquiz = () => {
         }
     }
 
-    return(
-        <div>
-            <div className="form-row mcl">
-                <div className="card col add-card-AddQuestion">
-                    <h1>Ajouter une question</h1>
-                    <div className="form-row mcl">
-                        <div className="col">
-                            <select id="inputStateMatiere" className="form-control" onChange={(e)=>{setMatiere(e.target.value)}}>
-                                <option  className="defaultValue" value="undifined">Matières : </option>
-                                {subjects.map(subject=>{
-                                    return(
-                                        <option key={Math.random()} value={subject}>{subject}</option>
-                                    )
-                                })}
-                            </select>
-                        </div>
-                        <div className="col">
-                            <select id="inputStateChapitre" className="form-control" onChange={(e)=>{setChapitre(e.target.value)}}>
-                                <option  className="defaultValue" value="undifined">Chapitres : </option>
-                                {chapters.map(chapter=>{
-                                    return(
-                                        <option key={Math.random()} value={chapter}>{chapter}</option>
-                                    )
-                                })}
-                            </select>
-                        </div>
-                        <div className="col">
-                            <select id="inputStateChapitre" className="form-control" onChange={(e)=>{setLecon(e.target.value)}}>
-                                <option  className="defaultValue" value="undifined">Lecon : </option>
-                                {lessons.map(lesson=>{
-                                    return(
-                                        <option key={Math.random()} value={lesson.lessonId}>{lesson.lessonTitle}</option>
-                                    )
-                                })}
-                            </select>
-                        </div>
-                        <div className="col">
-                            <input type="number" className="form-control" placeholder="Question N°" id="questionNumber"
-                                value={questionNumber}
-                                onChange={(e) => setQuestionNumber(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <Editor
-                            id="question"
-                            editorState={question}
-                            toolbarClassName="toolbarClassName"
-                            wrapperClassName="wrapperClassName"
-                            editorClassName="editorClassName"
-                            onEditorStateChange={onEditorStateChangeQuestion}
-                            toolbar={{
-                                fontFamily: {
-                                    options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana', 'Chalkduster Regular'],
-                                    className: undefined,
-                                    component: undefined,
-                                    dropdownClassName: undefined,
-                                }
-                            }}
-                        />
-                    </div>
-                    <div className="form-row mcl">
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="réponse A :" id="answersA"
-                                value={answersA}
-                                onChange={(e) => setAnswersA(e.target.value)}
-                            />
-                        </div>
-                        <div className="form-check col">
-                            <input className="form-check-input" type="checkbox" value={answersA} id="checkA"/>
-                        </div>
-                    </div>
-                    <div className="form-row mcl">
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="réponse B :" id="answersB"
-                                value={answersB}
-                                onChange={(e) => setAnswersB(e.target.value)}
-                            />
-                        </div>
-                        <div className="form-check col">
-                            <input className="form-check-input" type="checkbox" value={answersB} id="checkB"/>
-                        </div>
-                    </div>
-                    <div className="form-row mcl">
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="réponse C :" id="answersC"
-                                value={answersC}
-                                onChange={(e) => setAnswersC(e.target.value)}
-                            />
-                        </div>
-                        <div className="form-check col">
-                            <input className="form-check-input" type="checkbox" value={answersC} id="checkC"/>
-                        </div>
-                    </div>
-                    <div className="form-row mcl">
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="réponse D :" id="answersD"
-                                value={answersD}
-                                onChange={(e) => setAnswersD(e.target.value)}
-                            />
-                        </div>
-                        <div className="form-check col">
-                            <input className="form-check-input" type="checkbox" value={answersD} id="checkD"/>
-                        </div>
-                    </div>
-                    <button className="btn btn-primary" onClick={()=>{postQuiz()}}>
-                            Ajouter la question
-                    </button>
-                </div>
-                <div className="card col add-card-AddQuestion">
-                    <div className="row bothParts">
-                        <div className="col">
-                            <h3>PREVISU QUESTIONS</h3>
-                            <div id="quizWay">
-                                {
-                                    displaySubject()
-                                }
-                                {
-                                    displayChapter()
-                                }
-                                {
-                                    displayLesson()
-                                }
-                                {
-                                    displayQuestionNumber()
-                                }   
-                            </div>
-                            <div id="sizeQuestionRender">
-                                {
-                                    question !== "" ?
-                                    <label  className="form-control labelAddQuiz">{<InlineTex texContent={draftToHtml(convertToRaw(question.getCurrentContent()))}/>}</label>
-                                    : ""
-                                }
+    if(allow === true){
+        return(
+            <div>
+                <div className="form-row mcl">
+                    <div className="card col add-card-AddQuestion">
+                        <h1>Ajouter une question</h1>
+                        <div className="form-row mcl">
+                            <div className="col">
+                                <select id="inputStateMatiere" className="form-control" onChange={(e)=>{setMatiere(e.target.value)}}>
+                                    <option  className="defaultValue" value="undifined">Matières : </option>
+                                    {subjects.map(subject=>{
+                                        return(
+                                            <option key={Math.random()} value={subject}>{subject}</option>
+                                        )
+                                    })}
+                                </select>
                             </div>
                             <div className="col">
-                                {
-                                    displayIfAnswerA()
-                                }
-                                {
-                                    displayIfAnswerB()
-                                }
-                                {
-                                    displayIfAnswerC()
-                                }
-                                {
-                                    displayIfAnswerD()
-                                }
+                                <select id="inputStateChapitre" className="form-control" onChange={(e)=>{setChapitre(e.target.value)}}>
+                                    <option  className="defaultValue" value="undifined">Chapitres : </option>
+                                    {chapters.map(chapter=>{
+                                        return(
+                                            <option key={Math.random()} value={chapter}>{chapter}</option>
+                                        )
+                                    })}
+                                </select>
+                            </div>
+                            <div className="col">
+                                <select id="inputStateChapitre" className="form-control" onChange={(e)=>{setLecon(e.target.value)}}>
+                                    <option  className="defaultValue" value="undifined">Lecon : </option>
+                                    {lessons.map(lesson=>{
+                                        return(
+                                            <option key={Math.random()} value={lesson.lessonId}>{lesson.lessonTitle}</option>
+                                        )
+                                    })}
+                                </select>
+                            </div>
+                            <div className="col">
+                                <input type="number" className="form-control" placeholder="Question N°" id="questionNumber"
+                                    value={questionNumber}
+                                    onChange={(e) => setQuestionNumber(e.target.value)}
+                                />
                             </div>
                         </div>
+                        <div>
+                            <Editor
+                                id="question"
+                                editorState={question}
+                                toolbarClassName="toolbarClassName"
+                                wrapperClassName="wrapperClassName"
+                                editorClassName="editorClassName"
+                                onEditorStateChange={onEditorStateChangeQuestion}
+                                toolbar={{
+                                    fontFamily: {
+                                        options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana', 'Chalkduster Regular'],
+                                        className: undefined,
+                                        component: undefined,
+                                        dropdownClassName: undefined,
+                                    }
+                                }}
+                            />
+                        </div>
+                        <div className="form-row mcl">
+                            <div className="col">
+                                <input type="text" className="form-control" placeholder="réponse A :" id="answersA"
+                                    value={answersA}
+                                    onChange={(e) => setAnswersA(e.target.value)}
+                                />
+                            </div>
+                            <div className="form-check col">
+                                <input className="form-check-input" type="checkbox" value={answersA} id="checkA"/>
+                            </div>
+                        </div>
+                        <div className="form-row mcl">
+                            <div className="col">
+                                <input type="text" className="form-control" placeholder="réponse B :" id="answersB"
+                                    value={answersB}
+                                    onChange={(e) => setAnswersB(e.target.value)}
+                                />
+                            </div>
+                            <div className="form-check col">
+                                <input className="form-check-input" type="checkbox" value={answersB} id="checkB"/>
+                            </div>
+                        </div>
+                        <div className="form-row mcl">
+                            <div className="col">
+                                <input type="text" className="form-control" placeholder="réponse C :" id="answersC"
+                                    value={answersC}
+                                    onChange={(e) => setAnswersC(e.target.value)}
+                                />
+                            </div>
+                            <div className="form-check col">
+                                <input className="form-check-input" type="checkbox" value={answersC} id="checkC"/>
+                            </div>
+                        </div>
+                        <div className="form-row mcl">
+                            <div className="col">
+                                <input type="text" className="form-control" placeholder="réponse D :" id="answersD"
+                                    value={answersD}
+                                    onChange={(e) => setAnswersD(e.target.value)}
+                                />
+                            </div>
+                            <div className="form-check col">
+                                <input className="form-check-input" type="checkbox" value={answersD} id="checkD"/>
+                            </div>
+                        </div>
+                        <button className="btn btn-primary" onClick={()=>{postQuiz()}}>
+                                Ajouter la question
+                        </button>
                     </div>
-                    <div className="bothParts">
-                        <h3>Questions existantes</h3>
-                        <div id="text">
-                            {
-                                existingQuiz.map(question=>{
-                                    return(
-                                        <div id="singleQuestion" key={Math.random()}>
-                                            <label  className="form-control labelAddQuiz">{<InlineTex texContent={`${question.question}`}/>}</label>
-                                            <label  className="form-control labelAddQuiz" id="existingQuestionNumber">{`N° ${question.questionNumber}`}</label>
-                                        </div>
-                                    )
-                                })
-                            }
+                    <div className="card col add-card-AddQuestion">
+                        <div className="row bothParts">
+                            <div className="col">
+                                <h3>PREVISU QUESTIONS</h3>
+                                <div id="quizWay">
+                                    {
+                                        displaySubject()
+                                    }
+                                    {
+                                        displayChapter()
+                                    }
+                                    {
+                                        displayLesson()
+                                    }
+                                    {
+                                        displayQuestionNumber()
+                                    }   
+                                </div>
+                                <div id="sizeQuestionRender">
+                                    {
+                                        question !== "" ?
+                                        <label  className="form-control labelAddQuiz">{<InlineTex texContent={draftToHtml(convertToRaw(question.getCurrentContent()))}/>}</label>
+                                        : ""
+                                    }
+                                </div>
+                                <div className="col">
+                                    {
+                                        displayIfAnswerA()
+                                    }
+                                    {
+                                        displayIfAnswerB()
+                                    }
+                                    {
+                                        displayIfAnswerC()
+                                    }
+                                    {
+                                        displayIfAnswerD()
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bothParts">
+                            <h3>Questions existantes</h3>
+                            <div id="text">
+                                {
+                                    existingQuiz.map(question=>{
+                                        return(
+                                            <div id="singleQuestion" key={Math.random()}>
+                                                <label  className="form-control labelAddQuiz">{<InlineTex texContent={`${question.question}`}/>}</label>
+                                                <label  className="form-control labelAddQuiz" id="existingQuestionNumber">{`N° ${question.questionNumber}`}</label>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-    )
+        )
+    }
+    else{
+        return(
+            <div>
+                <h1>{errorMessage}</h1>
+            </div>
+        )
+    }
 }
 
 

@@ -22,7 +22,8 @@
     "react-scripts": "3.4.3",
     "react-tex": "^1.5.0",
     "react-toastify": "^6.1.0",
-    "toastr": "^2.1.4"
+    "toastr": "^2.1.4",
+    "universal-cookie": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -3,12 +3,14 @@ import {useHistory} from 'react-router-dom'
 import {Link} from 'react-router-dom'
 import {UserContext} from '../../App'
 import './MesCours.css';
+import Cookies from 'universal-cookie';
 import { InlineTex } from 'react-tex'
 import {toast} from 'react-toastify';  
 import 'react-toastify/dist/ReactToastify.css'; 
 toast.configure()
 
 const MesCours = ()=>{
+    const cookies = new Cookies()
     const [mesCours ,setCours]=useState([])
     const [errorMessage, setErrorMessage] = useState([])
     const [allow, setAllow] = useState([])
@@ -18,14 +20,18 @@ const MesCours = ()=>{
     const history = useHistory()
 
     const testExpiredToken = () => {
-            localStorage.clear()
-            dispatch({type: "CLEAR"})
-            history.push('/login')
-    }
+        localStorage.clear()
+        //Clear Cookies
+        cookies.remove('jwt', {path:'/'})
+        // Clear Cookies
+        dispatch({type: "CLEAR"})
+        history.push('/login')
+	}
     useEffect(()=>{
         fetch('/api/tokenIsOk',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         })
         .then(res=>res.json())
@@ -42,7 +48,8 @@ const MesCours = ()=>{
     useEffect(()=>{
         fetch('/api/getMyPost',{
             headers:{
-                "Authorization":"Bearer "+localStorage.getItem("jwt")
+                // "Authorization":"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         }).then(res=>res.json())
         .then(result=>{
@@ -63,7 +70,8 @@ const MesCours = ()=>{
         fetch(`/api/deletepostById/${postId}`,{
             method:"delete",
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
             }
         }).then(res=>res.json())
         .then((result)=>{

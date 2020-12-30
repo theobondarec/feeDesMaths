@@ -4,6 +4,7 @@ import {UserContext} from '../../App'
 import { InlineTex } from 'react-tex'
 import './Addlesson.css'
 import dotenv from 'dotenv'
+import Cookies from 'universal-cookie';
 
 import {Editor} from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -33,10 +34,7 @@ const config = {
 
 
 const Addlesson = () => {
-
-    // useEffect(()=>{
-    //     console.log(config)
-    // },[])
+    const cookies = new Cookies()
 
     const [chapitre, setChapitre] = useState("")
     const [matiere, setMatiere] = useState("")
@@ -46,14 +44,18 @@ const Addlesson = () => {
 
     const testExpiredToken = () => {
         localStorage.clear()
+        //Clear Cookies
+        cookies.remove('jwt', {path:'/'})
+        // Clear Cookies
         dispatch({type: "CLEAR"})
         history.push('/login')
-}
+    }
 
     useEffect(()=>{
         fetch('/api/tokenIsOk',{
             headers:{
-                Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
             }
         })
         .then(res=>res.json())
@@ -74,10 +76,12 @@ const Addlesson = () => {
     useEffect(()=>{
         fetch('/api/subjects',{
             headers:{
-                Authorization: "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+                // Authorization: "Bearer " + localStorage.getItem("jwt")
             }
         }).then(res=>res.json())
         .then(result=>{
+            console.log(result)
             if(result.allow === true){
                 setsubjects(result.subjects)
                 setAllow(result.allow)
@@ -95,7 +99,8 @@ const Addlesson = () => {
         if(matiere === "" || matiere === "undifined"){
             fetch('/api/chapters',{
                 headers:{
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
                 }
             }).then(res=>res.json())
             .then(result=>{
@@ -113,7 +118,8 @@ const Addlesson = () => {
                 method: "post",
                 headers:{
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("jwt")
+                    Authorization:"Bearer "+ cookies.get('jwt')
+                    // Authorization: "Bearer " + localStorage.getItem("jwt")
                 },
                 body:JSON.stringify({
                     subject:matiere
@@ -223,7 +229,8 @@ const Addlesson = () => {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+                // "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({
                 subject:matiere,
@@ -264,7 +271,8 @@ const Addlesson = () => {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+                // "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({
                 subject: matiereForChapter.toLocaleLowerCase(),
@@ -306,7 +314,8 @@ const Addlesson = () => {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+                // "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({
                 subject: newSubject
@@ -357,136 +366,66 @@ const Addlesson = () => {
     }
 
 
-    return (
-        <div>
-            <div className="form-row mcl">
-                <div className="card col add-card-AddLesson">
-                    <h1>Ajouter une leçon</h1>
-                    <div className="form-row mcl spaceAdd">
-                        <div className="col">
-                            <select id="inputStateMatiere" className="form-control" onChange={(e)=>{setMatiere(e.target.value)}}>
-                                <option  className="defaultValue" value="undifined">Matières : </option>
-                                {subjects.map(subject=>{
-                                    return(
-                                        <option key={subject} value={subject}>{subject}</option>
-                                    )
-                                })}
-                            </select>
-                            <button className="btn btn-primary btn_PopUp" onClick={()=>{popUpMatiere()}}>Ajout matière</button>
-                        </div>
-                        <div className="col">
-                            <select id="inputStateChapitre" className="form-control" onChange={(e)=>{setChapitre(e.target.value)}}>
-                                <option  className="defaultValue" value="undifined">Chapitres : </option>
-                                {chapters.map(chapter=>{
-                                    return(
-                                        <option key={chapter} value={chapter}>{chapter}</option>
-                                    )
-                                })}
-                            </select>
-                            {/* <a href="#addChapter">Ajouter un chapitre</a> */}
-                            <button className="btn btn-primary btn_PopUp" onClick={()=>{popUpChapitre()}}>Ajout chapitre</button>
 
-                        </div>
-                    </div>
-                    <div className="form-row mcl">
-                        <div className="col">
-                            <input type="number" className="form-control" placeholder="lecon N°" id="lessNumber"
-                                value={lessNumber}
-                                onChange={(e) => setLessonNumber(e.target.value)}
-                            />
-                        </div>
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="Titre de la leçon" id="leconTitle"
-                                value={leconTitle}
-                                onChange={(e) => setLecon(e.target.value)}
-                            />
-                        </div>
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="Video Url ou video id" id="lessonClip"
-                                value={lessonClip}
-                                onChange={(e) => setLessonClip(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <Editor
-                        id="cours"
-                        editorState={cours}
-                        toolbarClassName="toolbarClassName"
-                        wrapperClassName="wrapperClassName"
-                        editorClassName="editorClassName"
-                        onEditorStateChange={onEditorStateChangeCours}
-                        toolbar={{
-                            fontFamily: {
-                                options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana', 'Chalkduster Regular'],
-                                className: undefined,
-                                component: undefined,
-                                dropdownClassName: undefined,
-                            },
-                        }}
-                    />
-                    <button type="button" className="btn btn-primary" onClick={() => postLesson()}>Upload</button>
-                </div>
-                <div className="card col add-card-AddLesson">
-                    <h1>Prévisualtion cours</h1>
-                    <div>
-                        {
-                            cours !== "" ?
-                                <InlineTex texContent={draftToHtml(convertToRaw(cours.getCurrentContent()))}/> : ""
-                        }
-                    </div>
-                </div>
-            </div>       
-
-
-
-
-            {/* ajoute chapitre */}
-            <div id="popUpChapter">
-            <span className="close" onClick={()=>{closePopUp()}}>&times;</span>
+    if(allow === true){
+        return (
+            <div>
                 <div className="form-row mcl">
-                    <div className="card col add-card-AddLesson" id="addChapter">
-                        <h1>Ajouter un chapitre</h1>
+                    <div className="card col add-card-AddLesson">
+                        <h1>Ajouter une leçon</h1>
                         <div className="form-row mcl spaceAdd">
                             <div className="col">
-                                <select id="inputStateChapter" className="form-control" onChange={(e)=>{setMatiereForChapter(e.target.value)}}>
-                                    <option  className="defaultValue" value="undifined">Matière : </option>
+                                <select id="inputStateMatiere" className="form-control" onChange={(e)=>{setMatiere(e.target.value)}}>
+                                    <option  className="defaultValue" value="undifined">Matières : </option>
                                     {subjects.map(subject=>{
                                         return(
                                             <option key={subject} value={subject}>{subject}</option>
                                         )
                                     })}
                                 </select>
+                                <button className="btn btn-primary btn_PopUp" onClick={()=>{popUpMatiere()}}>Ajout matière</button>
                             </div>
                             <div className="col">
-                                <input type="number" className="form-control" placeholder="chapitre N°" id="chapNumber"
-                                    value={chapNumber}
-                                    onChange={(e) => setChapNumber(e.target.value)}
+                                <select id="inputStateChapitre" className="form-control" onChange={(e)=>{setChapitre(e.target.value)}}>
+                                    <option  className="defaultValue" value="undifined">Chapitres : </option>
+                                    {chapters.map(chapter=>{
+                                        return(
+                                            <option key={chapter} value={chapter}>{chapter}</option>
+                                        )
+                                    })}
+                                </select>
+                                {/* <a href="#addChapter">Ajouter un chapitre</a> */}
+                                <button className="btn btn-primary btn_PopUp" onClick={()=>{popUpChapitre()}}>Ajout chapitre</button>
+    
+                            </div>
+                        </div>
+                        <div className="form-row mcl">
+                            <div className="col">
+                                <input type="number" className="form-control" placeholder="lecon N°" id="lessNumber"
+                                    value={lessNumber}
+                                    onChange={(e) => setLessonNumber(e.target.value)}
                                 />
                             </div>
                             <div className="col">
-                                <input type="text" className="form-control" placeholder="titre du chapitre" id="newChapter"
-                                    value={newChapter}
-                                    onChange={(e) => setNewChapter(e.target.value)}
+                                <input type="text" className="form-control" placeholder="Titre de la leçon" id="leconTitle"
+                                    value={leconTitle}
+                                    onChange={(e) => setLecon(e.target.value)}
+                                />
+                            </div>
+                            <div className="col">
+                                <input type="text" className="form-control" placeholder="Video Url ou video id" id="lessonClip"
+                                    value={lessonClip}
+                                    onChange={(e) => setLessonClip(e.target.value)}
                                 />
                             </div>
                         </div>
-                        <div className="input-group spaceAdd">
-                            <div className="custom-file">
-                                <input type="file" id="submitButton" onChange={(e)=>submitButton(e.target.files[0])}/>
-                                <div>
-                                    <progress value="0" max="100" id="progressBar">0%</progress>    
-                                </div>
-                                <button id="buttonDeleteIllu" className="btn" onClick={()=>{deleteFile()}}><i className="fa fa-close"></i></button>
-                            </div>
-                        </div>
-
                         <Editor
-                            id = "desc"
-                            editorState={desc}
+                            id="cours"
+                            editorState={cours}
                             toolbarClassName="toolbarClassName"
                             wrapperClassName="wrapperClassName"
                             editorClassName="editorClassName"
-                            onEditorStateChange={onEditorStateChangeDescription}
+                            onEditorStateChange={onEditorStateChangeCours}
                             toolbar={{
                                 fontFamily: {
                                     options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana', 'Chalkduster Regular'],
@@ -496,50 +435,130 @@ const Addlesson = () => {
                                 },
                             }}
                         />
-                        <button id="buttonPostChapter" type="button" className="btn btn-primary"
-                                onClick={() => postChapter()}
-                        >
-                            Upload
-                        </button>
+                        <button type="button" className="btn btn-primary" onClick={() => postLesson()}>Upload</button>
                     </div>
-                    <div className="card col" id="add-card-lesson">
-                        <h1>Prévisualtion description chapitre</h1>
+                    <div className="card col add-card-AddLesson">
+                        <h1>Prévisualtion cours</h1>
                         <div>
                             {
-                                desc !== "" ?
-                                    <InlineTex texContent={draftToHtml(convertToRaw(desc.getCurrentContent()))}/> : ""
+                                cours !== "" ?
+                                    <InlineTex texContent={draftToHtml(convertToRaw(cours.getCurrentContent()))}/> : ""
                             }
                         </div>
                     </div>
-                </div>
-            </div>
-            
-
-
-            {/* ajoute matiere */}
-            <div id="popUpSubject">
-                <div className="card add-card-AddLesson" id="addSubject">
+                </div>       
+    
+    
+    
+    
+                {/* ajoute chapitre */}
+                <div id="popUpChapter">
                 <span className="close" onClick={()=>{closePopUp()}}>&times;</span>
-                    <h1>Ajouter une matiere</h1>
-                    <div className="form-row mcl" id="spaceAddLesson">
-                        <div className="col">
-                            <input type="text" className="form-control" placeholder="Titre de la matière" id="newSubject"
-                                value={newSubject}
-                                onChange={(e) => setNewSubject(e.target.value)}
+                    <div className="form-row mcl">
+                        <div className="card col add-card-AddLesson" id="addChapter">
+                            <h1>Ajouter un chapitre</h1>
+                            <div className="form-row mcl spaceAdd">
+                                <div className="col">
+                                    <select id="inputStateChapter" className="form-control" onChange={(e)=>{setMatiereForChapter(e.target.value)}}>
+                                        <option  className="defaultValue" value="undifined">Matière : </option>
+                                        {subjects.map(subject=>{
+                                            return(
+                                                <option key={subject} value={subject}>{subject}</option>
+                                            )
+                                        })}
+                                    </select>
+                                </div>
+                                <div className="col">
+                                    <input type="number" className="form-control" placeholder="chapitre N°" id="chapNumber"
+                                        value={chapNumber}
+                                        onChange={(e) => setChapNumber(e.target.value)}
+                                    />
+                                </div>
+                                <div className="col">
+                                    <input type="text" className="form-control" placeholder="titre du chapitre" id="newChapter"
+                                        value={newChapter}
+                                        onChange={(e) => setNewChapter(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <div className="input-group spaceAdd">
+                                <div className="custom-file">
+                                    <input type="file" id="submitButton" onChange={(e)=>submitButton(e.target.files[0])}/>
+                                    <div>
+                                        <progress value="0" max="100" id="progressBar">0%</progress>    
+                                    </div>
+                                    <button id="buttonDeleteIllu" className="btn" onClick={()=>{deleteFile()}}><i className="fa fa-close"></i></button>
+                                </div>
+                            </div>
+    
+                            <Editor
+                                id = "desc"
+                                editorState={desc}
+                                toolbarClassName="toolbarClassName"
+                                wrapperClassName="wrapperClassName"
+                                editorClassName="editorClassName"
+                                onEditorStateChange={onEditorStateChangeDescription}
+                                toolbar={{
+                                    fontFamily: {
+                                        options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana', 'Chalkduster Regular'],
+                                        className: undefined,
+                                        component: undefined,
+                                        dropdownClassName: undefined,
+                                    },
+                                }}
                             />
-                        </div>
-                        <div className="col">
-                            <button id="boutonSubject" type="button" className="btn btn-primary"
-                                    onClick={() => postSubject()}
+                            <button id="buttonPostChapter" type="button" className="btn btn-primary"
+                                    onClick={() => postChapter()}
                             >
                                 Upload
                             </button>
                         </div>
+                        <div className="card col" id="add-card-lesson">
+                            <h1>Prévisualtion description chapitre</h1>
+                            <div>
+                                {
+                                    desc !== "" ?
+                                        <InlineTex texContent={draftToHtml(convertToRaw(desc.getCurrentContent()))}/> : ""
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+    
+    
+                {/* ajoute matiere */}
+                <div id="popUpSubject">
+                    <div className="card add-card-AddLesson" id="addSubject">
+                    <span className="close" onClick={()=>{closePopUp()}}>&times;</span>
+                        <h1>Ajouter une matiere</h1>
+                        <div className="form-row mcl" id="spaceAddLesson">
+                            <div className="col">
+                                <input type="text" className="form-control" placeholder="Titre de la matière" id="newSubject"
+                                    value={newSubject}
+                                    onChange={(e) => setNewSubject(e.target.value)}
+                                />
+                            </div>
+                            <div className="col">
+                                <button id="boutonSubject" type="button" className="btn btn-primary"
+                                        onClick={() => postSubject()}
+                                >
+                                    Upload
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
+    else{
+        return(
+            <div>
+                <h1>{errorMessage}</h1>
+            </div>
+        )
+    }
 }
 
 export default Addlesson

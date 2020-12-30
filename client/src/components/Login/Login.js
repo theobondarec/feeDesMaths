@@ -2,8 +2,9 @@ import React,{useState, useContext} from 'react'
 import './login.css'
 import {Link, useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
-import logo from '../../Images/logo.png'
 import {toast} from 'react-toastify';  
+import Cookies from 'universal-cookie';
+import logo from '../../Images/logo.png'
 import 'react-toastify/dist/ReactToastify.css'; 
 toast.configure()
 
@@ -13,6 +14,8 @@ const Login = ()=>{
     const [email, setEmail]= useState("")
     const [password, setPassword]= useState("")
     const history = useHistory()
+
+    const cookies = new Cookies();
 
     const postData = ()=>{
         // if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){
@@ -51,8 +54,14 @@ const Login = ()=>{
                     // window.alert(data.error)
                 }
                 else{
-                    localStorage.setItem("jwt",data.token)
+
+                    // 
+                    // localStorage.setItem("jwt",data.token)
+                    cookies.set('jwt', data.token, { path: '/' , expires: new Date(Date.now()+3600000)})
+                    // console.log(cookies.get('jwt'))
                     localStorage.setItem("user",JSON.stringify(data.user))
+                    // 
+
                     dispatch({type:"USER", payload:data.user})
                     toast.success('signed in', {autoClose: 3000})
                     // window.alert("signed in")

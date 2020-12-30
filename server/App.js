@@ -3,8 +3,14 @@ var path = require('path');
 
 const express = require('express')
 const bodyParser = require('body-parser')
-// const helmet = require('helmet')
 const app = express()
+
+
+const helmet = require('helmet')
+app.use(helmet())
+// app.disable('x-powered-by')      /////SI NON UTILISATION DE HELMET
+
+
 
 app.use(express.static(path.join(__dirname, 'public/build')));
 
@@ -49,8 +55,7 @@ firebase.initializeApp(firebaseConfig)
 
 
 app.use(bodyParser.json({limit: '50MB' }))
-// app.use(helmet())
-app.disable('x-powered-by')      /////SI NON UTILISATION DE HELMET
+
 
 app.use(require('./routes/auth'))
 app.use(require('./routes/admin'))

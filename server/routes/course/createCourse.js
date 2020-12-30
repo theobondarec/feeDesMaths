@@ -163,6 +163,46 @@ router.post('/api/createCourse' , FBAuth, (req, res)=>{
 
 //// Return les chapitres et les matieres pour les dropdown ajout une lesson
 router.get('/api/subjects', FBAuth, (req,res)=>{
+    let idToken
+    let uid
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
+        idToken = req.headers.authorization.split('Bearer ')[1]
+    }
+    else{
+        console.error('No token found')
+        return res.status(403).json({error: 'Unauthorized'})
+    }
+
+    admin.auth().verifyIdToken(idToken)
+    .then(decodedToken =>{
+        const rank = decodedToken.rank
+        ////////
+        if(rank == "admin" || rank == "professor"){
+            let subjects = []
+            admin.firestore().collection('cours').get()
+            .then((data)=>{
+                data.forEach(doc=>{
+                    if(doc.data().name){
+                        // console.log(doc.data().nom)
+                        subjects.push(doc.data().name)
+                    }
+                })
+                res.send({subjects, allow:true})
+            })
+            .catch(err=>{
+                console.error(err)
+            })
+        }
+        else{
+            return res.json({error:"you're not allow to access at this function, you're rank is too low"})
+        }
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+router.get('/api/subjectsCours', FBAuth, (req,res)=>{
     let subjects = []
     admin.firestore().collection('cours').get()
     .then((data)=>{
