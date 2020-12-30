@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const app = express()
 
 
-const helmet = require('helmet')
+// const helmet = require('helmet')
 // app.use(helmet())
 app.disable('x-powered-by')      /////SI NON UTILISATION DE HELMET
 
