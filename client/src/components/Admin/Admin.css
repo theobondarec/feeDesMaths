@@ -12,7 +12,9 @@
     justify-content: space-around;
 }
 
-
+.popUpDel{
+    display: none;
+}
 
 /* NEVER USED
  #bg{

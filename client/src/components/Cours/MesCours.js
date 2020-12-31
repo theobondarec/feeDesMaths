@@ -115,6 +115,9 @@ const MesCours = ()=>{
                 toast.error(result.error, {autoClose: 3000})
             }
         })
+        .catch(err=>{
+            console.log(err)
+        })
     }
 
     const deleteChapter = (myChapterId,index)=>{

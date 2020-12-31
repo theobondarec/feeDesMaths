@@ -76,9 +76,7 @@ app.use(require('./routes/course/checkPrc'))
 app.use(require('./routes/course/createQuiz'))
 app.use(require('./routes/course/getQuiz'))
 app.use(require('./routes/course/score'))
-// app.use(require('./routes/course/getLessonsChap'))
 
-// console.log(__dirname)
 
 
 app.get('*', (req, res)=>{

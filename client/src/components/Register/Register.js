@@ -35,7 +35,8 @@ const Signup = ()=>{
         .then(data => {
             if(data.error){
                 // toast(data.error)
-                console.log(data.error)
+                // console.log(data.error)
+                toast.error(data.error, {autoClose: 3000})
                 if(data.error.name){
                     toast.error(data.error.name, {autoClose: 3000})
                 }
