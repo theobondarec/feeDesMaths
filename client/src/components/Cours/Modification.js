@@ -179,7 +179,7 @@ const Modification = ()=>{
             }
             else{
                 // toast(result.error)
-                toast.error(result.error, )
+                toast.error(result.error, {autoClose: 3000})
                 // window.alert(result.error)
             }
         })
@@ -196,7 +196,13 @@ const Modification = ()=>{
                     <div className="card col add-card-Modification">
                         <h1>Modifier une leçon</h1>
                         <div className="form-row mcl" id="spaceModification">
-                            <div className="col">
+                            <div className="col labelLessonModification">
+                                <label >{lesson.subject}</label>
+                            </div>
+                            <div className="col labelLessonModification">
+                                <label>{lesson.chapter}</label>
+                            </div>
+                            {/* <div className="col">
                                 <select id="inputStateMatiere" className="form-control" onChange={(e)=>{setMatiere(e.target.value)}}>
                                     <option  className="defaultValue" value={lesson.subject}>{lesson.subject}</option>
                                     <option disabled>──────────</option>
@@ -217,19 +223,19 @@ const Modification = ()=>{
                                         )
                                     })}
                                 </select>
-                            </div>
-                            <div className="col">
+                            </div> */}
+                            <div className="col" id="lessonNumberID">
                                 <input type="number" className="form-control" placeholder="chapitre N°" id="lessNumber"
                                     value={lessNumber}
                                     onChange={(e) => setLessonNumber(e.target.value)}
                                 />
                             </div>
-                            <div className="col">
-                                <input type="text" className="form-control" placeholder="Titre de la leçon" id="leconTitle"
-                                    value={leconTitle}
-                                    onChange={(e) => setLeconTitle(e.target.value)}
-                                />
-                            </div>
+                        </div>
+                        <div>
+                            <input type="text" className="form-control" placeholder="Titre de la leçon" id="leconTitle"
+                                value={leconTitle}
+                                onChange={(e) => setLeconTitle(e.target.value)}
+                            />
                         </div>
                         
                         <Editor

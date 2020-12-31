@@ -5,7 +5,19 @@
   border-width: 5px;
   border-color: #f5ab36;
   padding: 20px;
-  text-align: center;
+  /* text-align: center; */
   max-width: 700px;
   margin: 10px auto;
+}
+
+.labelLessonModification{
+  border: 1px solid rgba(136, 136, 136, 0.432);
+  border-radius: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+#lessonNumberID{
+  display: flex;
 }

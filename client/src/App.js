@@ -21,6 +21,7 @@ import Mescours from './components/Cours/MesCours'
 import Juridique from './components/Juridique/Juridique'
 import LeconPrecise from './components/Cours/LeconPrecise'
 import Modification from './components/Cours/Modification'
+import ChapterModification from './components/Cours/ChapterModification'
 import {reducer, initialState} from './reducer/userReducer'
 import Addquiz from './components/Cours/AddQuiz'
 import CoursPrecis from './components/Cours/CourPrecis'
@@ -58,6 +59,7 @@ const Routing = () => {
             <PrivateRoute component={CoursPrecis} path="/cours/:id" />
             <PrivateRoute component={LeconPrecise} path="/lesson/:id"  />
             <PrivateRoute component={Modification} path="/modification/:id" />
+            <PrivateRoute component={ChapterModification} path="/modificationChapter/:id" />
             <PrivateRoute component={Addquiz} path="/createQuiz" exact />
             {/*
             <Route exact path="/juridique">

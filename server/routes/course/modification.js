@@ -23,4 +23,23 @@ router.get('/api/modification/:postId', FBAuth, (req, res) => {
     })
 })
 
+router.get('/api/chapterModification/:postId', FBAuth, (req, res) => {
+    const postId = req.params.postId
+    // res.send(postId)
+    // console.log(postId)
+
+    // let postById
+    let monChapitre = []
+    admin.firestore().collectionGroup('chapitres').where('chapterId', '==', postId).get()
+    .then(data => {/// GET chapitre
+        data.forEach(doc => {
+            monChapitre.push(doc.data())
+        })
+        return res.send(monChapitre)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+})
+
 module.exports = router

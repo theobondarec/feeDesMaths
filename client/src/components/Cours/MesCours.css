@@ -6,7 +6,7 @@
     margin-bottom: 10px;
     padding-bottom: 10px;
 }
-#title{
+#titleMyPost{
     display: flex;
     text-align: center;
     width: 100%;
@@ -18,11 +18,11 @@
 #boutonMesCours{
     margin-left: 20px;
 }
-#mescours{
+/* #mescours{
     background-color: white;
     top: 10px;
     box-shadow: 10px 15px 15px black;  
-}
+} */
 .warningMesCours{
     border-width: 2px;
     border-color: #e22149;
@@ -42,7 +42,7 @@
 
 
 /* POPUP */
-#popUpDel{
+.popUpDel{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -53,4 +53,36 @@
     /*overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+.popUpDelChap{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    /*overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */ 
+}
+
+  #myPosts{
+    /* width: 90%; */
+    margin: auto auto;
+    margin-bottom: 1%;
+  }
+
+  .titleXsize{
+      display: flex;
+      justify-content: space-between;
+  }
+  .size{
+      display: flex;
+      align-items: center;
+  }
+
+  #myChapter{
+      display: none;
   }
