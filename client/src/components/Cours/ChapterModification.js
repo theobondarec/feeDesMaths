@@ -130,7 +130,7 @@ const ChapterModification = ()=>{
         document.getElementById('buttonDeleteIllu').disabled = true
         const imageExtension = file.name.split(".")[file.name.split(".").length - 1];
         const filename = `${(Math.random().toString(36).substr(2, 13) + '-' + Math.random().toString(36).substr(2, 13)+ '-' + Math.random().toString(36).substr(2, 13)).toString()}.${imageExtension}`;
-        let locationRef = storage.ref('test/' + filename)
+        let locationRef = storage.ref('img/' + filename)
         let task = locationRef.put(file)
         task.on('state_changed', 
             function progress(snapshot){ //progress
