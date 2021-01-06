@@ -131,7 +131,7 @@ router.post('/api/login', (req, res) => {
     })
     .catch(err=>{
         console.log(err)
-        res.error(err)
+        res.status(500).json({error: err.message})
     })
 
 

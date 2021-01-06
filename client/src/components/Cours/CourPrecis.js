@@ -270,6 +270,9 @@ const CoursPrecis = ()=>{
             }
             // calcul/20
             const finalScore = ((totalScore*20)/questions.length).toFixed(2)
+            if(finalScore < 0){
+                finalScore = 0
+            }
             setScore(finalScore)
             setNote(finalScore)
             showScore(finalScore)

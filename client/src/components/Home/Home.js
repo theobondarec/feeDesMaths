@@ -1,20 +1,69 @@
-import React, { Component } from 'react';
+import React, {useEffect, useState, useContext, Component} from 'react'
+import {useParams, useHistory} from 'react-router-dom'
+import {UserContext} from '../../App'
+import Cookies from 'universal-cookie';
+
+
 import './Home.css';
 import mathe from '../../Images/math.jpg'
-// import hommeordi from '../../Images/hommeordi.jpg'
+import hommeordi from '../../Images/hommeordi.jpg'
 import ecriture from '../../Images/ecriture.jpg'
 
-class Home extends Component {
-    render() {
-        return (
-            <div>
-                <Carrousel />
-                <Txt />
-            </div>
+// class Home extends Component {
+//     render() {
+//         return (
+//             <div>
+//                 <testToken />
+//                 <Carrousel />
+//                 <Txt />
+//             </div>
 
-        );
+//         );
+//     }
+// } export default Home
+
+const Home = ()=>{
+    const cookies = new Cookies()
+    const {state, dispatch} = useContext(UserContext)
+    const history = useHistory()
+
+    const testExpiredToken = () => {
+        localStorage.clear()
+        //Clear Cookies
+        cookies.remove('jwt', {path:'/'})
+        // Clear Cookies
+        dispatch({type: "CLEAR"})
+        history.push('/login')
     }
-} export default Home
+    
+    useEffect(()=>{
+        fetch('/api/tokenIsOk',{
+            headers:{
+                // Authorization:"Bearer "+localStorage.getItem("jwt")
+                Authorization:"Bearer "+ cookies.get('jwt')
+            }
+        })
+        .then(res=>res.json())
+        .then(result=>{
+            if(result.tokenOk === true){
+                return
+            }
+            else{
+                testExpiredToken()
+            }
+        })
+    },[])
+
+
+    return (
+        <div>
+            <Carrousel />
+            <Txt />
+        </div>
+
+    );
+}
+export default Home
 
 export const Carrousel = () => {
     // mettre du code js ici si besoin
@@ -34,8 +83,7 @@ export const Carrousel = () => {
                         <img className="d-block w-100" src={mathe} height="300px" alt="First slide"></img>
                     </div>
                     <div className="carousel-item">
-                        {/* <img class="d-block w-100" src={hommeordi} height="300px" alt="First slide"></img> */}
-                        <img className="d-block w-100"  height="300px" alt="First slide"></img>
+                        <img className="d-block w-100" src={hommeordi} height="300px" alt="First slide"></img>
                     </div>
                 </div>
             </div>

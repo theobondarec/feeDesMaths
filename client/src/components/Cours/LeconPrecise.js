@@ -177,16 +177,26 @@ const LeconPrecise = ()=>{
             if(clip.length > 15){
                 const clipId = youtube_parser(clip)    
                 // console.log(clipId)
+
+
+
+                ///////
+                var srcId = "https://www.youtube.com/embed/"+clipId
                 return(
-                    <iframe width="560" height="315" src={`http://www.youtube.com/embed/${clipId}`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                    <iframe width="560" height="315" src={srcId} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 )
             }
             else{
                 const clipId = clip
                 return(
-                    <iframe width="560" height="315" src={`http://www.youtube.com/embed/${clipId}`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                    <iframe width="560" height="315" src={srcId} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                 )
             }
+                ////////
+
+
+
+
         }
     }
 
@@ -339,6 +349,9 @@ const LeconPrecise = ()=>{
             }
             // calcul/20
             const finalScore = ((totalScore*20)/questions.length).toFixed(2)
+            if(finalScore < 0){
+                finalScore = 0
+            }
             setScore(finalScore)
             setNote(finalScore)
             showScore(finalScore)
