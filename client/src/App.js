@@ -44,10 +44,11 @@ const Routing = () => {
 
     return (
         <Switch>
+            <PublicRoute restricted={true} component={Home} path="/" exact />
+
             <PublicRoute restricted={false} component={Juridique} path="/juridique" />
             <PublicRoute restricted={false} component={Settings} path="/settings" exact />
             
-            <PublicRoute restricted={true} component={Home} path="/" exact />
             <PublicRoute restricted={true} component={Login} path="/login" exact />
             <PublicRoute restricted={true} component={Register} path="/register" exact />
 
