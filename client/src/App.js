@@ -44,10 +44,10 @@ const Routing = () => {
 
     return (
         <Switch>
-            <PublicRoute restricted={false} component={Home} path="/" exact />
             <PublicRoute restricted={false} component={Juridique} path="/juridique" />
             <PublicRoute restricted={false} component={Settings} path="/settings" exact />
-
+            
+            <PublicRoute restricted={true} component={Home} path="/" exact />
             <PublicRoute restricted={true} component={Login} path="/login" exact />
             <PublicRoute restricted={true} component={Register} path="/register" exact />
 
@@ -61,53 +61,6 @@ const Routing = () => {
             <PrivateRoute component={Modification} path="/modification/:id" />
             <PrivateRoute component={ChapterModification} path="/modificationChapter/:id" />
             <PrivateRoute component={Addquiz} path="/createQuiz" exact />
-            {/*
-            <Route exact path="/juridique">
-                <Juridique/>
-            </Route>
-            <Route exact path="/">
-                <Home/>
-            </Route>
-            <Route path="/settings">
-                <Settings/>
-            </Route>
-            <Route path="/login">
-                <Login/>
-            </Route>
-            <Route path="/register">
-                <Register/>
-            </Route>
-            <Route path="/profile">
-                <Profile/>
-            </Route>
-            <Route path="/admin">
-                <Admin/>
-            </Route>
-            <Route exact path="/cours">
-                <Cours/>
-            </Route>
-            <Route path="/mypost">
-                <Mescours/>
-            </Route>
-            <Route path="/createpost">
-                <Addlesson/>
-            </Route>
-            <Route path="/cours/:id">
-                <CoursPrecis/>
-            </Route>
-            <Route path="/lesson/:id">
-                <LeconPrecise />
-            </Route>
-            <Route path="/modification/:id">
-                <Modification />
-            </Route>
-            <Route path='/createQuiz'>
-                <Addquiz />
-            </Route>
-            <Route path='/quiz'>
-                <Quiz />
-            </Route>
-            */}
         </Switch>
     )
 }
