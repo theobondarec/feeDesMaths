@@ -269,7 +269,7 @@ const CoursPrecis = ()=>{
                 }
             }
             // calcul/20
-            const finalScore = ((totalScore*20)/questions.length).toFixed(2)
+            var finalScore = ((totalScore*20)/questions.length).toFixed(2)
             if(finalScore < 0){
                 finalScore = 0
             }
@@ -453,7 +453,7 @@ const CoursPrecis = ()=>{
                                 {note?showNote():quizQuestion()}
                             </div>
                             <div id="showScore">
-                                {note?showNote():waiting()}
+                                {showNote()}
                             </div>
                         </div>
 

@@ -42,7 +42,7 @@ router.post('/api/getQuiz', FBAuth, (req, res) => {
                         // console.log(data)
                         let quiz = []
                         data.forEach(doc=>{
-                            console.log(doc.data())
+                            // console.log(doc.data())
                             if(!doc.data().lessonId){
                                 quiz.push(doc.data())
                             }
@@ -95,7 +95,7 @@ router.post('/api/getQuizWChapterId', FBAuth, (req, res) => {
             // console.log(data)
             let quiz = []
             data.forEach(doc=>{
-                console.log(doc.data())
+                // console.log(doc.data())
                 if(!doc.data().lessonId){
                     quiz.push(doc.data())
                 }
