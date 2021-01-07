@@ -71,7 +71,7 @@ router.post('/api/createQuiz', FBAuth, (req, res) => {
                     }
                     // console.log(questionQuiz)
 
-                    admin.firestore().collection('cours').doc(subject).collection('chapitres').doc(chapterId).collection('lecons').doc(lessonId).collection('questions').doc().set(questionQuiz)
+                    admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('lecons').doc(lessonId).collection('questions').doc().set(questionQuiz)
                     // console.log("Creation quiz pour lecon")
                     return res.send({message:`question for the lesson n° ${lessonId} added`, createQuestion:true})
                 }
