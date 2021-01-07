@@ -188,7 +188,7 @@ const CoursPrecis = ()=>{
             body:JSON.stringify({
                 subject:cours[0].subject,
                 chapterId:cours[0].chapterId,
-                lessonId:"undifined"
+                lessonId:"undefined"
             })
         })
         .then(res => res.json())

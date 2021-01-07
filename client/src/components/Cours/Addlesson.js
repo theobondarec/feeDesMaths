@@ -81,7 +81,7 @@ const Addlesson = () => {
             }
         }).then(res=>res.json())
         .then(result=>{
-            console.log(result)
+            // console.log(result)
             if(result.allow === true){
                 setsubjects(result.subjects)
                 setAllow(result.allow)

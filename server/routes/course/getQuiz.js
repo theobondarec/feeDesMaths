@@ -7,7 +7,9 @@ const admin = require('firebase-admin')
 
 router.post('/api/getQuiz', FBAuth, (req, res) => {
     var {subject, chapter, lessonId} = req.body
-    lessonId === "undifined" ? lessonId = "" : lessonId
+    lessonId === "undefined" ? lessonId = "" : lessonId
+
+    // console.log(subject, chapter, lessonId)
 
     let idToken
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
@@ -40,7 +42,7 @@ router.post('/api/getQuiz', FBAuth, (req, res) => {
                         // console.log(data)
                         let quiz = []
                         data.forEach(doc=>{
-                            // console.log(doc.data())
+                            console.log(doc.data())
                             if(!doc.data().lessonId){
                                 quiz.push(doc.data())
                             }
@@ -82,19 +84,21 @@ router.post('/api/getQuiz', FBAuth, (req, res) => {
 
 router.post('/api/getQuizWChapterId', FBAuth, (req, res) => {
     var {subject, chapterId, lessonId} = req.body
-    lessonId === "undifined" ? lessonId = "" : lessonId
+    lessonId === "undefined" ? lessonId = "" : lessonId
 
     // console.log(subject, chapterId, lessonId)
-
     if(!lessonId){
         // admin.firestore().collectionGroup('questions').where('chapterId', '==', chapterId).get()
-        admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('questions').orderBy('questionNumber','asc').get()
+        // admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('questions').orderBy('questionNumber','asc').get()
+        admin.firestore().collectionGroup('questions').where('chapterId', '==', chapterId).orderBy('questionNumber','asc').get()
         .then(data=>{
             // console.log(data)
             let quiz = []
             data.forEach(doc=>{
-                // console.log(doc.data())
-                quiz.push(doc.data())
+                console.log(doc.data())
+                if(!doc.data().lessonId){
+                    quiz.push(doc.data())
+                }
             })
             res.send(quiz)
         })
@@ -105,8 +109,8 @@ router.post('/api/getQuizWChapterId', FBAuth, (req, res) => {
     else{
         // console.log(subject, chapter, lessonId, " chapterId ", chapterId)
 
-        // admin.firestore().collectionGroup('questions').where('lessonId', '==', lessonId).get()
-        admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('lecons').doc(lessonId).collection('questions').orderBy('questionNumber','asc').get()
+        // admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('lecons').doc(lessonId).collection('questions').orderBy('questionNumber','asc').get()
+        admin.firestore().collectionGroup('questions').where('lessonId', '==', lessonId).orderBy('questionNumber','asc').get()
         .then(data=>{
             let quiz = []
             data.forEach(doc=>{
