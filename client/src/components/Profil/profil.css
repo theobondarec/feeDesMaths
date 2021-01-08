@@ -7,3 +7,27 @@
 #tableProfile{
     border: 5px solid #E22149;
 }
+
+#Progress{
+	background-color: #f5ab36;
+	margin-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 5px;
+	box-shadow: 3px 3px 10px black;
+}
+#detail{
+	background-color: white;
+	border-radius: 5px;
+}
+#notes{
+	background-color: #f5ab36;
+	margin-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 5px;
+	box-shadow: 3px 3px 10px black;
+	
+}
+
+#avancement{
+	padding-bottom: 5px;
+}

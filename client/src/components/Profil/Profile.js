@@ -131,7 +131,7 @@ const Profile = ()=>{
                                 {cours.map(items=>{
                                     // console.log(items)
                                     return (
-                                        <div key={Math.random()}>
+                                        <div key={Math.random()} id="avancement">
                                             <h3>{items.chapterTitle}</h3>
                                             <div className="progress" id="progressBarLesson" style={{height: "40px"}}>
                                                 <div className="progress-bar progress-bar-striped" style={{width: `${items.progression}%`}} role="progressbar"
@@ -163,7 +163,7 @@ const Profile = ()=>{
                         cours.push(notesG[item][i])
                     }
                     return(
-                        <div key={Math.random()}>
+                        <div key={Math.random()} id="avancement">
                             <h2>{item}</h2>
                             <table className="table" id="tableProfile">
                                 <thead>
@@ -205,15 +205,15 @@ const Profile = ()=>{
     if(progressionG[matiere[0]] || notesG[matiereNotes[0]]){
         return(
         <div className="displayProfile">
-            <div>
+            <div class="col-10 offset-1" id="Progress">
                 <h1>Progression des chapitres</h1>
-                <div>
+                <div id="detail">
                     {showProgression()}
                 </div>
             </div>
-            <div>
+            <div class="col-10 offset-1" id="Progress">
                 <h1>Notes Quiz</h1>
-                <div className="table-responsive">
+                <div className="table-responsive" id="detail">
                     {showScore()}
                 </div>
             </div>
