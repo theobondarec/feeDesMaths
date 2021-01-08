@@ -17,16 +17,15 @@ const Login = ()=>{
 
     const cookies = new Cookies();
 
+    var is_fired = false;
+    const enterPressed = (event)=>{
+        if(event.key === "Enter" && is_fired===false){
+            is_fired = true
+            postData()
+        }
+    }
+
     const postData = ()=>{
-        // if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){
-        //     toast.error('Invalid Email', {autoClose: 3000})
-        //     // window.alert('Invalid Email !')
-        //     return
-        // }
-        // if(!password){
-        //     toast.error('Password empty', {autoClose: 3000})
-        //     return
-        // }
         fetch("/api/login",{
             method:"post",
             headers:{
@@ -42,11 +41,11 @@ const Login = ()=>{
                 if(data.error){
                     // toast(data.error)
                     if(data.error.email){
-                        console.log(data.error.email)
+                        // console.log(data.error.email)
                         toast.error(data.error.email, {autoClose: 3000})
                     }
                     if(data.error.password){
-                        console.log(data.error.password)
+                        // console.log(data.error.password)
                         toast.error(data.error.password, {autoClose: 3000})
                         // data.error.email
                     }
@@ -71,6 +70,7 @@ const Login = ()=>{
             console.log(err)
         })
     }
+
 
     return(
     <div className="container h-100">
@@ -97,6 +97,7 @@ const Login = ()=>{
                             placeholder="email"
                             value={email}
                             onChange={(e)=>setEmail(e.target.value)}
+                            onKeyDown={(e) => enterPressed(e)}
                             />
                         </div>
                         <div className="input-group mb-2">
@@ -108,11 +109,13 @@ const Login = ()=>{
                                 </span>
                             </div>
                             <input
+                            id="password_input"
                             className="form-control input_pass"
                             type="password"
                             placeholder="password"
                             value={password}
                             onChange={(e)=>setPassword(e.target.value)}
+                            onKeyDown={(e) => enterPressed(e)}
                             />
                         </div>
                         <div className="form-group">
@@ -134,7 +137,7 @@ const Login = ()=>{
         </div>
     </div>
     
-)
+    )
 }
 
 
