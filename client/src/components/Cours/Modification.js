@@ -54,7 +54,7 @@ const Modification = ()=>{
     const [lessNumber,setLessonNumber] = useState("")
     const [leconTitle, setLeconTitle] = useState("")
     const [cours, setCours] = useState("")
-    
+    const [clip, setClip] = useState("")
     // const ContentState = Draft.ContentState
     useEffect(()=>{
         fetch(`/api/modification/${postId.id}`,{
@@ -69,6 +69,7 @@ const Modification = ()=>{
             setChapitre(result[0].chapter)
             setLessonNumber(result[0].lessonNumber)
             setLeconTitle(result[0].lessonTitle)
+            setClip(result[0].lessonClip)
             const coursHTML = convertFromHTML(result[0].lessonContent)
             setCours(EditorState.createWithContent(ContentState.createFromBlockArray(coursHTML.contentBlocks, coursHTML.entityMap)))
         })
@@ -164,6 +165,7 @@ const Modification = ()=>{
                 subject:matiere,
                 chapter:chapitre,
                 lessonTitle:leconTitle,
+                lessonClip:clip,
                 lesson:draftToHtml(convertToRaw(cours.getCurrentContent())),
                 lessonNumber:lessNumber,
                 leconId:lesson.lessonId,
@@ -235,6 +237,12 @@ const Modification = ()=>{
                             <input type="text" className="form-control" placeholder="Titre de la leçon" id="leconTitle"
                                 value={leconTitle}
                                 onChange={(e) => setLeconTitle(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <input type="url" className="form-control" placeholder="Url de la vidéo Youtube" id="ytbUrl"
+                                value={clip}
+                                onChange={(e) => setClip(e.target.value)}
                             />
                         </div>
                         

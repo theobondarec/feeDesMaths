@@ -204,23 +204,24 @@ const MesCours = ()=>{
                             return(
                                 <div className="card" id="myLessonCard" key={item.lessonId}>
                                     <div className="f">
-                                        <div className="card-title" id="title">
+                                        <div className="card-title" id="titleMyLessons">
                                             <h2>{item.lessonTitle}</h2>
                 
-                                            <Link to={"/modification/"+item.lessonId} className="btn warningMesCours">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
-                                            <button type="button" className="btn warningMesCours"
+                                            <Link to={"/modification/"+item.lessonId} className="btn seecourse_btn">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
+                                            <button type="button" className="btn seecourse_btn"
                                             /*onClick={()=>{deletePost(item.lessonId)}}*/
                                             onClick={()=>{popUpDel(index)}}
                                             >
-                                            <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path fillRule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                                             </svg>
                                             </button> 
                                             <div id={`popUpDel${index}`} className="popUpDel">
                                                 <div className="card">
                                                     <span className="close" onClick={()=>{closePopUp(index)}}>&times;</span>
                                                     <h1 className="card-title">êtes-vous sûr de vouloir supprimer {item.lessonTitle} ?</h1>
-                                                    <button type="button" className="btn warningMesCours"
+                                                    <button type="button" className="btn seecourse_btn"
                                                     onClick={()=>{deletePost(item.lessonId, index)}}
                                                     >
                                                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -233,7 +234,7 @@ const MesCours = ()=>{
                                         <div className="card-body">
                                             <InlineTex texContent={item.lessonContent}/>
                                         </div>
-                                        <Link to={"/lesson/"+item.lessonId} id="boutonMesCours" className="btn warningMesCours">Voir la leçon</Link>
+                                        <Link to={"/lesson/"+item.lessonId} id="boutonMesCours" className="btn seecourse_btn">Voir la leçon</Link>
                                     </div>
                                 </div>
                             )
@@ -273,11 +274,11 @@ const MesCours = ()=>{
 
 
                                             {/*  */}
-                                            <Link to={"/modificationChapter/"+item.chapterId} className="btn warningMesCours">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
+                                            <Link to={"/modificationChapter/"+item.chapterId} className="btn seecourse_btn">Modifier</Link>        {/*MODIFIER/SUPPR juste pour rank=prof */}
                                             {/*  */}
 
 
-                                            <button type="button" className="btn warningMesCours"
+                                            <button type="button" className="btn seecourse_btn"
                                             /*onClick={()=>{deletePost(item.lessonId)}}*/
                                             onClick={()=>{popUpDelChap(index)}}
                                             >
@@ -290,7 +291,7 @@ const MesCours = ()=>{
                                                 <div className="card">
                                                     <span className="close" onClick={()=>{closePopUpChap(index)}}>&times;</span>
                                                     <h1 className="card-title">êtes-vous sûr de vouloir supprimer {item.chapterTitle}</h1>
-                                                    <button type="button" className="btn warningMesCours"
+                                                    <button type="button" className="btn seecourse_btn"
                                                     onClick={()=>{deleteChapter(item.chapterId, index); /*console.log("chapterID moment input in function : ",item.chapterId)*/}}
                                                     >
                                                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -308,7 +309,7 @@ const MesCours = ()=>{
                                         <div className="card-body">
                                             <InlineTex texContent={item.description}/>
                                         </div>
-                                        <Link to={"/cours/"+item.chapterId} id="boutonMesCours" className="btn warningMesCours">Voir la leçon</Link>
+                                        <Link to={"/cours/"+item.chapterId} id="boutonMesCours" className="btn seecourse_btn">Voir la leçon</Link>
                                     </div>
                                 </div>
                             )

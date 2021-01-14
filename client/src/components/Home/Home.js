@@ -113,7 +113,7 @@ export const Txt = () => {
                 </div>
                 <div className="col-6" id="video">
                     <div className="row justify-content-center">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/wrNLKRX99Og" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/meik4LcQStI" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                     </div>
                     <p className="pHome">Le cours de maths a été compliqué ? Vous ne l’avez pas compris ou peu ? Cela arrive évidemment. Et vous vous dîtes que vous comprendrez mieux au prochain cours ? C’est possible, cependant la meilleure solution pour vous reste de creuser la question vous-même en prenant le temps. Servez-vous de nos cours vidéos et quizz ! Une fois le cours assimilé, jetez-vous dans le bain avec les exercies et prenez le risque de faire des erreurs. Les exercices corrigés vous permettront de les identifier pour mieux les comprendre. Ceci est probablement l’une des meilleures méthodes pour progresser en maths !</p>
                 </div>
