@@ -1,6 +1,6 @@
 import React from 'react'
 import './Header.css'
-import logo from '../../Images/logo.png'
+import logo from '../../Images/logoFeeDesMaths.png'
 
 const Header = () =>{
     return(
