@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import './register.css'
 import {Link, useHistory} from 'react-router-dom'
-import logo from '../../Images/logo.png'
+import logo from '../../Images/logoFeeDesMaths.png'
 import {toast} from 'react-toastify';  
 import 'react-toastify/dist/ReactToastify.css'; 
 toast.configure()

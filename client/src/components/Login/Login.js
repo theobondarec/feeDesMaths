@@ -4,7 +4,7 @@ import {Link, useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
 import {toast} from 'react-toastify';  
 import Cookies from 'universal-cookie';
-import logo from '../../Images/logo.png'
+import logo from '../../Images/logoFeeDesMaths.png'
 import 'react-toastify/dist/ReactToastify.css'; 
 toast.configure()
 
