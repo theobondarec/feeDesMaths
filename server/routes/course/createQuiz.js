@@ -34,7 +34,9 @@ router.post('/api/createQuiz', FBAuth, (req, res) => {
             admin.firestore().collectionGroup('chapitres').where('chapterTitle', '==', chapter).get()
             .then((data)=>{
                 data.forEach(doc=>{
-                    chapterId = doc.data().chapterId
+                    if(doc.data().subject === subject.toLowerCase()){
+                        chapterId = doc.data().chapterId
+                    }
                 })
             })
             .then(()=>{
@@ -53,7 +55,7 @@ router.post('/api/createQuiz', FBAuth, (req, res) => {
                     // console.log(questionQuiz)
                     
                     admin.firestore().collection('cours').doc(subject.toLowerCase()).collection('chapitres').doc(chapterId).collection('questions').doc().set(questionQuiz)
-                    // console.log("Creation quiz pour chapitre")
+                    // console.log("Creation quiz pour chapitre", chapter, chapterId)
                     return res.send({message:`question for the chapter ${chapter} added`, createQuestion:true})
                 }
                 else{

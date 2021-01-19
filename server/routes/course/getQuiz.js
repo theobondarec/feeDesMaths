@@ -30,7 +30,9 @@ router.post('/api/getQuiz', FBAuth, (req, res) => {
             admin.firestore().collectionGroup('chapitres').where('chapterTitle', '==', chapter).get()
             .then((data)=>{
                 data.forEach(doc=>{
-                    chapterId = doc.data().chapterId
+                    if(doc.data().subject === subject.toLowerCase()){
+                        chapterId = doc.data().chapterId
+                    }
                 })
             })
             .then(()=>{

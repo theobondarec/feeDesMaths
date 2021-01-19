@@ -198,6 +198,7 @@ const Addquiz = () => {
             }
         })
     },[])
+
     const [chapters, setChapters] = useState([])
     const [errorMessageChapter, setErrorMessageChapter] = useState([])
     // const [allowChapters, setAllowChapters] = useState([])
@@ -396,6 +397,7 @@ const Addquiz = () => {
             return(<label  className="form-control labelAddQuiz" id="questNumber">{`N° ${questionNumber}`}</label>)
         }
     }
+
 
     if(allow === true){
         return(
