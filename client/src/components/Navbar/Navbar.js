@@ -44,7 +44,7 @@ const NavBar = () =>{
             return [
                 <div key={Math.random()} className="options_navbar">
                     <li className="nav-item">
-                        <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+                        <Link className="nav-link" to="/">Accueil <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/cours">Cours</Link>
@@ -54,8 +54,8 @@ const NavBar = () =>{
                         profile
                         </Link>
                         <div className="dropdown-menu dropdown_menu_navbar" aria-labelledby="navbarDropdown">
-                            <Link className="dropdown-item" to="/profile">My profile</Link> {/*Avancement des cours*/}
-                            <Link className="dropdown-item" to="/settings">Settings</Link> {/*modification mot de passe*/}
+                            <Link className="dropdown-item" to="/profile">Profil</Link> {/*Avancement des cours*/}
+                            <Link className="dropdown-item" to="/settings">Paramètres</Link> {/*modification mot de passe*/}
                             <div className="dropdown-divider"></div>
                             <button className="dropdown-item" 
                             onClick={()=>{
@@ -75,7 +75,7 @@ const NavBar = () =>{
             return[
                 <div key={Math.random()} className="options_navbar">
                     <li className="nav-item">
-                        <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+                        <Link className="nav-link" to="/">Accueil <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/cours">Cours</Link>
@@ -88,7 +88,7 @@ const NavBar = () =>{
                             <Link className="dropdown-item" to="/createpost">Ajouter un cours</Link> {/*only if you're professor*/}
                             <Link className="dropdown-item" to="/createQuiz">Ajouter un quiz</Link> {/*only if you're professor*/}
                             <Link className="dropdown-item" to="/mypost">Mes leçons</Link> {/*only if you're professor*/}
-                            <Link className="dropdown-item" to="/settings">Settings</Link> {/*modification mot de passe*/}
+                            <Link className="dropdown-item" to="/settings">Paramètres</Link> {/*modification mot de passe*/}
                             <div className="dropdown-divider"></div>
                             <button className="dropdown-item" 
                             onClick={()=>{
@@ -108,7 +108,7 @@ const NavBar = () =>{
             return[
                 <div key={Math.random()} className="options_navbar">
                     <li className="nav-item">
-                        <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+                        <Link className="nav-link" to="/">Accueil <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item dropdown">
                         <Link to="/profile" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -116,7 +116,7 @@ const NavBar = () =>{
                         </Link>
                         <div className="dropdown-menu dropdown_menu_navbar" aria-labelledby="navbarDropdown">
                             <Link className="dropdown-item" to="/admin">Admin page</Link>
-                            <Link className="dropdown-item" to="/settings">Settings</Link>
+                            <Link className="dropdown-item" to="/settings">Paramètres</Link>
                             <div className="dropdown-divider"></div>
                             <button className="dropdown-item" 
                             onClick={()=>{
