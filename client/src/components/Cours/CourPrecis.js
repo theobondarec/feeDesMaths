@@ -273,6 +273,9 @@ const CoursPrecis = ()=>{
             if(finalScore < 0){
                 finalScore = 0
             }
+            if(finalScore > 20){
+                finalScore = 20
+            }
             setScore(finalScore)
             setNote(finalScore)
             showScore(finalScore)

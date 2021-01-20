@@ -79,9 +79,9 @@ router.post('/api/postQuizzScore', FBAuth, (req, res)=>{
     .then(decodedToken =>{
         const uid = decodedToken.uid
         const data={
-            subject,
-            chapterTitle,
-            lessonTitle,
+            subject:subject.toLowerCase(),
+            chapterTitle:chapterTitle.toLowerCase(),
+            lessonTitle:lessonTitle.toLowerCase(),
             note:parseInt(note)
         }
 
