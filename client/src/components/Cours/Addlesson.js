@@ -438,7 +438,7 @@ const Addlesson = () => {
                         <button type="button" className="btn btn-primary" onClick={() => postLesson()}>Upload</button>
                     </div>
                     <div className="card col add-card-AddLesson">
-                        <h1>Prévisualtion cours</h1>
+                        <h1>Prévisualisation cours</h1>
                         <div>
                             {
                                 cours !== "" ?
@@ -514,7 +514,7 @@ const Addlesson = () => {
                             </button>
                         </div>
                         <div className="card col" id="add-card-lesson">
-                            <h1>Prévisualtion description chapitre</h1>
+                            <h1>Prévisualisation description chapitre</h1>
                             <div>
                                 {
                                     desc !== "" ?
