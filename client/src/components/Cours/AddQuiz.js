@@ -37,7 +37,6 @@ const Addquiz = () => {
         fetch('/api/tokenIsOk',{
             headers:{
                 Authorization:"Bearer "+ cookies.get('jwt')
-                // Authorization:"Bearer "+localStorage.getItem("jwt")
             }
         })
         .then(res=>res.json())
@@ -52,7 +51,6 @@ const Addquiz = () => {
     },[])
 
 
-    // const [lessonClip,setLessonClip] = useState("")
     const [lecon, setLecon] = useState("")
     const [chapitre, setChapitre] = useState("")
     const [matiere, setMatiere] = useState("")
@@ -142,14 +140,11 @@ const Addquiz = () => {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization:"Bearer "+ cookies.get('jwt')
-                    // "Authorization": "Bearer " + localStorage.getItem("jwt")
                 },
                 body: JSON.stringify({
-                    // ACCESDB
                     subject:matiere,
                     chapter:chapitre,
                     lessonId:lecon,
-                    // COMPO QUIZ
                     question: draftToHtml(convertToRaw(question.getCurrentContent())),
                     questionNumber:parseInt(questionNumber),
                     optionA:answersA,
@@ -184,7 +179,6 @@ const Addquiz = () => {
     useEffect(()=>{
         fetch('/api/subjects',{
             headers:{
-                // Authorization: "Bearer " + localStorage.getItem("jwt")
                 Authorization:"Bearer "+ cookies.get('jwt')
             }
         }).then(res=>res.json())
@@ -201,12 +195,10 @@ const Addquiz = () => {
 
     const [chapters, setChapters] = useState([])
     const [errorMessageChapter, setErrorMessageChapter] = useState([])
-    // const [allowChapters, setAllowChapters] = useState([])
     useEffect(()=>{
         if(matiere === "" || matiere === "undifined"){
             fetch('/api/chapters',{
                 headers:{
-                    // Authorization: "Bearer " + localStorage.getItem("jwt")
                     Authorization:"Bearer "+ cookies.get('jwt')
 
                 }
@@ -214,7 +206,6 @@ const Addquiz = () => {
             .then(result=>{
                 if(result.allow === true){
                     setChapters(result.chapters)
-                    // setAllowChapters(result.allow)
                 }
                 else{
                     setErrorMessageChapter(result.error)
@@ -227,8 +218,6 @@ const Addquiz = () => {
                 headers:{
                     "Content-Type": "application/json",
                     Authorization:"Bearer "+ cookies.get('jwt')
-
-                    // Authorization: "Bearer " + localStorage.getItem("jwt")
                 },
                 body:JSON.stringify({
                     subject:matiere
@@ -237,8 +226,6 @@ const Addquiz = () => {
             .then(result=>{
                 if(result.allow === true){
                     setChapters(result.chapters)
-                    // setAllowChapters(result.allow)
-                    // console.log(result)
                 }
                 else{
                     setErrorMessageChapter(result.error)
@@ -258,11 +245,9 @@ const Addquiz = () => {
             fetch('/api/lesson',{
                 headers:{
                     Authorization:"Bearer "+ cookies.get('jwt')
-                    // Authorization: "Bearer " + localStorage.getItem("jwt")
                 }
             }).then(res=>res.json())
             .then(result=>{
-                // console.log(result)
                 if(result.allow === true){
                     setLessons(result.lessons)
                 }
@@ -280,7 +265,6 @@ const Addquiz = () => {
                 headers:{
                     "Content-Type": "application/json",
                     Authorization:"Bearer "+ cookies.get('jwt')
-                    // Authorization: "Bearer " + localStorage.getItem("jwt")
                 },
                 body:JSON.stringify({
                     subject:matiere,
@@ -305,12 +289,10 @@ const Addquiz = () => {
     const [existingQuiz, setExistingQuiz] = useState([])
     useEffect(()=>{
         if(matiere && chapitre){
-            // console.log(matiere, chapitre, lecon)
             fetch('/api/getQuiz',{
                 method: "post",
                 headers:{
                     "Content-Type": "application/json",
-                    // Authorization: "Bearer " + localStorage.getItem("jwt")
                     Authorization:"Bearer "+ cookies.get('jwt')
                 },
                 body:JSON.stringify({
@@ -321,17 +303,12 @@ const Addquiz = () => {
             })
             .then(res => res.json())
             .then((result)=>{
-                // console.log(result)
                 setExistingQuiz(result)
             })
             .catch(err=>{
                 console.log(err)
             })
-            // console.log("fetch")
         }
-        // else{
-            // console.log('nothing')
-        // }
     },[matiere, chapitre, lecon])
 
 
